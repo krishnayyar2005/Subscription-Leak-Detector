@@ -376,11 +376,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (budget === null) {
                     budgetStatusEl.textContent = 'Not set';
                     budgetStatusEl.className = 'stat-card__value stat-card__value--mono';
-                    budgetTextEl.textContent = 'Click to set yearly budget';
+                    budgetTextEl.textContent = 'Click to set monthly budget';
                     budgetTextEl.className = 'stat-card__change';
                 } else {
+                    const yearlyBudget = budget * 12;
                     const yearlySpend = monthlyTotal * 12;
-                    const remaining = budget - yearlySpend;
+                    const remaining = yearlyBudget - yearlySpend;
                     budgetStatusEl.textContent = formatMoney(remaining);
                     
                     if (remaining < 0) {
@@ -392,6 +393,26 @@ document.addEventListener('DOMContentLoaded', () => {
                         budgetTextEl.className = 'stat-card__change stat-card__change--success';
                         budgetTextEl.textContent = 'Remaining this year';
                     }
+                }
+            }
+
+            // Leak Tide Update
+            const leakTidePctEl = document.getElementById('leak-tide-percentage');
+            if (leakTidePctEl) {
+                let leakPct = 0;
+                if (monthlyTotal > 0) {
+                    leakPct = Math.round((totalLeak / monthlyTotal) * 100);
+                }
+                leakTidePctEl.textContent = `${leakPct}%`;
+                
+                const waveFillEl = document.getElementById('leak-tide-fill');
+                if (waveFillEl) {
+                    waveFillEl.style.height = `${leakPct}%`;
+                }
+                
+                const leakAmountEl = document.getElementById('leak-tide-amount');
+                if (leakAmountEl) {
+                    leakAmountEl.textContent = formatMoney(totalLeak);
                 }
             }
 
@@ -459,7 +480,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     </td>
                 </tr>`;
-            }).join('') || '<tr><td colspan="5" class="text-center font-body text-on-surface-variant p-4">No subscriptions added yet.</td></tr>';
+            }).join('') || `<tr><td colspan="5" class="text-center font-body text-on-surface-variant p-4">${filter !== 'All' || searchQuery ? 'No subscriptions match the current filter.' : 'No subscriptions added yet.'}</td></tr>`;
             
             // Build dynamic filters
             const cats = ['All', ...new Set(subs.map(s => s.category))];
@@ -641,7 +662,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Window exposed methods for inline listeners
         let currentFilter = 'All';
-        window.filterSubs = (cat) => { currentFilter = cat; renderSubscriptions(cat, document.getElementById('sub-search').value); };
+
+        // Helper to get the current search query from whichever search input exists
+        const getSearchQuery = () => {
+            const el = document.getElementById('sub-search') || document.querySelector('.form-input--search');
+            return el ? el.value : '';
+        };
+
+        window.filterSubs = (cat) => { currentFilter = cat; renderSubscriptions(cat, getSearchQuery()); };
         window.reloadDashboardData = () => {
             subs = JSON.parse(localStorage.getItem('essara_subscriptions_' + session.id)) || [];
             renderDashboard();
@@ -657,8 +685,29 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        const subSearch = document.getElementById('sub-search');
+        const subSearch = document.getElementById('sub-search') || document.querySelector('.form-input--search');
         if (subSearch) subSearch.addEventListener('input', (e) => renderSubscriptions(currentFilter, e.target.value));
+
+        // Wire up the static .filter-chips .chip buttons (All / Video / Music)
+        const filterChips = document.querySelectorAll('.filter-chips .chip');
+        if (filterChips.length > 0) {
+            filterChips.forEach(chip => {
+                chip.addEventListener('click', () => {
+                    // Map button label to the stored category value
+                    const label = chip.textContent.trim();
+                    const categoryMap = { 'All': 'All', 'Video': 'Video', 'Music': 'Music' };
+                    const filterValue = categoryMap[label] || label;
+
+                    currentFilter = filterValue;
+
+                    // Update active chip styling
+                    filterChips.forEach(c => c.classList.remove('chip--active'));
+                    chip.classList.add('chip--active');
+
+                    renderSubscriptions(currentFilter, getSearchQuery());
+                });
+            });
+        }
         const currSel = document.getElementById('currency-select') || document.getElementById('currency-selector');
         const costSymbolEl = document.getElementById('cost-currency-symbol');
         const budgetSymbolEl = document.getElementById('budget-popover-symbol');
@@ -785,6 +834,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (subs.length === 0) {
             saveSubs();
         }
+
+        // Expose shared formatMoney for external pages (like Calendar, Budget)
+        window.formatMoney = formatMoney;
 
         renderDashboard();
     }

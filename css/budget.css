@@ -1,0 +1,257 @@
+/* ================================================================
+   ESSARA Budget Planner — Specific Styles
+   Pixel-close match to design/budget_planner/screen.png
+   ================================================================ */
+
+/* --- Page Header Row --- */
+.budget-header-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+}
+
+@media (min-width: 768px) {
+    .budget-header-row {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+}
+
+/* --- Monthly Budget Goal Card --- */
+.budget-goal-card {
+    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.budget-goal-input-row {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: stretch;
+}
+
+.budget-input-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.budget-save-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-family: var(--font-label);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 0 var(--space-lg);
+    border-radius: var(--radius-sm);
+}
+
+/* --- Stats Grid Customization --- */
+.budget-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--gutter);
+    margin-bottom: var(--space-xl);
+}
+
+@media (min-width: 768px) {
+    .budget-stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.budget-stat-remaining {
+    background-color: rgba(52, 211, 153, 0.1);
+    border-color: rgba(52, 211, 153, 0.2);
+}
+html.dark .budget-stat-remaining {
+    background-color: rgba(52, 211, 153, 0.05);
+    border-color: rgba(52, 211, 153, 0.1);
+}
+
+/* --- Budget Utilization Card --- */
+.budget-utilization-card {
+    margin-bottom: var(--space-xl);
+    padding: var(--space-xl);
+}
+
+.budget-utilization-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+}
+
+.budget-progress-container {
+    width: 100%;
+    height: 16px;
+    background-color: var(--surface-container-high);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    display: flex;
+    margin-bottom: var(--space-sm);
+}
+
+/* Individual segment inside the main bar */
+.budget-progress-segment {
+    height: 100%;
+    background-color: var(--primary);
+    border-right: 2px solid var(--surface-container-lowest);
+    transition: width 0.3s ease;
+}
+.budget-progress-segment:last-child {
+    border-right: none;
+}
+
+/* Over budget segment */
+.budget-progress-segment--leak {
+    background-color: var(--error);
+}
+
+.budget-utilization-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* --- Category Breakdown Card --- */
+.budget-category-card {
+    padding: var(--space-xl);
+    margin-bottom: var(--space-xxl);
+}
+
+.budget-category-table {
+    display: flex;
+    flex-direction: column;
+}
+
+.budget-category-header {
+    display: flex;
+    align-items: center;
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--outline-variant);
+    margin-bottom: var(--space-sm);
+}
+
+.budget-category-th {
+    font-family: var(--font-label);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--on-surface-variant);
+}
+
+/* Grid columns for table rows/header */
+.budget-th-cat, .budget-row-cat { flex: 0 0 25%; }
+.budget-th-spend, .budget-row-spend { flex: 1; display: flex; align-items: center; gap: var(--space-md); }
+.budget-th-cost, .budget-row-cost { flex: 0 0 15%; text-align: right; justify-content: flex-end; }
+
+/* Category List Rows */
+.budget-row {
+    display: flex;
+    align-items: center;
+    padding: var(--space-md) 0;
+    border-bottom: 1px solid rgba(195, 197, 217, 0.2);
+}
+.budget-row:last-child {
+    border-bottom: none;
+}
+
+.budget-cat-name {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--on-surface);
+}
+
+.budget-cat-icon {
+    color: var(--primary);
+    font-size: 20px;
+}
+
+.budget-row-spend-bar-bg {
+    flex: 1;
+    height: 8px;
+    background-color: var(--surface-container-high);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.budget-row-spend-bar-fill {
+    height: 100%;
+    background-color: var(--primary);
+    border-radius: var(--radius-full);
+}
+
+.budget-row-spend-pct {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--on-surface-variant);
+    min-width: 40px;
+    text-align: right;
+}
+
+.budget-row-cost-val {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--on-surface);
+}
+
+/* Leak Warning Variant */
+.budget-row--leak {
+    background-color: rgba(255, 138, 0, 0.05); /* very faint orange tint on row */
+}
+
+.budget-row--leak .budget-row-spend-bar-bg {
+    background-color: rgba(255, 138, 0, 0.15);
+}
+
+.budget-row--leak .budget-row-spend-bar-fill {
+    background-color: #FF8A00; /* Match design orange */
+}
+
+.budget-row--leak .budget-row-cost-val {
+    color: #FF8A00;
+    font-weight: 700;
+}
+
+.budget-row--leak .budget-row-spend-pct {
+    color: #FF8A00;
+}
+
+/* Leak Tag styling */
+.budget-leak-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 2px 6px;
+    border: 1px solid #FF8A00;
+    border-radius: var(--radius-sm);
+    background-color: rgba(255, 138, 0, 0.1);
+    color: #FF8A00;
+    font-family: var(--font-label);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-left: 8px;
+}
+.budget-leak-tag-icon {
+    font-size: 12px;
+}
+
+/* Empty State */
+.budget-empty-state {
+    padding: var(--space-xl);
+    text-align: center;
+    color: var(--on-surface-variant);
+    font-family: var(--font-body);
+    font-size: 14px;
+}
