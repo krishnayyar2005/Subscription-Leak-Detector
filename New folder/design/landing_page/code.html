@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ESSARA - Subscription Overlap &amp; Cost Leak Detector</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#dce9ff",
+                        "outline": "#737688",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#eff4ff",
+                        "primary-fixed-dim": "#b7c4ff",
+                        "surface-container": "#e5eeff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary": "#6f4500",
+                        "secondary": "#006a61",
+                        "on-secondary-fixed-variant": "#005049",
+                        "on-surface-variant": "#434656",
+                        "on-background": "#0b1c30",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#d3e4fe",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-primary-fixed-variant": "#0038b6",
+                        "on-surface": "#0b1c30",
+                        "surface-container-highest": "#d3e4fe",
+                        "background": "#f8f9ff",
+                        "secondary-fixed-dim": "#6bd8cb",
+                        "tertiary-container": "#905a00",
+                        "secondary-container": "#86f2e4",
+                        "primary-container": "#0052ff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "inverse-primary": "#b7c4ff",
+                        "outline-variant": "#c3c5d9",
+                        "primary-fixed": "#dde1ff",
+                        "on-primary-fixed": "#001452",
+                        "on-error-container": "#93000a",
+                        "on-secondary-container": "#006f66",
+                        "on-secondary-fixed": "#00201d",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#cbdbf5",
+                        "inverse-surface": "#213145",
+                        "on-tertiary-container": "#ffdfbe",
+                        "surface": "#f8f9ff",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-primary-container": "#dfe3ff",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#004ced",
+                        "surface-bright": "#f8f9ff",
+                        "secondary-fixed": "#89f5e7",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary": "#003ec7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "xl": "40px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "base": "4px",
+                        "container-max": "1280px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "headline-lg": ["Geist"],
+                        "data-mono": ["JetBrains Mono"],
+                        "display": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Geist"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "display": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .dark .glass-card {
+            background: rgba(33, 49, 69, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background dark:bg-inverse-surface text-on-surface dark:text-inverse-on-surface font-body-md transition-colors duration-200">
+<!-- Top Navigation -->
+<nav class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline flex justify-between items-center w-full px-gutter h-16 max-w-container-max mx-auto z-50 sticky top-0 transition-all duration-200 ease-in-out active:scale-95">
+<div class="flex items-center gap-gutter">
+<a class="font-display text-display font-bold text-primary dark:text-primary-fixed-dim" href="#">ESSARA</a>
+<div class="hidden md:flex gap-md">
+<!-- Navigation links from JSON -->
+<a class="text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1 font-bold font-label-caps text-label-caps uppercase hover:bg-surface-container-low dark:hover:bg-surface-container-high/10" href="#overview">Overview</a>
+<a class="text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors font-label-caps text-label-caps uppercase hover:bg-surface-container-low dark:hover:bg-surface-container-high/10" href="#features">Features</a>
+<a class="text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors font-label-caps text-label-caps uppercase hover:bg-surface-container-low dark:hover:bg-surface-container-high/10" href="#how-it-works">How it Works</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-2 rounded-full hover:bg-surface-container-low dark:hover:bg-surface-container-high/10 text-primary dark:text-primary-fixed-dim" id="theme-toggle">
+<span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+</button>
+<a class="font-label-caps text-label-caps uppercase text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Log in</a>
+<a class="bg-primary text-on-primary px-4 py-2 rounded font-label-caps text-label-caps uppercase hover:bg-primary-container transition-colors" href="#">Get started</a>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="py-24 px-gutter max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<div>
+<h1 class="font-display text-display font-bold text-on-surface dark:text-inverse-on-surface mb-6 leading-tight">Stop the Subscription Leak</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant dark:text-outline mb-8">Track recurring services, detect redundant apps, and reclaim hundreds of dollars wasted every year.</p>
+<button class="bg-primary text-on-primary px-8 py-4 rounded-lg font-label-caps text-label-caps uppercase hover:bg-primary-container transition-colors text-lg">Get Started for Free</button>
+</div>
+<div class="relative h-[400px] w-full rounded-2xl overflow-hidden glass-card flex items-center justify-center">
+<!-- Simulated representation of leaking money/overlapping apps -->
+<div class="absolute inset-0 bg-gradient-to-br from-surface-container-highest to-background dark:from-inverse-surface dark:to-surface-variant opacity-50"></div>
+<div class="relative z-10 flex flex-col items-center">
+<div class="flex -space-x-4 mb-4">
+<div class="w-16 h-16 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-bold text-xl shadow-lg border-2 border-surface dark:border-inverse-surface z-20">Sp</div>
+<div class="w-16 h-16 rounded-full bg-surface-tint text-on-primary flex items-center justify-center font-bold text-xl shadow-lg border-2 border-surface dark:border-inverse-surface z-10">Am</div>
+</div>
+<div class="bg-error/10 text-error px-4 py-2 rounded-full font-label-caps text-label-caps flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">warning</span>
+                    Overlap Detected: $120/yr leak
+                </div>
+</div>
+</div>
+</section>
+<!-- Features Section -->
+<section class="py-24 bg-surface-container-lowest dark:bg-surface-container-highest" id="features">
+<div class="max-w-container-max mx-auto px-gutter">
+<h2 class="font-headline-lg text-headline-lg font-bold text-center mb-16">Precision Subscription Management</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Feature 1 -->
+<div class="bg-surface dark:bg-inverse-surface p-8 rounded-xl border border-outline-variant dark:border-outline hover:shadow-lg transition-shadow">
+<div class="w-12 h-12 rounded-lg bg-surface-container text-primary flex items-center justify-center mb-6">
+<span class="material-symbols-outlined">add_circle</span>
+</div>
+<h3 class="font-headline-md text-headline-md font-semibold mb-4">Add in Seconds</h3>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-outline">Quick entry for name, category, cost. Build your portfolio instantly.</p>
+</div>
+<!-- Feature 2 -->
+<div class="bg-surface dark:bg-inverse-surface p-8 rounded-xl border border-outline-variant dark:border-outline hover:shadow-lg transition-shadow relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-secondary/10 rounded-bl-full -mr-4 -mt-4"></div>
+<div class="w-12 h-12 rounded-lg bg-surface-container text-secondary flex items-center justify-center mb-6 relative z-10">
+<span class="material-symbols-outlined">join_inner</span>
+</div>
+<h3 class="font-headline-md text-headline-md font-semibold mb-4 relative z-10">Automatic Overlap Detection</h3>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-outline relative z-10">Catch redundant services in the same category automatically.</p>
+</div>
+<!-- Feature 3 -->
+<div class="bg-surface dark:bg-inverse-surface p-8 rounded-xl border border-outline-variant dark:border-outline hover:shadow-lg transition-shadow">
+<div class="w-12 h-12 rounded-lg bg-error-container text-error flex items-center justify-center mb-6">
+<span class="material-symbols-outlined">trending_down</span>
+</div>
+<h3 class="font-headline-md text-headline-md font-semibold mb-4">Projected Annual Leak</h3>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-outline">See exactly how much an overlap costs you over 12 months with <span class="font-data-mono text-data-mono">data-driven</span> precision.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- How it Works Section -->
+<section class="py-24 max-w-container-max mx-auto px-gutter" id="how-it-works">
+<h2 class="font-headline-lg text-headline-lg font-bold text-center mb-16">Systematic Optimization</h2>
+<div class="flex flex-col md:flex-row justify-center items-center gap-12">
+<!-- Step 1 -->
+<div class="flex flex-col items-center text-center max-w-xs">
+<div class="w-16 h-16 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline-md text-headline-md mb-6">1</div>
+<h3 class="font-headline-md text-headline-md font-semibold mb-2">Log</h3>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-outline">Input your subscriptions.</p>
+</div>
+<!-- Arrow -->
+<div class="hidden md:block text-outline-variant dark:text-outline">
+<span class="material-symbols-outlined text-4xl">arrow_forward</span>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center text-center max-w-xs">
+<div class="w-16 h-16 rounded-full bg-surface-variant text-on-surface font-headline-md text-headline-md flex items-center justify-center mb-6">2</div>
+<h3 class="font-headline-md text-headline-md font-semibold mb-2">Watch</h3>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-outline">View the automated leak breakdown.</p>
+</div>
+<!-- Arrow -->
+<div class="hidden md:block text-outline-variant dark:text-outline">
+<span class="material-symbols-outlined text-4xl">arrow_forward</span>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center text-center max-w-xs">
+<div class="w-16 h-16 rounded-full bg-surface-variant text-on-surface font-headline-md text-headline-md flex items-center justify-center mb-6">3</div>
+<h3 class="font-headline-md text-headline-md font-semibold mb-2">Cancel</h3>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-outline">Remove redundant services with confidence.</p>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-24 bg-primary text-on-primary text-center px-gutter">
+<h2 class="font-display text-display font-bold mb-8">Ready to stop the leak?</h2>
+<button class="bg-surface text-primary px-8 py-4 rounded-lg font-label-caps text-label-caps uppercase hover:bg-surface-container transition-colors text-lg">Sign Up</button>
+</section>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-highest border-t border-outline-variant dark:border-outline w-full py-xl px-gutter max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 opacity-80 hover:opacity-100 transition-opacity">
+<div class="col-span-1 md:col-span-1">
+<h4 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-on-background mb-4">ESSARA</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline">© 2024 ESSARA. Precision subscription management for modern finance.</p>
+</div>
+<div class="col-span-1 md:col-span-3 grid grid-cols-2 md:grid-cols-3 gap-8">
+<div class="flex flex-col gap-2">
+<a class="font-label-caps text-label-caps uppercase text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Product</a>
+<a class="font-label-caps text-label-caps uppercase text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Pricing</a>
+<a class="font-label-caps text-label-caps uppercase text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Features</a>
+</div>
+<div class="flex flex-col gap-2">
+<a class="font-label-caps text-label-caps uppercase text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Security</a>
+<a class="font-label-caps text-label-caps uppercase text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Log in</a>
+<a class="font-label-caps text-label-caps uppercase text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Sign up</a>
+</div>
+<div class="flex flex-col gap-2">
+<a class="font-label-caps text-label-caps uppercase text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Admin Login</a>
+<a class="font-label-caps text-label-caps uppercase text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">About Us</a>
+<a class="font-label-caps text-label-caps uppercase text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Privacy Policy</a>
+</div>
+</div>
+</footer>
+<script>
+        // Simple theme toggle functionality
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        themeToggleBtn.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            const iconSpan = themeToggleBtn.querySelector('span');
+            if (htmlElement.classList.contains('dark')) {
+                iconSpan.textContent = 'light_mode';
+                iconSpan.setAttribute('data-icon', 'light_mode');
+            } else {
+                iconSpan.textContent = 'dark_mode';
+                iconSpan.setAttribute('data-icon', 'dark_mode');
+            }
+        });
+    </script>
+</body></html>

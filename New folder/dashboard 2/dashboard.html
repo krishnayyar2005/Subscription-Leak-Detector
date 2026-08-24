@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESSARA - Subscription Management</title>
+    <meta name="description" content="ESSARA Dashboard — Subscription Overlap & Cost Leak Detector overview.">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ===== Top Navigation Bar ===== -->
+    <nav class="topnav" id="topnav">
+        <div class="topnav__inner">
+            <!-- Brand -->
+            <div class="topnav__left">
+                <a href="../index.html" class="topnav__brand">ESSARA</a>
+                <!-- Desktop Nav Links -->
+                <div class="topnav__links" id="nav-links">
+                    <a href="dashboard.html" class="topnav__link topnav__link--active">Overview</a>
+                    <a href="../subscription/subscription.html" class="topnav__link">Subscriptions</a>
+                    <a href="../overlaps/index.html" class="topnav__link">Overlaps</a>
+                    <a href="../reports.html" class="topnav__link">Reports</a>
+                    <a href="../budget.html" class="topnav__link">Budget</a>
+                    <a href="../renewal.html" class="topnav__link">Calendar</a>
+                </div>
+            </div>
+            <!-- Actions -->
+            <div class="topnav__actions">
+                <select class="currency-select" id="currency-select">
+                    <option value="USD">USD ($)</option>
+                    <option value="EUR">EUR (€)</option>
+                    <option value="GBP">GBP (£)</option>
+                    <option value="INR">INR (₹)</option>
+                </select>
+                <button class="icon-btn" id="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="material-symbols-outlined">dark_mode</span>
+                </button>
+                <div class="profile-menu-container" id="profile-menu-container">
+                    <div class="avatar" id="profile-icon" role="button" tabindex="0">
+                        <span class="material-symbols-outlined">person</span>
+                    </div>
+                    <div class="profile-dropdown" id="profile-dropdown">
+                        <div class="profile-dropdown__header">
+                            <span class="profile-dropdown__name" id="user-display-name"></span>
+                            <span class="profile-dropdown__email" id="user-display-email"></span>
+                        </div>
+                        <div class="profile-dropdown__divider"></div>
+                        <button class="profile-dropdown__item profile-dropdown__item--danger" id="logout-btn">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">logout</span>
+                            Log out
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== Main Content ===== -->
+    <main class="main-content">
+
+        <!-- Dashboard Header -->
+        <header class="page-header">
+            <h1 class="page-header__title">Overview</h1>
+            <p class="page-header__subtitle">Here is the summary of your subscription health.</p>
+        </header>
+
+        <!-- Stats Grid -->
+        <section class="stats-grid">
+            <!-- Active Subs -->
+            <article class="stat-card">
+                <div class="stat-card__top">
+                    <span class="stat-card__label">Active Subs</span>
+                    <span class="material-symbols-outlined stat-card__icon">subscriptions</span>
+                </div>
+                <div class="stat-card__bottom">
+                    <span class="stat-card__value" id="stat-active-subs">0</span>
+                    <span class="stat-card__change stat-card__change--positive" id="stat-active-change"></span>
+                </div>
+            </article>
+            <!-- Monthly Spend -->
+            <article class="stat-card">
+                <div class="stat-card__top">
+                    <span class="stat-card__label">Monthly Spend</span>
+                    <span class="material-symbols-outlined stat-card__icon">payments</span>
+                </div>
+                <div class="stat-card__bottom">
+                    <span class="stat-card__value stat-card__value--mono" id="stat-monthly-spend">$0.00</span>
+                    <span class="stat-card__sub" id="stat-annual-approx"></span>
+                </div>
+            </article>
+            <!-- Projected Annual Leak -->
+            <article class="stat-card stat-card--leak">
+                <div class="stat-card__top">
+                    <span class="stat-card__label stat-card__label--leak">Projected Annual Leak</span>
+                    <span class="material-symbols-outlined stat-card__icon stat-card__icon--error">warning</span>
+                </div>
+                <div class="stat-card__bottom">
+                    <span class="stat-card__value stat-card__value--mono stat-card__value--error" id="stat-projected-leak">$0.00</span>
+                    <span class="stat-card__change stat-card__change--error" id="stat-leak-action"></span>
+                </div>
+            </article>
+            <!-- Budget Status -->
+            <article class="stat-card" id="budget-status-card" style="position: relative; cursor: pointer; overflow: visible;">
+                <div class="stat-card__top">
+                    <span class="stat-card__label">Budget Status</span>
+                    <span class="material-symbols-outlined stat-card__icon stat-card__icon--success">check_circle</span>
+                </div>
+                <div class="stat-card__bottom">
+                    <span class="stat-card__value stat-card__value--mono" id="stat-budget-status">Not set</span>
+                    <span class="stat-card__change stat-card__change--success" id="stat-budget-text">Click to set yearly budget</span>
+                </div>
+                
+                <!-- Budget Popover -->
+                <div class="profile-dropdown" id="budget-popover" style="top: 100%; right: 0; padding: 16px; min-width: 250px; z-index: 10; display: none;">
+                    <label class="form-label" style="margin-bottom: 8px; display: block; font-size: 14px; font-weight: 500;">Set yearly budget</label>
+                    <div class="input-with-icon" style="margin-bottom: 12px; position: relative;">
+                        <span class="input-icon" id="budget-popover-symbol" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--on-surface-variant);">$</span>
+                        <input class="form-input form-input--mono form-input--pl" type="number" step="0.01" min="0" id="budget-popover-input" style="padding-left: 32px; width: 100%;">
+                    </div>
+                    <button class="btn btn--primary btn--full" id="budget-popover-save" style="width: 100%;">Save</button>
+                </div>
+            </article>
+        </section>
+
+        <!-- Secondary Content Grid -->
+        <section class="content-grid">
+            <!-- Identified Overlaps (2/3 width) -->
+            <div class="card card--overlaps">
+                <div class="card__header">
+                    <h2 class="card__title">Identified Overlaps</h2>
+                    <a href="#overlaps" class="card__action">View All</a>
+                </div>
+                <div id="dashboard-overlaps-container">
+                    <p style="padding: 16px; color: var(--on-surface-variant); font-size: 14px;">No overlaps yet.</p>
+                </div>
+            </div>
+
+            <!-- Upcoming Renewals (1/3 width) -->
+            <aside class="card card--upcoming">
+                <div class="card__header">
+                    <h2 class="card__title">Upcoming</h2>
+                    <a href="#calendar" class="card__action">Calendar</a>
+                </div>
+                <ul class="upcoming-list" id="dashboard-upcoming-container">
+                    <p style="padding: 16px; color: var(--on-surface-variant); font-size: 14px;">No upcoming renewals.</p>
+                </ul>
+            </aside>
+        </section>
+
+    </main>
+
+    <!-- ===== Footer ===== -->
+    <footer class="site-footer">
+        <div class="site-footer__inner">
+            <div class="site-footer__brand-col">
+                <span class="site-footer__brand">ESSARA</span>
+                <p class="site-footer__copy">© 2024 ESSARA. Precision subscription management for modern finance.</p>
+            </div>
+            <div class="site-footer__links-grid">
+                <div class="site-footer__link-col">
+                    <a href="#" class="site-footer__link">Product</a>
+                    <a href="#" class="site-footer__link">Pricing</a>
+                    <a href="#" class="site-footer__link">Features</a>
+                </div>
+                <div class="site-footer__link-col">
+                    <a href="#" class="site-footer__link">Security</a>
+                    <a href="#" class="site-footer__link">Log in</a>
+                    <a href="#" class="site-footer__link">Sign up</a>
+                </div>
+                <div class="site-footer__link-col">
+                    <a href="#" class="site-footer__link">Admin Login</a>
+                    <a href="#" class="site-footer__link">About Us</a>
+                    <a href="#" class="site-footer__link">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const trigger = document.getElementById("profile-icon");
+            const dropdown = document.getElementById("profile-dropdown");
+            if (trigger && dropdown) {
+                // Populate user info
+                try {
+                    const session = JSON.parse(localStorage.getItem('essara_session'));
+                    if (session) {
+                        document.getElementById('user-display-name').textContent = session.name;
+                        document.getElementById('user-display-email').textContent = session.email;
+                    }
+                } catch(e) {}
+
+                trigger.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    dropdown.classList.toggle("open");
+                });
+                document.addEventListener("click", (e) => {
+                    if (!dropdown.contains(e.target) && !trigger.contains(e.target)) {
+                        dropdown.classList.remove("open");
+                    }
+                });
+            }
+            const logoutBtn = document.getElementById("logout-btn");
+            if (logoutBtn) {
+                logoutBtn.addEventListener("click", () => {
+                    localStorage.removeItem('essara_session');
+                    window.location.href = '../login.html';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

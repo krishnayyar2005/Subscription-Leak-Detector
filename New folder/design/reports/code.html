@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Reports | ESSARA</title>
+<!-- Tailwind CSS (Include correct URL pattern) -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config defined by the Design System -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#6bd8cb",
+                    "surface-container-highest": "#d3e4fe",
+                    "surface-container-low": "#eff4ff",
+                    "secondary": "#006a61",
+                    "inverse-on-surface": "#eaf1ff",
+                    "primary-container": "#0052ff",
+                    "on-primary-container": "#dfe3ff",
+                    "primary": "#003ec7",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-secondary-container": "#006f66",
+                    "inverse-primary": "#b7c4ff",
+                    "surface-tint": "#004ced",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "background": "#f8f9ff",
+                    "on-primary-fixed": "#001452",
+                    "surface-variant": "#d3e4fe",
+                    "secondary-fixed": "#89f5e7",
+                    "tertiary-container": "#905a00",
+                    "primary-fixed": "#dde1ff",
+                    "outline-variant": "#c3c5d9",
+                    "on-error": "#ffffff",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "secondary-container": "#86f2e4",
+                    "on-secondary-fixed-variant": "#005049",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed-variant": "#0038b6",
+                    "surface-container": "#e5eeff",
+                    "primary-fixed-dim": "#b7c4ff",
+                    "tertiary": "#6f4500",
+                    "on-surface-variant": "#434656",
+                    "on-secondary-fixed": "#00201d",
+                    "on-surface": "#0b1c30",
+                    "on-error-container": "#93000a",
+                    "surface-container-high": "#dce9ff",
+                    "surface": "#f8f9ff",
+                    "outline": "#737688",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-secondary": "#ffffff",
+                    "on-background": "#0b1c30",
+                    "error-container": "#ffdad6",
+                    "surface-dim": "#cbdbf5",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#213145",
+                    "surface-bright": "#f8f9ff",
+                    "on-tertiary-fixed": "#2a1700",
+                    "on-tertiary-container": "#ffdfbe"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "base": "4px",
+                    "lg": "24px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "container-max": "1280px",
+                    "xl": "40px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "body-sm": [
+                            "Inter", "sans-serif"
+                    ],
+                    "label-caps": [
+                            "Inter", "sans-serif"
+                    ],
+                    "body-lg": [
+                            "Inter", "sans-serif"
+                    ],
+                    "headline-md": [
+                            "Geist", "sans-serif"
+                    ],
+                    "body-md": [
+                            "Inter", "sans-serif"
+                    ],
+                    "headline-lg": [
+                            "Geist", "sans-serif"
+                    ],
+                    "headline-lg-mobile": [
+                            "Geist", "sans-serif"
+                    ],
+                    "data-mono": [
+                            "JetBrains Mono", "monospace"
+                    ],
+                    "display": [
+                            "Geist", "sans-serif"
+                    ]
+            },
+            "fontSize": {
+                    "body-sm": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-caps": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "data-mono": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "display": [
+                            "40px",
+                            {
+                                    "lineHeight": "48px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ]
+            }
+          }
+        }
+      }
+    </script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&amp;family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+<!-- TopNavBar (ESSARA) -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline full-width top-0 z-50 sticky transition-all duration-200 ease-in-out">
+<div class="flex justify-between items-center w-full px-gutter h-16 max-w-container-max mx-auto">
+<div class="flex items-center gap-md">
+<!-- Brand Logo -->
+<a class="font-display text-display font-bold text-primary dark:text-primary-fixed-dim shrink-0" href="#">
+                    ESSARA
+                </a>
+<!-- Search (Left-aligned as per JSON) -->
+<div class="hidden md:flex relative ml-md">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="pl-[36px] pr-sm py-[8px] bg-surface-container-low dark:bg-surface-container-highest border border-outline-variant rounded focus:outline-none focus:ring-2 focus:ring-primary-container text-body-sm font-body-sm text-on-surface w-64 placeholder-outline" placeholder="Search..." type="text"/>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center h-full gap-lg">
+<a class="text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-high/10 font-label-caps text-label-caps flex items-center h-full px-xs" href="#">Overview</a>
+<a class="text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-high/10 font-label-caps text-label-caps flex items-center h-full px-xs" href="#">Subscriptions</a>
+<a class="text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-high/10 font-label-caps text-label-caps flex items-center h-full px-xs" href="#">Overlaps</a>
+<!-- Active Tab -->
+<a class="text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim font-bold font-label-caps text-label-caps flex items-center h-full px-xs pt-[2px]" href="#">Reports</a>
+<a class="text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-high/10 font-label-caps text-label-caps flex items-center h-full px-xs" href="#">Budget</a>
+<a class="text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors hover:bg-surface-container-low dark:hover:bg-surface-container-high/10 font-label-caps text-label-caps flex items-center h-full px-xs" href="#">Calendar</a>
+</nav>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-sm">
+<button class="font-label-caps text-label-caps text-on-surface-variant border border-outline-variant px-sm py-[4px] rounded hover:bg-surface-container-low transition-colors flex items-center gap-xs">
+                    USD <span class="material-symbols-outlined text-[16px]" data-icon="expand_more">expand_more</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+</button>
+<img alt="User Profile Avatar" class="w-8 h-8 rounded-full border border-outline-variant object-cover ml-xs" data-alt="A professional headshot of a user against a neutral modern background. Clean, high-key corporate lighting. The user is looking directly at the camera with a subtle smile. High-resolution avatar intended for enterprise dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6MH40SViRGEK1ew_UmUsTgs3zJnyWcSn9P5sqqwVz2ZQeOWPe45l4raBLjzqNmRtW9FQnFU0negrpfdn2skRiV1ClvlkPBZMjt7NUvVDV-HCIICM7SRPj-hQcZS9iNDMuhC6sRIKuVQh41WRHAyr-o7m9pCdC0m-eGClJD_KExd9AACcED4s22jAO9ckDJAolcuKVtMHkLdObeJ3CxAEDJxLOkQug58afMeFUivaQhn4Ws77B5zxw"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-gutter py-xl">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-lg gap-md">
+<div>
+<h1 class="font-headline-lg text-headline-lg md:text-headline-lg text-on-background">Category Spend Report</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Breakdown of subscription costs normalized across categories.</p>
+</div>
+<div class="flex gap-sm">
+<button class="font-label-caps text-label-caps px-md py-[8px] border border-outline-variant rounded bg-surface hover:bg-surface-container-low text-on-surface transition-colors flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="download">download</span> Export
+                </button>
+</div>
+</div>
+<!-- Data Table Container (Level 1 Elevation equivalent) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden w-full">
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse min-w-[800px]">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="py-[12px] px-md font-label-caps text-label-caps text-on-surface-variant font-semibold w-1/3">Category</th>
+<th class="py-[12px] px-md font-label-caps text-label-caps text-on-surface-variant font-semibold text-center w-32">Count</th>
+<th class="py-[12px] px-md font-label-caps text-label-caps text-on-surface-variant font-semibold text-right w-40">Monthly Total</th>
+<th class="py-[12px] px-md font-label-caps text-label-caps text-on-surface-variant font-semibold text-right w-40">Annual Total</th>
+<th class="py-[12px] px-md font-label-caps text-label-caps text-on-surface-variant font-semibold text-center w-32">Status</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm text-on-surface">
+<!-- Row 1 (Highest Spend, Overlap Warning) -->
+<tr class="border-b border-outline-variant/50 hover:bg-surface-container-low/50 transition-colors">
+<td class="py-[16px] px-md flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]" data-icon="movie">movie</span>
+</div>
+<span class="font-medium">Entertainment &amp; Streaming</span>
+</td>
+<td class="py-[16px] px-md text-center font-data-mono text-data-mono">4</td>
+<td class="py-[16px] px-md text-right font-data-mono text-data-mono font-medium">$54.96</td>
+<td class="py-[16px] px-md text-right font-data-mono text-data-mono text-on-surface-variant">$659.52</td>
+<td class="py-[16px] px-md text-center">
+<span class="inline-flex items-center gap-xs px-[8px] py-[4px] rounded-full bg-error-container text-on-error-container font-label-caps text-[10px] leading-tight">
+<span class="material-symbols-outlined text-[12px]" data-icon="warning">warning</span> Overlap
+                                </span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="border-b border-outline-variant/50 hover:bg-surface-container-low/50 transition-colors">
+<td class="py-[16px] px-md flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-secondary-container/20 flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[18px]" data-icon="cloud">cloud</span>
+</div>
+<span class="font-medium">Cloud Storage &amp; Hosting</span>
+</td>
+<td class="py-[16px] px-md text-center font-data-mono text-data-mono">2</td>
+<td class="py-[16px] px-md text-right font-data-mono text-data-mono font-medium">$32.50</td>
+<td class="py-[16px] px-md text-right font-data-mono text-data-mono text-on-surface-variant">$390.00</td>
+<td class="py-[16px] px-md text-center">
+<span class="inline-flex items-center gap-xs px-[8px] py-[4px] rounded-full bg-error-container text-on-error-container font-label-caps text-[10px] leading-tight">
+<span class="material-symbols-outlined text-[12px]" data-icon="warning">warning</span> Overlap
+                                </span>
+</td>
+</tr>
+<!-- Row 3 (Healthy) -->
+<tr class="border-b border-outline-variant/50 hover:bg-surface-container-low/50 transition-colors">
+<td class="py-[16px] px-md flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-tertiary-container/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]" data-icon="music_note">music_note</span>
+</div>
+<span class="font-medium">Audio &amp; Music</span>
+</td>
+<td class="py-[16px] px-md text-center font-data-mono text-data-mono">1</td>
+<td class="py-[16px] px-md text-right font-data-mono text-data-mono font-medium">$10.99</td>
+<td class="py-[16px] px-md text-right font-data-mono text-data-mono text-on-surface-variant">$131.88</td>
+<td class="py-[16px] px-md text-center">
+<span class="inline-flex items-center gap-xs px-[8px] py-[4px] rounded-full bg-secondary-container/50 text-on-secondary-container font-label-caps text-[10px] leading-tight">
+<span class="material-symbols-outlined text-[12px]" data-icon="check_circle">check_circle</span> Healthy
+                                </span>
+</td>
+</tr>
+<!-- Row 4 (Healthy) -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-[16px] px-md flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]" data-icon="fitness_center">fitness_center</span>
+</div>
+<span class="font-medium">Health &amp; Fitness</span>
+</td>
+<td class="py-[16px] px-md text-center font-data-mono text-data-mono">1</td>
+<td class="py-[16px] px-md text-right font-data-mono text-data-mono font-medium">$9.99</td>
+<td class="py-[16px] px-md text-right font-data-mono text-data-mono text-on-surface-variant">$119.88</td>
+<td class="py-[16px] px-md text-center">
+<span class="inline-flex items-center gap-xs px-[8px] py-[4px] rounded-full bg-secondary-container/50 text-on-secondary-container font-label-caps text-[10px] leading-tight">
+<span class="material-symbols-outlined text-[12px]" data-icon="check_circle">check_circle</span> Healthy
+                                </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer Totals -->
+<div class="bg-surface-container p-md border-t border-outline-variant flex justify-end gap-xl items-center">
+<div class="text-right">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-[2px]">Total Monthly</span>
+<span class="font-data-mono text-[16px] font-bold text-on-surface">$108.44</span>
+</div>
+<div class="text-right pr-md">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-[2px]">Total Annual</span>
+<span class="font-data-mono text-[16px] font-bold text-on-surface">$1,301.28</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer (ESSARA) -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-highest border-t border-outline-variant dark:border-outline full-width mt-auto">
+<div class="w-full py-xl px-gutter max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+<div class="col-span-1 md:col-span-1">
+<div class="font-headline-md text-headline-md font-bold text-on-surface dark:text-on-background mb-sm">ESSARA</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 ESSARA. Precision subscription management for modern finance.</p>
+</div>
+<div class="col-span-1 flex flex-col gap-sm">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant font-semibold">Product</h4>
+<a class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100" href="#">Product</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100" href="#">Pricing</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100" href="#">Features</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100" href="#">Security</a>
+</div>
+<div class="col-span-1 flex flex-col gap-sm">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant font-semibold">Account</h4>
+<a class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100" href="#">Log in</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100" href="#">Sign up</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100" href="#">Admin Login</a>
+</div>
+<div class="col-span-1 flex flex-col gap-sm">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant font-semibold">Company</h4>
+<a class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100" href="#">About Us</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+</div>
+</div>
+</footer>
+</body></html>

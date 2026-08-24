@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ESSARA - Subscription Management</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#dce9ff",
+                        "outline": "#737688",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#eff4ff",
+                        "primary-fixed-dim": "#b7c4ff",
+                        "surface-container": "#e5eeff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary": "#6f4500",
+                        "secondary": "#006a61",
+                        "on-secondary-fixed-variant": "#005049",
+                        "on-surface-variant": "#434656",
+                        "on-background": "#0b1c30",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#d3e4fe",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-primary-fixed-variant": "#0038b6",
+                        "on-surface": "#0b1c30",
+                        "surface-container-highest": "#d3e4fe",
+                        "background": "#f8f9ff",
+                        "secondary-fixed-dim": "#6bd8cb",
+                        "tertiary-container": "#905a00",
+                        "secondary-container": "#86f2e4",
+                        "primary-container": "#0052ff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "inverse-primary": "#b7c4ff",
+                        "outline-variant": "#c3c5d9",
+                        "primary-fixed": "#dde1ff",
+                        "on-primary-fixed": "#001452",
+                        "on-error-container": "#93000a",
+                        "on-secondary-container": "#006f66",
+                        "on-secondary-fixed": "#00201d",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#cbdbf5",
+                        "inverse-surface": "#213145",
+                        "on-tertiary-container": "#ffdfbe",
+                        "surface": "#f8f9ff",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-primary-container": "#dfe3ff",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#004ced",
+                        "surface-bright": "#f8f9ff",
+                        "secondary-fixed": "#89f5e7",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary": "#003ec7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "xl": "40px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "base": "4px",
+                        "container-max": "1280px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "headline-lg": ["Geist"],
+                        "data-mono": ["JetBrains Mono"],
+                        "display": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Geist"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "display": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col">
+<!-- TopNavBar component generated from JSON -->
+<nav class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline docked full-width top-0 z-50 sticky transition-all duration-200 ease-in-out">
+<div class="flex justify-between items-center w-full px-gutter h-16 max-w-container-max mx-auto">
+<!-- Brand -->
+<div class="flex items-center gap-sm">
+<span class="font-display text-display font-bold text-primary dark:text-primary-fixed-dim">ESSARA</span>
+</div>
+<!-- Navigation Links (Web) -->
+<div class="hidden md:flex gap-gutter items-center h-full">
+<a class="text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1 font-bold h-full flex items-center" href="#overview">Overview</a>
+<a class="text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors h-full flex items-center hover:bg-surface-container-low dark:hover:bg-surface-container-high/10 px-sm" href="#subscriptions">Subscriptions</a>
+<a class="text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors h-full flex items-center hover:bg-surface-container-low dark:hover:bg-surface-container-high/10 px-sm" href="#overlaps">Overlaps</a>
+<a class="text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors h-full flex items-center hover:bg-surface-container-low dark:hover:bg-surface-container-high/10 px-sm" href="#reports">Reports</a>
+<a class="text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors h-full flex items-center hover:bg-surface-container-low dark:hover:bg-surface-container-high/10 px-sm" href="#budget">Budget</a>
+<a class="text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors h-full flex items-center hover:bg-surface-container-low dark:hover:bg-surface-container-high/10 px-sm" href="#calendar">Calendar</a>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-md">
+<select class="bg-surface-container text-on-surface text-label-caps font-label-caps border-none rounded py-xs pl-sm pr-lg focus:ring-2 focus:ring-primary h-8 hidden md:block">
+<option value="USD">USD ($)</option>
+<option value="EUR">EUR (€)</option>
+<option value="GBP">GBP (£)</option>
+<option value="INR">INR (₹)</option>
+</select>
+<button class="p-xs text-on-surface-variant hover:text-primary dark:text-outline dark:hover:text-primary-fixed-dim hover:bg-surface-container-low rounded transition-colors active:scale-95 flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a person looking forward, brightly lit studio environment, high resolution corporate modernism aesthetic, neutral gray background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8EQp0QRICkbwlayo05ITXIq1Oe4PQcA8I3p611H20Op-NUscTfMC3Qa5-WxqhNnMqBShN4JnJNeycGBZlT0MYCCLlZa01AWmJkCzB0QTRxpe9swJvsO38mlTAX8MnivQZwFSV4bi2R1XQy-fRfbeUayDIm6or31U6v-YYdAJJHu6yqNQNs_GBTxd7CJcLxDiYYI0tUJ8XoNCCUW21sPhWrnoq_Y8rW1_-n63VX1LUOQtj5fKGeoHy"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-container-max mx-auto px-gutter py-xl">
+<!-- Dashboard Header -->
+<header class="mb-xl">
+<h1 class="font-headline-lg text-headline-lg text-on-background mb-xs">Overview</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Here is the summary of your subscription health.</p>
+</header>
+<!-- Stats Grid (Bento style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-xl">
+<!-- Stat Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md relative overflow-hidden flex flex-col justify-between h-32 hover:bg-surface-container-low transition-colors">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Active Subs</span>
+<span class="material-symbols-outlined text-outline" data-icon="subscriptions">subscriptions</span>
+</div>
+<div>
+<span class="font-headline-lg text-headline-lg text-on-surface block">12</span>
+<span class="font-data-mono text-data-mono text-secondary-fixed-dim">+2 this month</span>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md relative overflow-hidden flex flex-col justify-between h-32 hover:bg-surface-container-low transition-colors">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Monthly Spend</span>
+<span class="material-symbols-outlined text-outline" data-icon="payments">payments</span>
+</div>
+<div>
+<span class="font-headline-lg text-headline-lg text-on-surface block font-data-mono">$142.50</span>
+<span class="font-data-mono text-data-mono text-outline-variant">≈ $1,710/yr</span>
+</div>
+</div>
+<!-- Stat Card 3 (Leak Warning) -->
+<div class="bg-error-container border border-error/20 rounded-lg p-md relative overflow-hidden flex flex-col justify-between h-32">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-on-error-container uppercase">Projected Annual Leak</span>
+<span class="material-symbols-outlined text-error" data-icon="warning">warning</span>
+</div>
+<div>
+<span class="font-headline-lg text-headline-lg text-on-error-container block font-data-mono">$240.00</span>
+<span class="font-data-mono text-data-mono text-error">Action recommended</span>
+</div>
+</div>
+<!-- Stat Card 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md relative overflow-hidden flex flex-col justify-between h-32 hover:bg-surface-container-low transition-colors">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Budget Status</span>
+<span class="material-symbols-outlined text-secondary" data-icon="check_circle">check_circle</span>
+</div>
+<div>
+<span class="font-headline-lg text-headline-lg text-on-surface block font-data-mono">$57.50</span>
+<span class="font-data-mono text-data-mono text-secondary">Remaining this month</span>
+</div>
+</div>
+</div>
+<!-- Secondary Content Area -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Quick List / Overlaps (Spans 2 cols) -->
+<section class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-lg p-lg">
+<div class="flex justify-between items-center mb-md border-b border-outline-variant pb-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface">Identified Overlaps</h2>
+<a class="font-label-caps text-label-caps text-primary hover:underline" href="#overlaps">View All</a>
+</div>
+<div class="space-y-sm">
+<!-- Overlap Group 1 -->
+<div class="border border-outline-variant rounded p-md bg-surface">
+<div class="flex justify-between items-center mb-sm">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Category: Streaming Video</span>
+<span class="bg-error-container text-on-error-container font-label-caps text-label-caps px-2 py-1 rounded">Leak: $15.99/mo</span>
+</div>
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead>
+<tr class="border-b border-outline-variant text-on-surface-variant">
+<th class="py-xs font-normal">Service</th>
+<th class="py-xs font-normal">Cost</th>
+<th class="py-xs font-normal text-right">Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-outline-variant/50 hover:bg-surface-container-low">
+<td class="py-sm text-on-surface font-medium">Netflix</td>
+<td class="py-sm font-data-mono text-on-surface">$15.99/mo</td>
+<td class="py-sm text-right">
+<span class="inline-block bg-surface-variant text-on-surface-variant font-label-caps text-label-caps px-2 py-1 rounded cursor-pointer hover:bg-primary-container hover:text-on-primary-container transition-colors">Mark Redundant</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low">
+<td class="py-sm text-on-surface font-medium">Hulu</td>
+<td class="py-sm font-data-mono text-on-surface">$7.99/mo</td>
+<td class="py-sm text-right">
+<span class="inline-block bg-secondary-container text-on-secondary-container font-label-caps text-label-caps px-2 py-1 rounded">Kept</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- Upcoming Renewals (Spans 1 col) -->
+<aside class="bg-surface-container-lowest border border-outline-variant rounded-lg p-lg">
+<div class="flex justify-between items-center mb-md border-b border-outline-variant pb-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface">Upcoming</h2>
+<a class="font-label-caps text-label-caps text-primary hover:underline" href="#calendar">Calendar</a>
+</div>
+<ul class="space-y-md">
+<li class="flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<div>
+<p class="font-body-sm text-body-sm text-on-surface font-medium">Spotify Premium</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Tomorrow</p>
+</div>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface">$10.99</span>
+</li>
+<li class="flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<div class="w-2 h-2 rounded-full bg-tertiary-container"></div>
+<div>
+<p class="font-body-sm text-body-sm text-on-surface font-medium">Adobe Creative Cloud</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant">In 3 days</p>
+</div>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface">$54.99</span>
+</li>
+<li class="flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<div>
+<p class="font-body-sm text-body-sm text-on-surface font-medium">Notion</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant">In 12 days</p>
+</div>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface">$8.00</span>
+</li>
+</ul>
+</aside>
+</div>
+</main>
+<!-- Footer component generated from JSON -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-highest border-t border-outline-variant dark:border-outline full-width mt-auto">
+<div class="w-full py-xl px-gutter max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+<div class="col-span-1 md:col-span-1">
+<span class="font-headline-md text-headline-md font-bold text-on-surface dark:text-on-background block mb-sm">ESSARA</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline">© 2024 ESSARA. Precision subscription management for modern finance.</p>
+</div>
+<div class="col-span-1 md:col-span-3 grid grid-cols-2 md:grid-cols-3 gap-8">
+<div class="flex flex-col gap-sm">
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">Product</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">Pricing</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">Features</a>
+</div>
+<div class="flex flex-col gap-sm">
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">Security</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">Log in</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">Sign up</a>
+</div>
+<div class="flex flex-col gap-sm">
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">Admin Login</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">About Us</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">Privacy Policy</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
