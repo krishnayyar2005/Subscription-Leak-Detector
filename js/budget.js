@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (saveBtn) {
         saveBtn.addEventListener('click', () => {
             const inputEl = document.getElementById('budget-input');
-            const { rate } = getCurrencyState();
+            const rate = typeof window.getCurrencyRate === 'function' ? window.getCurrencyRate() : 1;
             if (inputEl.value) {
                 const monthlyInputLocal = parseFloat(inputEl.value);
                 const monthlyInputBase = monthlyInputLocal / rate;
@@ -191,7 +191,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     saveBtn.innerHTML = origHtml;
                 }, 1500);
 
-                renderBudgetPage();
+                if (typeof window.reloadDashboardData === 'function') {
+                    window.reloadDashboardData();
+                } else {
+                    renderBudgetPage();
+                }
             }
         });
     }

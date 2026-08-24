@@ -711,9 +711,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const currSel = document.getElementById('currency-select') || document.getElementById('currency-selector');
         const costSymbolEl = document.getElementById('cost-currency-symbol');
         const budgetSymbolEl = document.getElementById('budget-popover-symbol');
+        const budgetInputSymbolEl = document.getElementById('budget-input-symbol');
         
         if (costSymbolEl) costSymbolEl.textContent = currencySymbols[currentCurrency];
         if (budgetSymbolEl) budgetSymbolEl.textContent = currencySymbols[currentCurrency];
+        if (budgetInputSymbolEl) budgetInputSymbolEl.textContent = currencySymbols[currentCurrency];
         
         if (currSel) {
             currSel.value = currentCurrency;
@@ -722,6 +724,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('essara_currency', currentCurrency);
                 if (costSymbolEl) costSymbolEl.textContent = currencySymbols[currentCurrency];
                 if (budgetSymbolEl) budgetSymbolEl.textContent = currencySymbols[currentCurrency];
+                if (budgetInputSymbolEl) budgetInputSymbolEl.textContent = currencySymbols[currentCurrency];
                 renderDashboard();
             });
         }
@@ -837,6 +840,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Expose shared formatMoney for external pages (like Calendar, Budget)
         window.formatMoney = formatMoney;
+        window.getCurrencyRate = () => currencyRates[currentCurrency];
 
         renderDashboard();
     }
