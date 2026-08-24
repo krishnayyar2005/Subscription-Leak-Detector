@@ -353,7 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (document.getElementById('subscriptions-list-container')) renderSubscriptions();
             if (document.getElementById('overlaps-list-container')) renderOverlaps();
             if (document.getElementById('view-reports')) renderReports();
-            if (document.getElementById('view-budget')) renderBudget();
+            if (document.getElementById('budget-current-spend')) renderBudget();
             if (document.getElementById('view-calendar')) renderCalendar();
         };
 
