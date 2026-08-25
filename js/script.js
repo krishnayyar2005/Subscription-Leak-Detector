@@ -1,11 +1,11 @@
 // Apply theme immediately to avoid flash of wrong theme as much as possible
-(function () {
+(function() {
     try {
         var theme = localStorage.getItem('essara_theme');
         if (theme === 'dark') {
             document.documentElement.classList.add('dark');
         }
-    } catch (e) { }
+    } catch (e) {}
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
-
+    
     if (mobileMenuBtn && mobileMenu) {
         mobileMenuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('active');
@@ -56,11 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
         anchor.addEventListener('click', function (e) {
             const targetId = this.getAttribute('href');
             if (targetId === '#' || targetId === '') return;
-
+            
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
                 e.preventDefault();
-
+                
                 // Close mobile menu if open
                 if (mobileMenu && mobileMenu.classList.contains('active')) {
                     mobileMenu.classList.remove('active');
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const headerOffset = 64; // height of navbar
                 const elementPosition = targetElement.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.scrollY - headerOffset;
-
+                
                 window.scrollTo({
                     top: offsetPosition,
                     behavior: 'smooth'
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Entrance Animations (Intersection Observer)
     // ==========================================
     const animatedElements = document.querySelectorAll('.animate-fade-in');
-
+    
     if (animatedElements.length > 0) {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -151,14 +151,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const user = JSON.parse(sessionData);
             userNameEl.textContent = user.name || 'User';
             userEmailEl.textContent = user.email || '';
-        } catch (e) { }
+        } catch(e) {}
     }
 
     // 2. Tab Switching Logic
     if (loginForm && signupForm && tabLogin && tabSignup) {
         const switchTab = (tab) => {
             errorBanner.classList.add('hidden');
-
+            
             // clear inputs and errors
             document.querySelectorAll('.form-input').forEach(input => {
                 input.value = '';
@@ -168,18 +168,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (tab === 'login') {
                 loginForm.classList.remove('hidden');
                 signupForm.classList.add('hidden');
-
+                
                 tabLogin.classList.add('auth-tab-active');
                 tabLogin.classList.remove('auth-tab-inactive');
                 tabSignup.classList.add('auth-tab-inactive');
                 tabSignup.classList.remove('auth-tab-active');
-
+                
                 // Update URL hash without jumping
                 history.pushState("", document.title, window.location.pathname + window.location.search);
             } else {
                 signupForm.classList.remove('hidden');
                 loginForm.classList.add('hidden');
-
+                
                 tabSignup.classList.add('auth-tab-active');
                 tabSignup.classList.remove('auth-tab-inactive');
                 tabLogin.classList.add('auth-tab-inactive');
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             clearErrors();
-
+            
             const emailInput = document.getElementById('login-email');
             const passInput = document.getElementById('login-password');
             const email = emailInput.value.trim();
@@ -244,11 +244,11 @@ document.addEventListener('DOMContentLoaded', () => {
         signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
             clearErrors();
-
+            
             const nameInput = document.getElementById('signup-name');
             const emailInput = document.getElementById('signup-email');
             const passInput = document.getElementById('signup-password');
-
+            
             const name = nameInput.value.trim();
             const email = emailInput.value.trim();
             const password = passInput.value;
@@ -300,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const savedBudgetRaw = localStorage.getItem('essara_budget_' + session.id);
         let budget = savedBudgetRaw ? parseFloat(savedBudgetRaw) : null;
         let currentCurrency = localStorage.getItem('essara_currency') || 'USD';
-
+        
         const currencyRates = { 'USD': 1, 'EUR': 0.92, 'GBP': 0.79, 'INR': 83.00 };
         const currencySymbols = { 'USD': '$', 'EUR': '€', 'GBP': '£', 'INR': '₹' };
 
@@ -317,7 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const formatMoney = (amount) => {
             const converted = amount * currencyRates[currentCurrency];
-            return currencySymbols[currentCurrency] + converted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            return currencySymbols[currentCurrency] + converted.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
         };
 
         const getOverlaps = () => {
@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const overlaps = [];
             let totalLeak = 0;
-
+            
             Object.keys(categories).forEach(cat => {
                 const items = categories[cat];
                 if (items.length > 1) {
@@ -360,16 +360,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const renderOverview = () => {
             const monthlyTotal = getMonthlyTotal();
             const { overlaps, totalLeak } = getOverlaps();
-
+            
             const activeSubsEl = document.getElementById('stat-active-subs');
             if (!activeSubsEl) return;
-
+            
             activeSubsEl.textContent = subs.length;
             document.getElementById('stat-monthly-spend').textContent = formatMoney(monthlyTotal);
             document.getElementById('stat-annual-approx').textContent = '≈ ' + formatMoney(monthlyTotal * 12) + '/yr';
-
+            
             document.getElementById('stat-projected-leak').textContent = formatMoney(totalLeak * 12);
-
+            
             const budgetStatusEl = document.getElementById('stat-budget-status');
             const budgetTextEl = document.getElementById('stat-budget-text');
             if (budgetStatusEl && budgetTextEl) {
@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const yearlySpend = monthlyTotal * 12;
                     const remaining = yearlyBudget - yearlySpend;
                     budgetStatusEl.textContent = formatMoney(remaining);
-
+                    
                     if (remaining < 0) {
                         budgetStatusEl.className = 'stat-card__value stat-card__value--mono stat-card__value--error';
                         budgetTextEl.className = 'stat-card__change stat-card__change--error';
@@ -404,12 +404,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     leakPct = Math.round((totalLeak / monthlyTotal) * 100);
                 }
                 leakTidePctEl.textContent = `${leakPct}%`;
-
+                
                 const waveFillEl = document.getElementById('leak-tide-fill');
                 if (waveFillEl) {
                     waveFillEl.style.height = `${leakPct}%`;
                 }
-
+                
                 const leakAmountEl = document.getElementById('leak-tide-amount');
                 if (leakAmountEl) {
                     leakAmountEl.textContent = formatMoney(totalLeak);
@@ -434,7 +434,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const diffDays = Math.ceil((date - today) / (1000 * 60 * 60 * 24));
                 return { ...s, diffDays };
             }).filter(s => s.diffDays >= 0).sort((a, b) => a.diffDays - b.diffDays).slice(0, 3);
-
+            
             document.getElementById('dashboard-upcoming-container').innerHTML = upcoming.map(s => `
                 <li class="upcoming-item">
                     <div class="upcoming-item__left">
@@ -481,7 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </td>
                 </tr>`;
             }).join('') || `<tr><td colspan="5" class="text-center font-body text-on-surface-variant p-4">${filter !== 'All' || searchQuery ? 'No subscriptions match the current filter.' : 'No subscriptions added yet.'}</td></tr>`;
-
+            
             // Build dynamic filters
             const cats = ['All', ...new Set(subs.map(s => s.category))];
             const filterContainer = document.getElementById('sub-filters');
@@ -513,7 +513,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="flex gap-6 text-right">
                             <div>
                                 <p class="font-label-caps text-label-caps text-on-surface-variant">Combined Monthly</p>
-                                <p class="font-data-mono text-data-mono text-on-surface">${formatMoney(o.items.reduce((s, i) => s + normalizeCost(i.cost, i.cycle), 0))}</p>
+                                <p class="font-data-mono text-data-mono text-on-surface">${formatMoney(o.items.reduce((s,i) => s+normalizeCost(i.cost,i.cycle), 0))}</p>
                             </div>
                             <div class="bg-error-10 px-3 py-1 rounded flex flex-col justify-center border border-error-20">
                                 <p class="font-label-caps text-label-caps text-error">Projected Leak</p>
@@ -592,22 +592,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const renderBudget = () => {
             const total = getMonthlyTotal();
             const pct = Math.min((total / budget) * 100, 100);
-
+            
             document.getElementById('budget-current-spend').textContent = formatMoney(total);
             document.getElementById('budget-goal-display').textContent = formatMoney(budget);
             document.getElementById('budget-remaining-display').textContent = formatMoney(Math.max(budget - total, 0));
-
+            
             document.getElementById('budget-percentage').textContent = pct.toFixed(1) + '%';
             document.getElementById('budget-progress-bar').style.width = pct + '%';
             document.getElementById('budget-progress-bar').style.backgroundColor = pct > 90 ? 'var(--error)' : 'var(--primary)';
-
+            
             const cats = {};
             subs.forEach(s => {
                 const norm = normalizeCost(s.cost, s.cycle);
                 cats[s.category] = (cats[s.category] || 0) + norm;
             });
 
-            document.getElementById('budget-categories-container').innerHTML = Object.keys(cats).sort((a, b) => cats[b] - cats[a]).map(c => {
+            document.getElementById('budget-categories-container').innerHTML = Object.keys(cats).sort((a,b) => cats[b]-cats[a]).map(c => {
                 const catPct = (cats[c] / budget) * 100;
                 return `
                 <div class="grid-12-cols gap-4 p-4 data-table-row items-center">
@@ -627,10 +627,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const today = new Date();
             const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
             document.getElementById('cal-month').textContent = today.toLocaleString('default', { month: 'long', year: 'numeric' });
-
+            
             const grid = document.getElementById('calendar-grid');
             let html = '';
-            for (let i = 1; i <= daysInMonth; i++) {
+            for(let i=1; i<=daysInMonth; i++) {
                 const daySubs = subs.filter(s => parseInt(s.date.split('-')[2]) === i);
                 const isToday = today.getDate() === i;
                 html += `
@@ -647,7 +647,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (date < today) date.setMonth(date.getMonth() + 1);
                 const diff = Math.ceil((date - today) / (1000 * 60 * 60 * 24));
                 return { ...s, diff };
-            }).sort((a, b) => a.diff - b.diff).slice(0, 5);
+            }).sort((a,b) => a.diff - b.diff).slice(0, 5);
 
             document.getElementById('cal-upcoming-list').innerHTML = upcoming.map(s => `
                 <div class="flex-between p-2 border-b border-outline-variant">
@@ -674,7 +674,7 @@ document.addEventListener('DOMContentLoaded', () => {
             subs = JSON.parse(localStorage.getItem('essara_subscriptions_' + session.id)) || [];
             renderDashboard();
         };
-
+        
         window.deleteSub = (id) => {
             const sub = subs.find(s => s.id === id);
             if (!sub) return;
@@ -712,11 +712,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const costSymbolEl = document.getElementById('cost-currency-symbol');
         const budgetSymbolEl = document.getElementById('budget-popover-symbol');
         const budgetInputSymbolEl = document.getElementById('budget-input-symbol');
-
+        
         if (costSymbolEl) costSymbolEl.textContent = currencySymbols[currentCurrency];
         if (budgetSymbolEl) budgetSymbolEl.textContent = currencySymbols[currentCurrency];
         if (budgetInputSymbolEl) budgetInputSymbolEl.textContent = currencySymbols[currentCurrency];
-
+        
         if (currSel) {
             currSel.value = currentCurrency;
             currSel.addEventListener('change', (e) => {
@@ -728,17 +728,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderDashboard();
             });
         }
-
+        
         const budgetCard = document.getElementById('budget-status-card');
         const budgetPopover = document.getElementById('budget-popover');
         if (budgetCard && budgetPopover) {
             const input = document.getElementById('budget-popover-input');
             const saveBtn = document.getElementById('budget-popover-save');
-
+            
             budgetCard.addEventListener('click', (e) => {
                 // If clicking inside the popover itself (like input/save), do nothing
                 if (budgetPopover.contains(e.target)) return;
-
+                
                 const isHidden = budgetPopover.style.display === 'none';
                 if (isHidden) {
                     budgetPopover.style.display = 'block';
@@ -748,7 +748,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     budgetPopover.style.display = 'none';
                 }
             });
-
+            
             saveBtn.addEventListener('click', () => {
                 const rawVal = parseFloat(input.value);
                 if (!isNaN(rawVal) && rawVal >= 0) {
@@ -759,14 +759,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 budgetPopover.style.display = 'none';
             });
-
+            
             document.addEventListener('click', (e) => {
                 if (!budgetCard.contains(e.target) && budgetPopover.style.display === 'block') {
                     budgetPopover.style.display = 'none';
                 }
             });
         }
-
+        
         const logoutBtnEl = document.getElementById('logout-btn');
         if (logoutBtnEl) logoutBtnEl.addEventListener('click', () => { localStorage.removeItem('essara_session'); window.location.href = 'login.html'; });
 
