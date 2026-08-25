@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ESSARA - Overlaps &amp; Leaks</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&amp;family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#f8f9ff",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#dde1ff",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface-bright": "#f8f9ff",
+                        "outline-variant": "#c3c5d9",
+                        "secondary-container": "#86f2e4",
+                        "surface-container-high": "#dce9ff",
+                        "surface-container": "#e5eeff",
+                        "surface-dim": "#cbdbf5",
+                        "outline": "#737688",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#0038b6",
+                        "secondary-fixed-dim": "#6bd8cb",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "tertiary": "#6f4500",
+                        "on-error": "#ffffff",
+                        "surface": "#f8f9ff",
+                        "primary": "#003ec7",
+                        "primary-container": "#0052ff",
+                        "inverse-primary": "#b7c4ff",
+                        "surface-variant": "#d3e4fe",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-secondary-container": "#006f66",
+                        "on-surface-variant": "#434656",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed": "#89f5e7",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "surface-tint": "#004ced",
+                        "surface-container-low": "#eff4ff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-secondary-fixed-variant": "#005049",
+                        "on-primary-fixed": "#001452",
+                        "tertiary-container": "#905a00",
+                        "on-secondary-fixed": "#00201d",
+                        "on-background": "#0b1c30",
+                        "on-surface": "#0b1c30",
+                        "secondary": "#006a61",
+                        "surface-container-highest": "#d3e4fe",
+                        "primary-fixed-dim": "#b7c4ff",
+                        "on-tertiary-container": "#ffdfbe",
+                        "on-primary-container": "#dfe3ff",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#213145"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "xl": "40px",
+                        "container-max": "1280px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "display": ["Geist"],
+                        "data-mono": ["JetBrains Mono"],
+                        "headline-md": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "body-sm": ["Inter"],
+                        "headline-lg": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar Component -->
+<nav class="bg-surface border-b border-outline-variant w-full sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-gutter h-16 max-w-container-max mx-auto">
+<div class="flex items-center gap-6">
+<!-- Brand Logo -->
+<a class="font-display text-display font-bold text-primary" href="#">ESSARA</a>
+<!-- Navigation Links (Web) -->
+<div class="hidden md:flex gap-4">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low px-2 py-1 rounded" href="#">Overview</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low px-2 py-1 rounded" href="#">Subscriptions</a>
+<a class="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-1 font-bold" href="#">Overlaps</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low px-2 py-1 rounded" href="#">Reports</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low px-2 py-1 rounded" href="#">Budget</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low px-2 py-1 rounded" href="#">Calendar</a>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-4">
+<button class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low px-2 py-1 rounded border border-outline-variant">Currency</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<img alt="User Profile Avatar" class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="A clean, modern corporate avatar depicting a professional individual in a well-lit studio environment, subtle cool tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuApGltSpFYYqwrHUFIbT7h2GOj6WE1eaIuLVFMkXwb-VyrTZPzUuTOmwyrImtjMxHuBORlKX_CP-0o17rZceSP_zJWcl3f22F0v0rRpc3Tc5fHPZH2nGI6_uR4lxXg69Ky_RnTGXEnqM8LcyPSq4vG0n36P0NiB4t2PFxkomIhWpNgSts2Et9whq3eRff4j52McbJEfk7DK6Y6W6azsEu3UvwSxNEZ7N2Chy_lEWlSun2YCggs_ThJ_"/>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-gutter py-xl flex flex-col gap-8">
+<!-- Header -->
+<header class="flex flex-col gap-2">
+<h1 class="font-headline-lg text-headline-lg hidden md:block">Subscription Overlaps</h1>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:hidden">Subscription Overlaps</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">Identify redundant software within categories. We calculate projected annual leaks based on retaining only the most robust (highest cost) tool per category.</p>
+</header>
+<!-- Summary Cards -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface border border-outline-variant rounded-lg p-6 flex flex-col justify-between">
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-2">Total Projected Leak</h3>
+<div class="font-headline-lg text-headline-lg text-error">$14,280<span class="font-data-mono text-data-mono text-on-surface-variant ml-2">/yr</span></div>
+</div>
+<div class="flex justify-between items-end mt-4">
+<span class="font-data-mono text-data-mono text-error flex items-center"><span class="material-symbols-outlined text-sm mr-1">trending_up</span> +12% from last month</span>
+<span class="material-symbols-outlined text-[48px] text-error-container">water_drop</span>
+</div>
+</div>
+<div class="bg-surface border border-outline-variant rounded-lg p-6 flex flex-col justify-between">
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-2">Active Overlap Groups</h3>
+<div class="font-headline-lg text-headline-lg text-on-surface">4</div>
+</div>
+<div class="flex justify-between items-end mt-4">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Across 12 subscriptions</span>
+<span class="material-symbols-outlined text-[48px] text-surface-variant">category</span>
+</div>
+</div>
+<div class="bg-surface border border-outline-variant rounded-lg p-6 flex flex-col justify-between">
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-2">Potential Savings Target</h3>
+<div class="font-headline-lg text-headline-lg text-secondary">$8,500<span class="font-data-mono text-data-mono text-on-surface-variant ml-2">/yr</span></div>
+</div>
+<div class="flex justify-between items-end mt-4">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Realistic reduction goal</span>
+<span class="material-symbols-outlined text-[48px] text-secondary-container">savings</span>
+</div>
+</div>
+</section>
+<!-- Overlap Groups Data -->
+<section class="flex flex-col gap-6">
+<!-- Group 1 -->
+<div class="bg-surface border border-outline-variant rounded-lg overflow-hidden shadow-sm">
+<div class="bg-surface-container-low p-4 border-b border-outline-variant flex justify-between items-center flex-wrap gap-4">
+<div class="flex items-center gap-3">
+<div class="bg-surface-variant text-primary p-2 rounded-full">
+<span class="material-symbols-outlined">design_services</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Design &amp; Prototyping</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">3 active subscriptions</p>
+</div>
+</div>
+<div class="flex gap-6 text-right">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Combined Monthly</p>
+<p class="font-data-mono text-data-mono text-on-surface">$185.00</p>
+</div>
+<div class="bg-error/10 px-3 py-1 rounded flex flex-col justify-center border border-error/20">
+<p class="font-label-caps text-label-caps text-error">Projected Leak</p>
+<p class="font-data-mono text-data-mono text-error font-bold">$1,020.00/yr</p>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface border-b border-outline-variant text-on-surface-variant">
+<th class="py-3 px-4 font-label-caps text-label-caps font-semibold">Service</th>
+<th class="py-3 px-4 font-label-caps text-label-caps font-semibold">Billing Cycle</th>
+<th class="py-3 px-4 font-label-caps text-label-caps font-semibold">Next Renewal</th>
+<th class="py-3 px-4 font-label-caps text-label-caps font-semibold text-right">Monthly Eq. Cost</th>
+<th class="py-3 px-4 font-label-caps text-label-caps font-semibold text-center">Status Recommendation</th>
+<th class="py-3 px-4 font-label-caps text-label-caps font-semibold text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1: Keep -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-surface-variant flex items-center justify-center font-display text-xs font-bold text-primary">F</div>
+<span class="font-body-sm text-body-sm font-semibold">Figma Organization</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm">Annually</td>
+<td class="py-3 px-4 font-body-sm text-body-sm">Nov 12, 2024</td>
+<td class="py-3 px-4 font-data-mono text-data-mono text-right">$100.00</td>
+<td class="py-3 px-4 text-center">
+<span class="inline-flex items-center gap-1 bg-secondary/10 text-secondary border border-secondary/20 px-2 py-1 rounded text-xs font-semibold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Keep
+                                    </span>
+</td>
+<td class="py-3 px-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Redundant -->
+<tr class="hover:bg-surface-container-lowest transition-colors bg-error/5">
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-surface-variant flex items-center justify-center font-display text-xs font-bold text-primary">I</div>
+<span class="font-body-sm text-body-sm font-semibold">InVision App</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm">Monthly</td>
+<td class="py-3 px-4 font-body-sm text-body-sm">Oct 25, 2024</td>
+<td class="py-3 px-4 font-data-mono text-data-mono text-right">$50.00</td>
+<td class="py-3 px-4 text-center">
+<span class="inline-flex items-center gap-1 bg-error/10 text-error border border-error/20 px-2 py-1 rounded text-xs font-semibold">
+<span class="material-symbols-outlined text-[14px]">warning</span> Redundant
+                                    </span>
+</td>
+<td class="py-3 px-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Redundant -->
+<tr class="hover:bg-surface-container-lowest transition-colors bg-error/5">
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-surface-variant flex items-center justify-center font-display text-xs font-bold text-primary">S</div>
+<span class="font-body-sm text-body-sm font-semibold">Sketch Teams</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm">Monthly</td>
+<td class="py-3 px-4 font-body-sm text-body-sm">Nov 01, 2024</td>
+<td class="py-3 px-4 font-data-mono text-data-mono text-right">$35.00</td>
+<td class="py-3 px-4 text-center">
+<span class="inline-flex items-center gap-1 bg-error/10 text-error border border-error/20 px-2 py-1 rounded text-xs font-semibold">
+<span class="material-symbols-outlined text-[14px]">warning</span> Redundant
+                                    </span>
+</td>
+<td class="py-3 px-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Component -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant w-full mt-auto">
+<div class="w-full py-xl px-gutter max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+<div class="col-span-1 md:col-span-4 flex flex-col items-center text-center">
+<span class="font-headline-md text-headline-md font-bold text-on-surface">ESSARA</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2">© 2024 ESSARA. Precision subscription management for modern finance.</p>
+<div class="flex flex-wrap justify-center gap-4 mt-6">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Product</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Pricing</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Features</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Security</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Log in</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Sign up</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Admin Login</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">About Us</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

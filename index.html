@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESSARA - Subscription Overlap & Cost Leak Detector</title>
+    <!-- Fonts and Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Theme Script handled in js/script.js -->
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand-logo">ESSARA</a>
+            
+            <div class="nav-links">
+                <a href="#overview" class="nav-link font-label-caps active">Overview</a>
+                <a href="#features" class="nav-link font-label-caps">Features</a>
+                <a href="#how-it-works" class="nav-link font-label-caps">How It Works</a>
+            </div>
+
+            <div class="nav-actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="material-symbols-outlined" id="theme-icon">dark_mode</span>
+                </button>
+                <a href="login.html" class="font-label-caps btn btn-secondary hidden-mobile">Log In</a>
+                <a href="login.html#signup" class="btn btn-primary hidden-mobile">Get Started</a>
+                
+                <button class="hamburger" id="mobile-menu-btn" aria-label="Menu">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="nav-menu-mobile" id="mobile-menu">
+            <a href="#overview" class="nav-link font-label-caps mobile-link">Overview</a>
+            <a href="#features" class="nav-link font-label-caps mobile-link">Features</a>
+            <a href="#how-it-works" class="nav-link font-label-caps mobile-link">How It Works</a>
+            <hr style="border-top: 1px solid var(--outline-variant); margin: 8px 0;">
+            <a href="login.html" class="font-label-caps nav-link mobile-link">Log In</a>
+            <a href="login.html#signup" class="font-label-caps nav-link mobile-link text-primary">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="section container" id="overview">
+        <div class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title font-display mb-6 animate-fade-in">Stop the Subscription Leak</h1>
+                <p class="hero-subtitle mb-8 animate-fade-in" style="transition-delay: 0.1s;">Track recurring services, detect redundant apps, and reclaim hundreds of dollars wasted every year.</p>
+                <div class="hero-actions animate-fade-in" style="transition-delay: 0.2s;">
+                    <a href="login.html#signup" class="btn btn-primary btn-large">Get Started for Free</a>
+                    <a href="#how-it-works" class="btn btn-secondary btn-large">Learn More</a>
+                </div>
+            </div>
+
+            <div class="hero-visual animate-fade-in" style="transition-delay: 0.3s;">
+                <div class="hero-overlap-card">
+                    <!-- Header -->
+                    <div class="overlap-header">
+                        <h3>Subscription Overlap Detected</h3>
+                        <p>Our radar has identified highly similar services in your portfolio. Reviewing these could reduce your burn rate.</p>
+                    </div>
+
+                    <!-- Floating Stat Card -->
+                    <div class="overlap-stat-card">
+                        <div class="overlap-stat-icon">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">savings</span>
+                        </div>
+                        <div class="overlap-stat-text">
+                            <div class="overlap-stat-label">Savings Potential</div>
+                            <div class="overlap-stat-value">$120/YR</div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Center -->
+                    <div class="overlap-center">
+                        <div class="overlap-glow"></div>
+                        
+                        <!-- Faint Icons -->
+                        <div class="overlap-faint-icon overlap-faint-1"><span class="material-symbols-outlined" style="font-size: 20px;">movie</span></div>
+                        <div class="overlap-faint-icon overlap-faint-2"><span class="material-symbols-outlined" style="font-size: 20px;">open_in_full</span></div>
+                        <div class="overlap-faint-icon overlap-faint-3"><span class="material-symbols-outlined" style="font-size: 20px;">cloud</span></div>
+                        <div class="overlap-faint-icon overlap-faint-4"><span class="material-symbols-outlined" style="font-size: 20px;">receipt_long</span></div>
+
+                        <!-- Main Icon Cluster -->
+                        <div class="overlap-icons-cluster">
+                            <div class="overlap-app-icon overlap-icon-left">
+                                <span class="material-symbols-outlined">music_note</span>
+                            </div>
+                            <div class="overlap-app-icon overlap-icon-right">
+                                <span class="material-symbols-outlined">headphones</span>
+                            </div>
+                            <div class="overlap-app-icon overlap-icon-center">
+                                <span class="material-symbols-outlined">priority_high</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Stats Strip -->
+    <section class="container" style="padding: 48px 24px; border-top: 1px solid var(--outline-variant); border-bottom: 1px solid var(--outline-variant);">
+        <div class="features-grid text-center animate-fade-in" style="gap: 16px;">
+            <div>
+                <div class="font-display" style="font-size: 48px; font-weight: 700; color: var(--primary);">4</div>
+                <div class="font-label-caps text-on-surface-variant">Currencies Supported</div>
+            </div>
+            <div>
+                <div class="font-display" style="font-size: 48px; font-weight: 700; color: var(--primary);">6</div>
+                <div class="font-label-caps text-on-surface-variant">Categories Tracked</div>
+            </div>
+            <div>
+                <div class="font-display" style="font-size: 48px; font-weight: 700; color: var(--primary);">100%</div>
+                <div class="font-label-caps text-on-surface-variant">Local & Private</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why ESSARA Section -->
+    <section class="section container">
+        <div class="text-center mb-16 animate-fade-in">
+            <h2 class="font-headline hero-title">Why ESSARA?</h2>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card animate-fade-in" style="transition-delay: 0.1s;">
+                <div class="feature-icon mb-6">
+                    <span class="material-symbols-outlined">dashboard</span>
+                </div>
+                <h3 class="feature-title font-headline" style="font-size: 20px;">See Everything in One Place</h3>
+                <p class="feature-desc">Every subscription, every cost, every renewal — tracked in one clean dashboard.</p>
+            </div>
+            <div class="feature-card animate-fade-in" style="transition-delay: 0.2s;">
+                <div class="feature-icon error mb-6">
+                    <span class="material-symbols-outlined">block</span>
+                </div>
+                <h3 class="feature-title font-headline" style="font-size: 20px;">Never Overpay Twice</h3>
+                <p class="feature-desc">We automatically flag redundant services the moment they overlap.</p>
+            </div>
+            <div class="feature-card animate-fade-in" style="transition-delay: 0.3s;">
+                <div class="feature-icon secondary mb-6">
+                    <span class="material-symbols-outlined">monitoring</span>
+                </div>
+                <h3 class="feature-title font-headline" style="font-size: 20px;">Know Your Real Number</h3>
+                <p class="feature-desc">See your true annual spend, not just what each app charges monthly.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features-bg" id="features">
+        <div class="container">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="font-headline hero-title">Precision Subscription Management</h2>
+            </div>
+            
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card animate-fade-in" style="transition-delay: 0.1s;">
+                    <div class="feature-icon mb-6">
+                        <span class="material-symbols-outlined">add_circle</span>
+                    </div>
+                    <h3 class="feature-title font-headline">Add in Seconds</h3>
+                    <p class="feature-desc">Quick entry for name, category, cost. Build your portfolio instantly.</p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card animate-fade-in" style="transition-delay: 0.2s;">
+                    <!-- background subtle shape -->
+                    <div style="position:absolute; top:0; right:0; width:96px; height:96px; background-color: var(--secondary-bg); border-bottom-left-radius: 9999px; z-index:0;"></div>
+                    <div class="feature-icon secondary mb-6" style="position:relative; z-index:1;">
+                        <span class="material-symbols-outlined">join_inner</span>
+                    </div>
+                    <h3 class="feature-title font-headline" style="position:relative; z-index:1;">Automatic Overlap Detection</h3>
+                    <p class="feature-desc" style="position:relative; z-index:1;">Catch redundant services in the same category automatically.</p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card animate-fade-in" style="transition-delay: 0.3s;">
+                    <div class="feature-icon error mb-6">
+                        <span class="material-symbols-outlined">trending_down</span>
+                    </div>
+                    <h3 class="feature-title font-headline">Projected Annual Leak</h3>
+                    <p class="feature-desc">See exactly how much an overlap costs you over 12 months with <span class="font-mono">data-driven</span> precision.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works Section -->
+    <section class="section container" id="how-it-works">
+        <div class="text-center mb-16 animate-fade-in">
+            <h2 class="font-headline hero-title">Systematic Optimization</h2>
+        </div>
+
+        <div class="steps-container">
+            <!-- Step 1 -->
+            <div class="step animate-fade-in" style="transition-delay: 0.1s;">
+                <div class="step-num">1</div>
+                <h3 class="feature-title font-headline">Log</h3>
+                <p class="feature-desc">Input your subscriptions.</p>
+            </div>
+            
+            <div class="step-arrow animate-fade-in" style="transition-delay: 0.2s;">
+                <span class="material-symbols-outlined" style="font-size:36px;">arrow_forward</span>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="step animate-fade-in" style="transition-delay: 0.3s;">
+                <div class="step-num">2</div>
+                <h3 class="feature-title font-headline">Watch</h3>
+                <p class="feature-desc">View the automated leak breakdown.</p>
+            </div>
+            
+            <div class="step-arrow animate-fade-in" style="transition-delay: 0.4s;">
+                <span class="material-symbols-outlined" style="font-size:36px;">arrow_forward</span>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="step animate-fade-in" style="transition-delay: 0.5s;">
+                <div class="step-num">3</div>
+                <h3 class="feature-title font-headline">Cancel</h3>
+                <p class="feature-desc">Remove redundant services with confidence.</p>
+            </div>
+        </div>
+
+        <div class="text-center mt-16 animate-fade-in" style="transition-delay: 0.6s; margin-top: 48px;">
+            <a href="login.html#signup" class="btn btn-primary btn-large">Start Optimizing</a>
+        </div>
+    </section>
+
+    <!-- CTA Band -->
+    <section class="section cta-band text-center">
+        <div class="container animate-fade-in">
+            <h2 class="font-display hero-title mb-8" style="color:var(--on-primary)">Ready to stop the leak?</h2>
+            <a href="login.html#signup" class="btn btn-inverse btn-large">Sign Up</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-grid animate-fade-in">
+            <div class="footer-brand">
+                <h4 class="font-headline">ESSARA</h4>
+                <p>© 2024 ESSARA. Precision subscription management for modern finance.</p>
+            </div>
+            
+            <div class="footer-links-grid">
+                <div class="footer-link-col">
+                    <a href="#overview" class="font-label-caps footer-link">Product</a>
+                    <a href="#" class="font-label-caps footer-link">Pricing</a>
+                    <a href="#features" class="font-label-caps footer-link">Features</a>
+                </div>
+                <div class="footer-link-col">
+                    <a href="#" class="font-label-caps footer-link">Security</a>
+                    <a href="login.html" class="font-label-caps footer-link">Log In</a>
+                    <a href="login.html#signup" class="font-label-caps footer-link">Sign Up</a>
+                </div>
+                <div class="footer-link-col">
+                    <a href="login.html#admin" class="font-label-caps footer-link">Admin Login</a>
+                    <a href="#" class="font-label-caps footer-link">About Us</a>
+                    <a href="#" class="font-label-caps footer-link">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

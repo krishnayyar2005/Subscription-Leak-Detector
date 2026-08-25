@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ESSARA - Authentication</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-high": "#dce9ff",
+                      "outline": "#737688",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#eff4ff",
+                      "primary-fixed-dim": "#b7c4ff",
+                      "surface-container": "#e5eeff",
+                      "surface-container-lowest": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "tertiary": "#6f4500",
+                      "secondary": "#006a61",
+                      "on-secondary-fixed-variant": "#005049",
+                      "on-surface-variant": "#434656",
+                      "on-background": "#0b1c30",
+                      "on-error": "#ffffff",
+                      "surface-variant": "#d3e4fe",
+                      "on-tertiary-fixed-variant": "#653e00",
+                      "on-primary-fixed-variant": "#0038b6",
+                      "on-surface": "#0b1c30",
+                      "surface-container-highest": "#d3e4fe",
+                      "background": "#f8f9ff",
+                      "secondary-fixed-dim": "#6bd8cb",
+                      "tertiary-container": "#905a00",
+                      "secondary-container": "#86f2e4",
+                      "primary-container": "#0052ff",
+                      "tertiary-fixed-dim": "#ffb95f",
+                      "inverse-primary": "#b7c4ff",
+                      "outline-variant": "#c3c5d9",
+                      "primary-fixed": "#dde1ff",
+                      "on-primary-fixed": "#001452",
+                      "on-error-container": "#93000a",
+                      "on-secondary-container": "#006f66",
+                      "on-secondary-fixed": "#00201d",
+                      "error-container": "#ffdad6",
+                      "surface-dim": "#cbdbf5",
+                      "inverse-surface": "#213145",
+                      "on-tertiary-container": "#ffdfbe",
+                      "surface": "#f8f9ff",
+                      "on-tertiary-fixed": "#2a1700",
+                      "on-primary-container": "#dfe3ff",
+                      "tertiary-fixed": "#ffddb8",
+                      "on-secondary": "#ffffff",
+                      "surface-tint": "#004ced",
+                      "surface-bright": "#f8f9ff",
+                      "secondary-fixed": "#89f5e7",
+                      "inverse-on-surface": "#eaf1ff",
+                      "primary": "#003ec7"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "md": "16px",
+                      "xl": "40px",
+                      "xs": "4px",
+                      "sm": "8px",
+                      "gutter": "24px",
+                      "base": "4px",
+                      "container-max": "1280px",
+                      "lg": "24px"
+              },
+              "fontFamily": {
+                      "label-caps": ["Inter"],
+                      "headline-lg": ["Geist"],
+                      "data-mono": ["JetBrains Mono"],
+                      "display": ["Geist"],
+                      "headline-lg-mobile": ["Geist"],
+                      "body-lg": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-md": ["Geist"],
+                      "body-md": ["Inter"]
+              },
+              "fontSize": {
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                      "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .auth-tab-active {
+            border-bottom-width: 2px;
+            border-color: #003ec7; /* primary */
+            color: #003ec7;
+        }
+        .auth-tab-inactive {
+            color: #737688; /* outline */
+            border-color: transparent;
+        }
+        .auth-tab-inactive:hover {
+            color: #0b1c30; /* on-surface */
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar Omitted as per JSON Logic (Transactional Intent) -->
+<main class="flex-grow flex items-center justify-center p-gutter">
+<div class="w-full max-w-md bg-surface-container-lowest border border-outline-variant rounded-lg p-xl">
+<div class="text-center mb-xl">
+<h1 class="font-display text-display text-primary">ESSARA</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-sm">Precision subscription management.</p>
+</div>
+<!-- Tab Switcher -->
+<div class="flex border-b border-outline-variant mb-lg">
+<button class="flex-1 pb-sm font-label-caps text-label-caps auth-tab-active transition-colors" id="tab-login" onclick="switchTab('login')">
+                    Log in
+                </button>
+<button class="flex-1 pb-sm font-label-caps text-label-caps auth-tab-inactive transition-colors" id="tab-signup" onclick="switchTab('signup')">
+                    Sign up
+                </button>
+</div>
+<!-- Error Banner (Hidden by default) -->
+<div class="hidden bg-error-container text-on-error-container p-md rounded mb-lg flex items-center gap-sm" id="error-banner">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">error</span>
+<span class="font-body-sm text-body-sm" id="error-message"></span>
+</div>
+<!-- Login Form -->
+<form class="flex flex-col gap-md" id="form-login" onsubmit="handleLogin(event)">
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface" for="login-email">Email</label>
+<input class="h-10 border border-outline-variant rounded px-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-body-sm text-body-sm bg-surface-bright" id="login-email" placeholder="name@company.com" required="" type="email"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface" for="login-password">Password</label>
+<input class="h-10 border border-outline-variant rounded px-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-body-sm text-body-sm bg-surface-bright" id="login-password" placeholder="••••••••" required="" type="password"/>
+</div>
+<button class="h-10 mt-sm bg-primary text-on-primary rounded font-label-caps text-label-caps hover:bg-on-primary-fixed-variant transition-colors flex items-center justify-center gap-xs" type="submit">
+                    Log in
+                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</form>
+<!-- Signup Form (Hidden by default) -->
+<form class="hidden flex-col gap-md" id="form-signup" onsubmit="handleSignup(event)">
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface" for="signup-name">Full Name</label>
+<input class="h-10 border border-outline-variant rounded px-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-body-sm text-body-sm bg-surface-bright" id="signup-name" placeholder="Jane Doe" required="" type="text"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface" for="signup-email">Email</label>
+<input class="h-10 border border-outline-variant rounded px-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-body-sm text-body-sm bg-surface-bright" id="signup-email" placeholder="name@company.com" required="" type="email"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface" for="signup-password">Password</label>
+<input class="h-10 border border-outline-variant rounded px-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-body-sm text-body-sm bg-surface-bright" id="signup-password" minlength="4" placeholder="Min 4 characters" required="" type="password"/>
+</div>
+<button class="h-10 mt-sm bg-primary text-on-primary rounded font-label-caps text-label-caps hover:bg-on-primary-fixed-variant transition-colors" type="submit">
+                    Create Account
+                </button>
+</form>
+<div class="mt-xl text-center">
+<a class="font-body-sm text-body-sm text-primary hover:underline" href="#">Go to Admin Login</a>
+</div>
+</div>
+</main>
+<!-- Footer Omitted as per JSON Logic (Transactional Intent) -->
+<script>
+        // Check Session
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('essara_session')) {
+                // Simulate redirect
+                document.body.innerHTML = '<div class="flex-grow flex items-center justify-center p-gutter"><div class="text-center"><span class="material-symbols-outlined text-display text-primary animate-spin mb-md" style="font-variation-settings: \'FILL\' 1;">sync</span><h2 class="font-headline-md text-headline-md text-on-surface">Redirecting to Dashboard...</h2></div></div>';
+                setTimeout(() => {
+                    console.log("Redirected to dashboard");
+                }, 1000);
+            }
+        });
+
+        function switchTab(tab) {
+            const loginForm = document.getElementById('form-login');
+            const signupForm = document.getElementById('form-signup');
+            const loginTab = document.getElementById('tab-login');
+            const signupTab = document.getElementById('tab-signup');
+            const errorBanner = document.getElementById('error-banner');
+
+            errorBanner.classList.add('hidden');
+
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden');
+                loginForm.classList.add('flex');
+                signupForm.classList.add('hidden');
+                signupForm.classList.remove('flex');
+                
+                loginTab.className = "flex-1 pb-sm font-label-caps text-label-caps auth-tab-active transition-colors";
+                signupTab.className = "flex-1 pb-sm font-label-caps text-label-caps auth-tab-inactive transition-colors";
+            } else {
+                signupForm.classList.remove('hidden');
+                signupForm.classList.add('flex');
+                loginForm.classList.add('hidden');
+                loginForm.classList.remove('flex');
+
+                signupTab.className = "flex-1 pb-sm font-label-caps text-label-caps auth-tab-active transition-colors";
+                loginTab.className = "flex-1 pb-sm font-label-caps text-label-caps auth-tab-inactive transition-colors";
+            }
+        }
+
+        function showError(message) {
+            const errorBanner = document.getElementById('error-banner');
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = message;
+            errorBanner.classList.remove('hidden');
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            // Mock Validation
+            if (email === 'test@test.com' && password === 'password') {
+                localStorage.setItem('essara_session', JSON.stringify({ email: email, name: 'Test User' }));
+                window.location.reload(); // Trigger session check
+            } else {
+                showError('Invalid email or password. Try test@test.com / password');
+            }
+        }
+
+        function handleSignup(e) {
+            e.preventDefault();
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+
+            // Mock Existing Email Check
+            if (email === 'test@test.com') {
+                showError('Account with this email already exists.');
+                return;
+            }
+
+            if (password.length < 4) {
+                showError('Password must be at least 4 characters.');
+                return;
+            }
+
+            // Success
+            localStorage.setItem('essara_session', JSON.stringify({ email: email, name: name }));
+            window.location.reload(); // Trigger session check
+        }
+    </script>
+</body></html>

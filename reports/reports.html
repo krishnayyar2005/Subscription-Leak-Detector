@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESSARA - Reports</title>
+    <meta name="description" content="ESSARA Reports — Category spend breakdown with overlap detection.">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../dashboard 2/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ===== Top Navigation Bar ===== -->
+    <nav class="topnav" id="topnav">
+        <div class="topnav__inner">
+            <!-- Brand -->
+            <div class="topnav__left">
+                <a href="../index.html" class="topnav__brand">ESSARA</a>
+                <!-- Desktop Nav Links -->
+                <div class="topnav__links" id="nav-links">
+                    <a href="../dashboard 2/dashboard.html" class="topnav__link">Overview</a>
+                    <a href="../subscription/subscription.html" class="topnav__link">Subscriptions</a>
+                    <a href="../overlaps/index.html" class="topnav__link">Overlaps</a>
+                    <a href="reports.html" class="topnav__link topnav__link--active">Reports</a>
+                    <a href="../budget.html" class="topnav__link">Budget</a>
+                    <a href="../calendar.html" class="topnav__link">Calendar</a>
+                </div>
+            </div>
+            <!-- Actions -->
+            <div class="topnav__actions">
+                <select class="currency-select" id="currency-select">
+                    <option value="USD">USD ($)</option>
+                    <option value="EUR">EUR (€)</option>
+                    <option value="GBP">GBP (£)</option>
+                    <option value="INR">INR (₹)</option>
+                </select>
+                <button class="icon-btn" id="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="material-symbols-outlined">dark_mode</span>
+                </button>
+                <div class="profile-menu-container" id="profile-menu-container">
+                    <div class="avatar" id="profile-icon" role="button" tabindex="0">
+                        <span class="material-symbols-outlined">person</span>
+                    </div>
+                    <div class="profile-dropdown" id="profile-dropdown">
+                        <div class="profile-dropdown__header">
+                            <span class="profile-dropdown__name" id="user-display-name"></span>
+                            <span class="profile-dropdown__email" id="user-display-email"></span>
+                        </div>
+                        <div class="profile-dropdown__divider"></div>
+                        <button class="profile-dropdown__item profile-dropdown__item--danger" id="logout-btn">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">logout</span>
+                            Log out
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== Main Content ===== -->
+    <main class="main-content" id="view-reports">
+
+        <!-- Page Header -->
+        <div class="reports-header">
+            <div class="reports-header__text">
+                <h1 class="page-header__title">Category Spend Report</h1>
+                <p class="page-header__subtitle">Breakdown of subscription costs normalized across categories.</p>
+            </div>
+            <div class="reports-header__actions">
+                <button class="reports-export-btn" id="reports-export-btn">
+                    <span class="material-symbols-outlined reports-export-btn__icon">download</span>
+                    Export
+                </button>
+            </div>
+        </div>
+
+        <!-- Data Table Container -->
+        <div class="reports-table-card">
+            <div class="reports-table-scroll">
+                <table class="reports-table">
+                    <thead>
+                        <tr>
+                            <th class="reports-table__th reports-table__th--category">Category</th>
+                            <th class="reports-table__th reports-table__th--count">Count</th>
+                            <th class="reports-table__th reports-table__th--monthly">Monthly Total</th>
+                            <th class="reports-table__th reports-table__th--annual">Annual Total</th>
+                            <th class="reports-table__th reports-table__th--status">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reports-table-body">
+                        <tr>
+                            <td colspan="5" class="reports-table__empty">No subscriptions added yet.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Table Footer Totals -->
+            <div class="reports-totals" id="reports-totals">
+                <div class="reports-totals__item">
+                    <span class="reports-totals__label">Total Monthly</span>
+                    <span class="reports-totals__value" id="reports-monthly-total">$0.00</span>
+                </div>
+                <div class="reports-totals__item">
+                    <span class="reports-totals__label">Total Annual</span>
+                    <span class="reports-totals__value" id="reports-annual-total">$0.00</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="../js/script.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

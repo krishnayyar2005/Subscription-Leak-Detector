@@ -1,0 +1,296 @@
+/* ================================================================
+   ESSARA Renewal Calendar — Specific Styles
+   Pixel-close match to design/renewel_calender/screen.png
+   ================================================================ */
+
+/* --- Page Header Row --- */
+.calendar-header-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+}
+
+@media (min-width: 768px) {
+    .calendar-header-row {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+}
+
+.calendar-header-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.calendar-month-label {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--on-surface);
+    min-width: 200px;
+    text-align: center;
+}
+
+.calendar-nav-btn {
+    border: 1px solid var(--outline-variant);
+    background-color: var(--surface);
+    color: var(--on-surface);
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+}
+
+.calendar-nav-btn:hover {
+    background-color: var(--surface-container-high);
+}
+
+/* --- Layout Grid --- */
+.calendar-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+}
+
+@media (min-width: 1024px) {
+    .calendar-layout {
+        grid-template-columns: 1fr 360px;
+    }
+}
+
+/* --- Calendar Grid --- */
+.calendar-grid-wrapper {
+    background-color: var(--surface);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.calendar-grid-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: var(--surface-container-lowest);
+    border-bottom: 1px solid var(--outline-variant);
+}
+
+.calendar-day-header {
+    padding: var(--space-md);
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--on-surface-variant);
+}
+
+.calendar-grid-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-cell {
+    min-height: 120px;
+    padding: var(--space-sm);
+    border-right: 1px solid var(--outline-variant);
+    border-bottom: 1px solid var(--outline-variant);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.calendar-cell:nth-child(7n) {
+    border-right: none;
+}
+
+/* Remove bottom border from last row if needed, but flex makes it hard. A bottom border is fine. */
+
+.calendar-date-number {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--on-surface);
+    padding: 4px;
+}
+
+.calendar-cell--empty {
+    background-color: var(--surface-container-lowest);
+}
+
+.calendar-cell--empty .calendar-date-number {
+    color: var(--on-surface-variant);
+    opacity: 0.5;
+}
+
+.calendar-cell--today {
+    background-color: rgba(0, 71, 250, 0.1); /* Primary with opacity */
+}
+
+html.dark .calendar-cell--today {
+    background-color: rgba(140, 166, 255, 0.1);
+}
+
+.calendar-cell--today .calendar-date-number {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+/* --- Calendar Tags --- */
+.calendar-tag {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    width: fit-content;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.calendar-tag .material-symbols-outlined {
+    font-size: 12px;
+}
+
+/* Tag Urgency Colors */
+.calendar-tag--overdue {
+    background-color: var(--error-container);
+    color: var(--on-error-container);
+}
+
+.calendar-tag--soon {
+    background-color: #fde68a; /* Orange/Yellow tone */
+    color: #92400e;
+}
+
+html.dark .calendar-tag--soon {
+    background-color: #78350f;
+    color: #fde68a;
+}
+
+.calendar-tag--later {
+    background-color: #e0e7ff; /* Blue/Purple tone */
+    color: #3730a3;
+}
+
+html.dark .calendar-tag--later {
+    background-color: #312e81;
+    color: #e0e7ff;
+}
+
+/* --- Upcoming Renewals List --- */
+.upcoming-renewals-card {
+    padding: var(--space-xl);
+}
+
+.upcoming-renewals-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.upcoming-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-sm) 0;
+    position: relative;
+}
+
+/* Left colored border simulating a pill line */
+.upcoming-item::before {
+    content: '';
+    position: absolute;
+    left: -24px; /* Move to the padding edge of the card */
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: 0 4px 4px 0;
+}
+
+.upcoming-item--overdue::before { background-color: var(--error); }
+.upcoming-item--soon::before { background-color: #f59e0b; }
+.upcoming-item--later::before { background-color: var(--primary); }
+
+/* Icon Background */
+.upcoming-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.upcoming-icon .material-symbols-outlined {
+    font-size: 24px;
+}
+
+.upcoming-item--overdue .upcoming-icon {
+    background-color: var(--error-container);
+    color: var(--on-error-container);
+}
+
+.upcoming-item--soon .upcoming-icon {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+html.dark .upcoming-item--soon .upcoming-icon {
+    background-color: #78350f;
+    color: #fcd34d;
+}
+
+.upcoming-item--later .upcoming-icon {
+    background-color: #e0e7ff;
+    color: #4f46e5;
+}
+html.dark .upcoming-item--later .upcoming-icon {
+    background-color: #312e81;
+    color: #818cf8;
+}
+
+/* Item Content */
+.upcoming-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.upcoming-name {
+    font-weight: 600;
+    color: var(--on-surface);
+    font-size: 15px;
+}
+
+.upcoming-status {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.upcoming-item--overdue .upcoming-status { color: var(--error); }
+.upcoming-item--soon .upcoming-status { color: #d97706; }
+html.dark .upcoming-item--soon .upcoming-status { color: #fcd34d; }
+.upcoming-item--later .upcoming-status { color: var(--on-surface-variant); }
+
+/* Item Cost */
+.upcoming-cost-col {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+}
+
+.upcoming-cost {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--on-surface);
+    font-size: 15px;
+}
+
+.empty-state-text {
+    color: var(--on-surface-variant);
+    font-size: 14px;
+    text-align: center;
+    padding: var(--space-xl) 0;
+}

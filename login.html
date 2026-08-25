@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESSARA - Authentication</title>
+    <!-- Fonts and Icons -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Theme Script handled in js/script.js -->
+</head>
+
+<body class="auth-body">
+
+    <main class="auth-main">
+        <div class="auth-card">
+
+            <div class="text-center mb-8">
+                <a href="index.html" style="text-decoration: none; color: inherit;">
+                    <h1 class="font-display brand-logo" style="font-size: 40px; margin-bottom: 8px;">ESSARA</h1>
+                </a>
+                <p class="auth-subtitle font-body">Precision subscription management.</p>
+            </div>
+
+            <!-- Tab Switcher -->
+            <div class="auth-tabs">
+                <button class="auth-tab auth-tab-active font-label-caps" id="tab-login" aria-selected="true">
+                    Log in
+                </button>
+                <button class="auth-tab auth-tab-inactive font-label-caps" id="tab-signup" aria-selected="false">
+                    Sign up
+                </button>
+            </div>
+
+            <!-- Error Banner (Hidden by default) -->
+            <div class="error-banner hidden" id="error-banner">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">error</span>
+                <span class="font-body" id="error-message"></span>
+            </div>
+
+            <!-- Login Form -->
+            <form class="auth-form flex" id="form-login">
+                <div class="form-group">
+                    <label class="font-label-caps" for="login-email">Email</label>
+                    <input class="form-input font-body" id="login-email" placeholder="name@company.com" required
+                        type="email" />
+                </div>
+                <div class="form-group">
+                    <label class="font-label-caps" for="login-password">Password</label>
+                    <input class="form-input font-body" id="login-password" placeholder="••••••••" required
+                        type="password" />
+                </div>
+                <button class="btn btn-primary btn-full mt-4 flex-center gap-2" type="submit" id="btn-login">
+                    Log in
+                    <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+                </button>
+
+            </form>
+
+            <!-- Signup Form (Hidden by default) -->
+            <form class="auth-form hidden" id="form-signup">
+                <div class="form-group">
+                    <label class="font-label-caps" for="signup-name">Full Name</label>
+                    <input class="form-input font-body" id="signup-name" placeholder="Jane Doe" required type="text" />
+                </div>
+                <div class="form-group">
+                    <label class="font-label-caps" for="signup-email">Email</label>
+                    <input class="form-input font-body" id="signup-email" placeholder="name@company.com" required
+                        type="email" />
+                </div>
+                <div class="form-group">
+                    <label class="font-label-caps" for="signup-password">Password</label>
+                    <input class="form-input font-body" id="signup-password" minlength="8"
+                        placeholder="Min 8 characters, 1 uppercase, 1 special character" required type="password" />
+                </div>
+                <button class="btn btn-primary btn-full mt-4" type="submit" id="btn-signup">
+                    Create Account
+                </button>
+            </form>
+
+
+
+        </div>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESSARA - Overlaps & Leaks</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../dashboard 2/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ===== Top Navigation Bar ===== -->
+    <nav class="topnav" id="topnav">
+        <div class="topnav__inner">
+            <!-- Brand -->
+            <div class="topnav__left">
+                <a href="../index.html" class="topnav__brand">ESSARA</a>
+                <!-- Desktop Nav Links -->
+                <div class="topnav__links" id="nav-links">
+                    <a href="../dashboard 2/dashboard.html" class="topnav__link">Overview</a>
+                    <a href="../subscription/subscription.html" class="topnav__link">Subscriptions</a>
+                    <a href="index.html" class="topnav__link topnav__link--active">Overlaps</a>
+                    <a href="../reports/reports.html" class="topnav__link">Reports</a>
+                    <a href="../budget.html" class="topnav__link">Budget</a>
+                    <a href="../calendar.html" class="topnav__link">Calendar</a>
+                </div>
+            </div>
+            <!-- Actions -->
+            <div class="topnav__actions">
+                <select class="currency-select" id="currency-select">
+                    <option value="USD">USD ($)</option>
+                    <option value="EUR">EUR (€)</option>
+                    <option value="GBP">GBP (£)</option>
+                    <option value="INR">INR (₹)</option>
+                </select>
+                <button class="icon-btn" id="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="material-symbols-outlined">dark_mode</span>
+                </button>
+                <div class="profile-menu-container" id="profile-menu-container">
+                    <div class="avatar" id="profile-icon" role="button" tabindex="0">
+                        <span class="material-symbols-outlined">person</span>
+                    </div>
+                    <div class="profile-dropdown" id="profile-dropdown">
+                        <div class="profile-dropdown__header">
+                            <span class="profile-dropdown__name" id="user-display-name"></span>
+                            <span class="profile-dropdown__email" id="user-display-email"></span>
+                        </div>
+                        <div class="profile-dropdown__divider"></div>
+                        <button class="profile-dropdown__item profile-dropdown__item--danger" id="logout-btn">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">logout</span>
+                            Log out
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== Main Content ===== -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="page-header">
+            <h1 class="page-header__title">Subscription Overlaps</h1>
+            <p class="page-header__subtitle max-w-3xl">Identify redundant software within categories. We calculate projected annual leaks based on retaining only the most robust (highest cost) tool per category.</p>
+        </header>
+
+        <!-- Summary Cards -->
+        <section class="stats-grid overlaps-stats-grid">
+            <!-- Card 1 -->
+            <article class="stat-card stat-card--overlaps">
+                <div class="stat-card__top">
+                    <span class="stat-card__label">Total Projected Leak</span>
+                    <div class="stat-card__value-wrapper">
+                        <span class="stat-card__value text-error" id="stat-total-leak">$0.00</span>
+                        <span class="stat-card__unit text-error">/yr</span>
+                    </div>
+                </div>
+                <div class="stat-card__bottom">
+                    <span class="stat-card__change stat-card__change--error">
+                        <span class="material-symbols-outlined stat-card__change-icon">trending_up</span> +12% from last month
+                    </span>
+                    <span class="material-symbols-outlined stat-card__bg-icon text-error-container">water_drop</span>
+                </div>
+            </article>
+            
+            <!-- Card 2 -->
+            <article class="stat-card stat-card--overlaps">
+                <div class="stat-card__top">
+                    <span class="stat-card__label">Active Overlap Groups</span>
+                    <div class="stat-card__value-wrapper">
+                        <span class="stat-card__value text-primary" id="stat-active-groups">0</span>
+                    </div>
+                </div>
+                <div class="stat-card__bottom">
+                    <span class="stat-card__subtext">Across 12 subscriptions</span>
+                    <span class="material-symbols-outlined stat-card__bg-icon text-surface-variant">category</span>
+                </div>
+            </article>
+            
+            <!-- Card 3 -->
+            <article class="stat-card stat-card--overlaps">
+                <div class="stat-card__top">
+                    <span class="stat-card__label">Potential Savings Target</span>
+                    <div class="stat-card__value-wrapper">
+                        <span class="stat-card__value text-secondary" id="stat-savings-target">$0.00</span>
+                        <span class="stat-card__unit">/yr</span>
+                    </div>
+                </div>
+                <div class="stat-card__bottom">
+                    <span class="stat-card__subtext">Realistic reduction goal</span>
+                    <span class="material-symbols-outlined stat-card__bg-icon text-secondary-container">savings</span>
+                </div>
+            </article>
+        </section>
+        <!-- Overlap Groups Data -->
+        <section class="flex flex-col gap-6" id="overlaps-list-container">
+            <div class="p-4 text-center font-body text-on-surface-variant">No overlaps yet.</div>
+        </section>
+    </main>
+
+
+
+    <!-- Scripts -->
+    <script src="../js/script.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const trigger = document.getElementById("profile-icon");
+            const dropdown = document.getElementById("profile-dropdown");
+            if (trigger && dropdown) {
+                // Populate user info
+                try {
+                    const session = JSON.parse(localStorage.getItem('essara_session'));
+                    if (session) {
+                        document.getElementById('user-display-name').textContent = session.name;
+                        document.getElementById('user-display-email').textContent = session.email;
+                    }
+                } catch(e) {}
+
+                trigger.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    dropdown.classList.toggle("open");
+                });
+                document.addEventListener("click", (e) => {
+                    if (!dropdown.contains(e.target) && !trigger.contains(e.target)) {
+                        dropdown.classList.remove("open");
+                    }
+                });
+            }
+            const logoutBtn = document.getElementById("logout-btn");
+            if (logoutBtn) {
+                logoutBtn.addEventListener("click", () => {
+                    localStorage.removeItem('essara_session');
+                    window.location.href = '../login.html';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

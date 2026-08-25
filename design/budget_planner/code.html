@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ESSARA - Budget Planner</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#e5eeff",
+                        "inverse-surface": "#213145",
+                        "on-primary-fixed": "#001452",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#0b1c30",
+                        "surface": "#f8f9ff",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#6f4500",
+                        "surface-dim": "#cbdbf5",
+                        "secondary-fixed": "#89f5e7",
+                        "surface-tint": "#004ced",
+                        "background": "#f8f9ff",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-secondary-fixed": "#00201d",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-surface": "#0b1c30",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#86f2e4",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-secondary-fixed-variant": "#005049",
+                        "primary-container": "#0052ff",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed-variant": "#0038b6",
+                        "surface-container-low": "#eff4ff",
+                        "error": "#ba1a1a",
+                        "outline": "#737688",
+                        "primary-fixed-dim": "#b7c4ff",
+                        "surface-container-high": "#dce9ff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "surface-bright": "#f8f9ff",
+                        "secondary": "#006a61",
+                        "primary-fixed": "#dde1ff",
+                        "tertiary-container": "#905a00",
+                        "on-primary-container": "#dfe3ff",
+                        "inverse-primary": "#b7c4ff",
+                        "surface-variant": "#d3e4fe",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-tertiary-container": "#ffdfbe",
+                        "primary": "#003ec7",
+                        "on-secondary-container": "#006f66",
+                        "outline-variant": "#c3c5d9",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-surface-variant": "#434656",
+                        "secondary-fixed-dim": "#6bd8cb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "base": "4px",
+                        "md": "16px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "xl": "40px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "data-mono": ["JetBrains Mono", "monospace"],
+                        "body-sm": ["Inter", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "headline-lg-mobile": ["Geist", "sans-serif"],
+                        "label-caps": ["Inter", "sans-serif"],
+                        "headline-md": ["Geist", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "display": ["Geist", "sans-serif"],
+                        "headline-lg": ["Geist", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @font-face {
+            font-family: 'Geist';
+            src: url('https://cdn.jsdelivr.net/fontsource/fonts/geist-sans@latest/latin-400-normal.woff2') format('woff2');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'Geist';
+            src: url('https://cdn.jsdelivr.net/fontsource/fonts/geist-sans@latest/latin-600-normal.woff2') format('woff2');
+            font-weight: 600;
+        }
+        @font-face {
+            font-family: 'Geist';
+            src: url('https://cdn.jsdelivr.net/fontsource/fonts/geist-sans@latest/latin-700-normal.woff2') format('woff2');
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md antialiased">
+<!-- TopNavBar -->
+<header class="bg-surface border-b border-outline-variant w-full z-50 sticky top-0 h-16 flex justify-between items-center px-gutter max-w-container-max mx-auto">
+<div class="flex items-center gap-8">
+<div class="text-headline-md font-headline-md font-bold text-primary">ESSARA</div>
+<nav aria-label="Main Navigation" class="hidden md:flex gap-6 h-full items-end">
+<a class="text-on-surface-variant pb-1 font-body-md text-body-md hover:text-primary transition-colors cursor-pointer transition-all duration-200" href="#">Overview</a>
+<a class="text-on-surface-variant pb-1 font-body-md text-body-md hover:text-primary transition-colors cursor-pointer transition-all duration-200" href="#">Subscriptions</a>
+<a class="text-on-surface-variant pb-1 font-body-md text-body-md hover:text-primary transition-colors cursor-pointer transition-all duration-200" href="#">Overlaps</a>
+<a class="text-on-surface-variant pb-1 font-body-md text-body-md hover:text-primary transition-colors cursor-pointer transition-all duration-200" href="#">Reports</a>
+<a aria-current="page" class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md hover:text-primary transition-colors cursor-pointer transition-all duration-200" href="#">Budget</a>
+<a class="text-on-surface-variant pb-1 font-body-md text-body-md hover:text-primary transition-colors cursor-pointer transition-all duration-200" href="#">Calendar</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button aria-label="notifications" class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button aria-label="settings" class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-variant border border-outline-variant overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A small circular profile picture showing a professional minimalist avatar in cool tones on a light gray background, high quality, flat design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAP7lfF_muHjhksQ6tECcSUasMIHmaLUH_47vW_QN4gqHOpqJAJm9kebmEc9eghc0a_4GlZfYEsK3EhR4XqL-H1MlMv4bayExMQ9x7KvP542pqG2T6I5q7JJQAzfti--BT0UgaKu8vkTa-AqxpdAuhF_327k4VZJcd4trR9s2Svjvo3H1ivDuLNSPrpTbvGOKK9dPbanevMI2kGMg5sPTjyF8qu7Az_U4HXE5xjyOusSX5kuM8qg3e"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-md md:px-gutter py-xl flex flex-col gap-8">
+<!-- Page Header & Settings -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-outline-variant pb-6">
+<div>
+<h1 class="font-headline-lg text-headline-lg md:font-display md:text-display text-on-background mb-2">Budget Planner</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage your monthly subscription spend limits.</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-xl flex items-end gap-4 w-full md:w-auto">
+<div class="flex-grow">
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-1 uppercase tracking-wider" for="budget-input">Monthly Budget Goal</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center text-on-surface-variant font-data-mono text-data-mono">$</span>
+<input class="block w-full pl-8 pr-4 py-2 bg-surface border border-outline-variant rounded-lg font-data-mono text-data-mono text-right focus:ring-2 focus:ring-primary focus:border-primary transition-shadow" id="budget-input" placeholder="0.00" type="text" value="1,200.00"/>
+</div>
+</div>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-body-sm text-body-sm font-semibold hover:bg-primary-fixed-variant transition-colors flex items-center gap-2 h-10">
+<span class="material-symbols-outlined text-sm" data-icon="save">save</span>
+                    Save
+                </button>
+</div>
+</div>
+<!-- Dashboard Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Total Spend -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Current Monthly Spend</h3>
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl" data-icon="credit_card">credit_card</span>
+</div>
+</div>
+<div class="font-headline-lg text-headline-lg text-on-background mb-1">$985.40</div>
+<div class="font-data-mono text-data-mono text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-error" data-icon="trending_up">trending_up</span>
+                    +4.2% from last month
+                </div>
+</div>
+<!-- Budget -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Monthly Budget</h3>
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl" data-icon="track_changes">track_changes</span>
+</div>
+</div>
+<div class="font-headline-lg text-headline-lg text-on-background mb-1">$1,200.00</div>
+<div class="font-data-mono text-data-mono text-on-surface-variant flex items-center gap-1">
+                    Goal set for Q4
+                </div>
+</div>
+<!-- Remaining -->
+<div class="bg-[#dcfce7] border border-[#86efac] rounded-xl p-6 flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<h3 class="font-label-caps text-label-caps text-[#166534] uppercase tracking-wider">Remaining Budget</h3>
+<div class="w-12 h-12 rounded-full bg-[#bbf7d0] flex items-center justify-center text-[#166534]">
+<span class="material-symbols-outlined text-3xl" data-icon="check_circle">check_circle</span>
+</div>
+</div>
+<div class="font-headline-lg text-headline-lg text-[#14532d] mb-1">$214.60</div>
+<div class="font-data-mono text-data-mono text-[#166534] flex items-center gap-1">
+                    Healthy status
+                </div>
+</div>
+</div>
+<!-- Progress Section -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 md:p-8">
+<div class="flex justify-between items-end mb-4">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-background">Budget Utilization</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">You have used 82% of your monthly budget.</p>
+</div>
+<div class="font-data-mono text-data-mono text-on-surface-variant">
+                    82.1%
+                </div>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-6 bg-surface-container rounded-full overflow-hidden mb-2 border border-outline-variant relative">
+<div class="absolute top-0 left-0 h-full bg-primary transition-all duration-1000 ease-out rounded-r-full" style="width: 82%;"></div>
+<!-- Markers -->
+<div class="absolute top-0 left-1/4 h-full w-px bg-surface-container-lowest opacity-50 z-10"></div>
+<div class="absolute top-0 left-2/4 h-full w-px bg-surface-container-lowest opacity-50 z-10"></div>
+<div class="absolute top-0 left-3/4 h-full w-px bg-surface-container-lowest opacity-50 z-10"></div>
+</div>
+<div class="flex justify-between font-label-caps text-label-caps text-on-surface-variant">
+<span>$0</span>
+<span>$1,200</span>
+</div>
+</div>
+<!-- Category Breakdown -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="p-6 border-b border-outline-variant bg-surface">
+<h2 class="font-headline-md text-headline-md text-on-background">Category Breakdown</h2>
+</div>
+<div class="p-0">
+<!-- Table Header -->
+<div class="grid grid-cols-12 gap-4 p-4 border-b border-outline-variant bg-surface-container-low font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider sticky top-0">
+<div class="col-span-3">Category</div>
+<div class="col-span-6">Spend vs Budget</div>
+<div class="col-span-3 text-right">Cost</div>
+</div>
+<!-- Row 1 -->
+<div class="grid grid-cols-12 gap-4 p-4 border-b border-outline-variant hover:bg-surface-container-low transition-colors items-center group">
+<div class="col-span-3 font-body-md text-body-md text-on-background flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="cloud">cloud</span>
+                        Cloud Services
+                    </div>
+<div class="col-span-6 flex items-center gap-4">
+<div class="flex-grow h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 65%;"></div>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant w-10 text-right">35%</span>
+</div>
+<div class="col-span-3 font-data-mono text-data-mono text-on-background text-right">
+                        $420.00
+                    </div>
+</div>
+<!-- Row 2: Overlap Alert -->
+<div class="grid grid-cols-12 gap-4 p-4 border-b border-outline-variant hover:bg-[#fff7ed] transition-colors items-center bg-[#fffbeb]">
+<div class="col-span-3 font-body-md text-body-md text-on-background flex items-center gap-2">
+<span class="material-symbols-outlined text-[#b45309] text-xl" data-icon="edit_document">edit_document</span>
+                        Design Tools
+                        <div class="flex items-center gap-1 bg-[#ffedd5] text-[#9a3412] px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border border-[#fdba74]">
+<span class="material-symbols-outlined text-[12px]" data-icon="warning">warning</span> Leak
+                        </div>
+</div>
+<div class="col-span-6 flex items-center gap-4">
+<div class="flex-grow h-2 bg-[#fef3c7] rounded-full overflow-hidden">
+<div class="h-full bg-[#d97706]" style="width: 45%;"></div>
+</div>
+<span class="font-label-caps text-label-caps text-[#b45309] w-10 text-right">25%</span>
+</div>
+<div class="col-span-3 font-data-mono text-data-mono text-[#9a3412] text-right font-bold">
+                        $295.50
+                    </div>
+</div>
+<!-- Row 3 -->
+<div class="grid grid-cols-12 gap-4 p-4 border-b border-outline-variant hover:bg-surface-container-low transition-colors items-center">
+<div class="col-span-3 font-body-md text-body-md text-on-background flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="campaign">campaign</span>
+                        Marketing
+                    </div>
+<div class="col-span-6 flex items-center gap-4">
+<div class="flex-grow h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary opacity-80" style="width: 30%;"></div>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant w-10 text-right">15%</span>
+</div>
+<div class="col-span-3 font-data-mono text-data-mono text-on-background text-right">
+                        $150.00
+                    </div>
+</div>
+<!-- Row 4 -->
+<div class="grid grid-cols-12 gap-4 p-4 hover:bg-surface-container-low transition-colors items-center">
+<div class="col-span-3 font-body-md text-body-md text-on-background flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="dvr">dvr</span>
+                        Development
+                    </div>
+<div class="col-span-6 flex items-center gap-4">
+<div class="flex-grow h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary opacity-60" style="width: 15%;"></div>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant w-10 text-right">7%</span>
+</div>
+<div class="col-span-3 font-data-mono text-data-mono text-on-background text-right">
+                        $119.90
+                    </div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low border-t border-outline-variant w-full py-xl px-gutter flex flex-col md:flex-row justify-between items-center max-w-container-max mx-auto mt-auto">
+<div class="text-body-md font-headline-md font-bold text-on-surface mb-4 md:mb-0">ESSARA</div>
+<div class="flex gap-6 mb-4 md:mb-0 font-body-sm text-body-sm">
+<a class="text-on-surface-variant hover:text-primary underline transition-opacity duration-150" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary underline transition-opacity duration-150" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary underline transition-opacity duration-150" href="#">Help Center</a>
+<a class="text-on-surface-variant hover:text-primary underline transition-opacity duration-150" href="#">Security</a>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">© 2024 ESSARA Financial Systems. All rights reserved.</div>
+</footer>
+</body></html>

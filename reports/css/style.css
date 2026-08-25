@@ -1,0 +1,321 @@
+/* ================================================================
+   ESSARA Reports Page — Specific Styles
+   Pixel-close match to design/reports/screen.png reference.
+   ================================================================ */
+
+/* --- Page Header (title + export button row) --- */
+.reports-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+    .reports-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+}
+
+.reports-header__text {
+    /* inherits page-header__title / subtitle from shared CSS */
+}
+
+/* Export button — outlined style matching the reference */
+.reports-export-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-family: var(--font-label);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-default);
+    background-color: var(--surface);
+    color: var(--on-surface);
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
+    height: 36px;
+}
+
+.reports-export-btn:hover {
+    background-color: var(--surface-container-low);
+}
+
+.reports-export-btn__icon {
+    font-size: 16px;
+}
+
+
+/* --- Table Card Container --- */
+.reports-table-card {
+    background-color: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    width: 100%;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.reports-table-scroll {
+    overflow-x: auto;
+    width: 100%;
+}
+
+
+/* --- Reports Table --- */
+.reports-table {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+    min-width: 700px;
+}
+
+/* Table header */
+.reports-table thead {
+    background-color: var(--surface-container-low);
+    border-bottom: 1px solid var(--outline-variant);
+}
+
+.reports-table__th {
+    font-family: var(--font-label);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--on-surface-variant);
+    padding: 12px 16px;
+}
+
+.reports-table__th--category {
+    width: 33%;
+}
+
+.reports-table__th--count {
+    text-align: center;
+    width: 10%;
+}
+
+.reports-table__th--monthly {
+    text-align: right;
+    width: 18%;
+}
+
+.reports-table__th--annual {
+    text-align: right;
+    width: 18%;
+}
+
+.reports-table__th--status {
+    text-align: center;
+    width: 12%;
+}
+
+/* Table body rows */
+.reports-table tbody tr {
+    border-bottom: 1px solid rgba(195, 197, 217, 0.4);
+    transition: background-color 0.15s ease;
+}
+
+.reports-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.reports-table tbody tr:hover {
+    background-color: var(--surface-container-low);
+}
+
+/* Table cells */
+.reports-table td {
+    padding: 16px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--on-surface);
+}
+
+/* Category cell: icon + label */
+.reports-cat-cell {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.reports-cat-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-default);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.reports-cat-icon span {
+    font-size: 18px;
+}
+
+/* Icon color variants per category type */
+.reports-cat-icon--primary {
+    background-color: rgba(0, 82, 255, 0.1);
+    color: var(--primary);
+}
+
+.reports-cat-icon--secondary {
+    background-color: rgba(134, 242, 228, 0.2);
+    color: var(--on-secondary-container);
+}
+
+.reports-cat-icon--tertiary {
+    background-color: rgba(144, 90, 0, 0.1);
+    color: var(--tertiary);
+}
+
+.reports-cat-name {
+    font-weight: 500;
+    color: var(--on-surface);
+}
+
+/* Count cell */
+.reports-td--count {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -0.01em;
+}
+
+/* Monthly cost cell */
+.reports-td--monthly {
+    text-align: right;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -0.01em;
+}
+
+/* Annual cost cell */
+.reports-td--annual {
+    text-align: right;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -0.01em;
+    color: var(--on-surface-variant);
+}
+
+/* Status cell */
+.reports-td--status {
+    text-align: center;
+}
+
+/* Status tags */
+.reports-status-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: var(--radius-full);
+    font-family: var(--font-label);
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.reports-status-tag__icon {
+    font-size: 12px;
+}
+
+.reports-status-tag--overlap {
+    background-color: var(--error-container);
+    color: var(--on-error-container);
+}
+
+.reports-status-tag--healthy {
+    background-color: rgba(134, 242, 228, 0.5);
+    color: var(--on-secondary-container);
+}
+
+/* Dark mode adjustment for healthy tag */
+html.dark .reports-status-tag--healthy {
+    background-color: rgba(52, 211, 153, 0.15);
+    color: var(--secondary);
+}
+
+
+/* --- Table Footer Totals Bar --- */
+.reports-totals {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--space-xl);
+    padding: var(--space-md);
+    background-color: var(--surface-container);
+    border-top: 1px solid var(--outline-variant);
+    transition: background-color 0.25s ease;
+}
+
+.reports-totals__item {
+    text-align: right;
+}
+
+.reports-totals__item:last-child {
+    padding-right: var(--space-md);
+}
+
+.reports-totals__label {
+    display: block;
+    font-family: var(--font-label);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--on-surface-variant);
+    margin-bottom: 2px;
+}
+
+.reports-totals__value {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    color: var(--on-surface);
+}
+
+
+/* --- Empty State --- */
+.reports-table__empty {
+    text-align: center;
+    padding: var(--space-xl) var(--space-md);
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--on-surface-variant);
+}
+
+
+/* --- Responsive --- */
+@media (max-width: 767px) {
+    .reports-header {
+        align-items: flex-start;
+    }
+
+    .reports-totals {
+        gap: var(--space-lg);
+        justify-content: flex-end;
+    }
+}
