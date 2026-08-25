@@ -48,28 +48,106 @@
     <!-- Hero Section -->
     <section class="section container" id="overview">
         <div class="hero">
-            <div class="hero-content animate-fade-in">
-                <h1 class="hero-title font-display mb-6">Stop the Subscription Leak</h1>
-                <p class="hero-subtitle mb-8">Track recurring services, detect redundant apps, and reclaim hundreds of dollars wasted every year.</p>
-                <div class="hero-actions">
+            <div class="hero-content">
+                <h1 class="hero-title font-display mb-6 animate-fade-in">Stop the Subscription Leak</h1>
+                <p class="hero-subtitle mb-8 animate-fade-in" style="transition-delay: 0.1s;">Track recurring services, detect redundant apps, and reclaim hundreds of dollars wasted every year.</p>
+                <div class="hero-actions animate-fade-in" style="transition-delay: 0.2s;">
                     <a href="login.html#signup" class="btn btn-primary btn-large">Get Started for Free</a>
                     <a href="#how-it-works" class="btn btn-secondary btn-large">Learn More</a>
                 </div>
             </div>
 
-            <div class="hero-visual animate-fade-in" style="transition-delay: 0.2s;">
-                <div class="glass-card">
-                    <div class="hero-visual-content">
-                        <div class="mockup-pips mb-4">
-                            <div class="pip pip-1 font-headline">Sp</div>
-                            <div class="pip pip-2 font-headline">Am</div>
+            <div class="hero-visual animate-fade-in" style="transition-delay: 0.3s;">
+                <div class="hero-overlap-card">
+                    <!-- Header -->
+                    <div class="overlap-header">
+                        <h3>Subscription Overlap Detected</h3>
+                        <p>Our radar has identified highly similar services in your portfolio. Reviewing these could reduce your burn rate.</p>
+                    </div>
+
+                    <!-- Floating Stat Card -->
+                    <div class="overlap-stat-card">
+                        <div class="overlap-stat-icon">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">savings</span>
                         </div>
-                        <div class="leak-badge font-label-caps">
-                            <span class="material-symbols-outlined">warning</span>
-                            Overlap Detected: $120/yr leak
+                        <div class="overlap-stat-text">
+                            <div class="overlap-stat-label">Savings Potential</div>
+                            <div class="overlap-stat-value">$120/YR</div>
                         </div>
                     </div>
+
+                    <!-- Visual Center -->
+                    <div class="overlap-center">
+                        <div class="overlap-glow"></div>
+                        
+                        <!-- Faint Icons -->
+                        <div class="overlap-faint-icon overlap-faint-1"><span class="material-symbols-outlined" style="font-size: 20px;">movie</span></div>
+                        <div class="overlap-faint-icon overlap-faint-2"><span class="material-symbols-outlined" style="font-size: 20px;">open_in_full</span></div>
+                        <div class="overlap-faint-icon overlap-faint-3"><span class="material-symbols-outlined" style="font-size: 20px;">cloud</span></div>
+                        <div class="overlap-faint-icon overlap-faint-4"><span class="material-symbols-outlined" style="font-size: 20px;">receipt_long</span></div>
+
+                        <!-- Main Icon Cluster -->
+                        <div class="overlap-icons-cluster">
+                            <div class="overlap-app-icon overlap-icon-left">
+                                <span class="material-symbols-outlined">music_note</span>
+                            </div>
+                            <div class="overlap-app-icon overlap-icon-right">
+                                <span class="material-symbols-outlined">headphones</span>
+                            </div>
+                            <div class="overlap-app-icon overlap-icon-center">
+                                <span class="material-symbols-outlined">priority_high</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+            </div>
+        </div>
+    </section>
+    <!-- Stats Strip -->
+    <section class="container" style="padding: 48px 24px; border-top: 1px solid var(--outline-variant); border-bottom: 1px solid var(--outline-variant);">
+        <div class="features-grid text-center animate-fade-in" style="gap: 16px;">
+            <div>
+                <div class="font-display" style="font-size: 48px; font-weight: 700; color: var(--primary);">4</div>
+                <div class="font-label-caps text-on-surface-variant">Currencies Supported</div>
+            </div>
+            <div>
+                <div class="font-display" style="font-size: 48px; font-weight: 700; color: var(--primary);">6</div>
+                <div class="font-label-caps text-on-surface-variant">Categories Tracked</div>
+            </div>
+            <div>
+                <div class="font-display" style="font-size: 48px; font-weight: 700; color: var(--primary);">100%</div>
+                <div class="font-label-caps text-on-surface-variant">Local & Private</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why ESSARA Section -->
+    <section class="section container">
+        <div class="text-center mb-16 animate-fade-in">
+            <h2 class="font-headline hero-title">Why ESSARA?</h2>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card animate-fade-in" style="transition-delay: 0.1s;">
+                <div class="feature-icon mb-6">
+                    <span class="material-symbols-outlined">dashboard</span>
+                </div>
+                <h3 class="feature-title font-headline" style="font-size: 20px;">See Everything in One Place</h3>
+                <p class="feature-desc">Every subscription, every cost, every renewal — tracked in one clean dashboard.</p>
+            </div>
+            <div class="feature-card animate-fade-in" style="transition-delay: 0.2s;">
+                <div class="feature-icon error mb-6">
+                    <span class="material-symbols-outlined">block</span>
+                </div>
+                <h3 class="feature-title font-headline" style="font-size: 20px;">Never Overpay Twice</h3>
+                <p class="feature-desc">We automatically flag redundant services the moment they overlap.</p>
+            </div>
+            <div class="feature-card animate-fade-in" style="transition-delay: 0.3s;">
+                <div class="feature-icon secondary mb-6">
+                    <span class="material-symbols-outlined">monitoring</span>
+                </div>
+                <h3 class="feature-title font-headline" style="font-size: 20px;">Know Your Real Number</h3>
+                <p class="feature-desc">See your true annual spend, not just what each app charges monthly.</p>
             </div>
         </div>
     </section>
