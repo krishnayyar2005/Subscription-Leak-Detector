@@ -255,14 +255,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let hasError = false;
 
+            const hasMinLength = password.length >= 8;
+            const hasUppercase = /[A-Z]/.test(password);
+            const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+
             if (!name) { nameInput.classList.add('has-error'); hasError = true; }
             if (!email || !email.includes('@')) { emailInput.classList.add('has-error'); hasError = true; }
-            if (password.length < 4) { passInput.classList.add('has-error'); hasError = true; }
+            if (!hasMinLength || !hasUppercase || !hasSpecialChar) { passInput.classList.add('has-error'); hasError = true; }
 
             if (hasError) {
                 showError('Please fix the errors highlighted below.');
-                if (password.length > 0 && password.length < 4) {
-                    showError('Password must be at least 4 characters long.');
+                if (password.length > 0 && (!hasMinLength || !hasUppercase || !hasSpecialChar)) {
+                    showError('Password must be at least 8 characters and include one uppercase letter and one special character.');
                 }
                 return;
             }
