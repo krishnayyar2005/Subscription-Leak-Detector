@@ -1,87 +1,55 @@
-# Subscription Leak Detector
+# 🔍 Subscription Leak Detector
 
-A web-based subscription management application that helps users track recurring expenses, identify overlapping subscriptions, manage budgets, and detect potential spending leaks.
+A comprehensive web application designed to help users track their recurring expenses, manage budgets, and identify wasted money on overlapping or forgotten subscriptions. 
 
-## 🎯 Problem
+## 🚀 Project Overview
 
-With multiple streaming, music, software, and other subscription services, users can easily lose track of recurring expenses and pay for overlapping services.
+Managing multiple subscriptions across streaming, software, and utilities can quickly become overwhelming. The **Subscription Leak Detector** provides a centralized dashboard to monitor all active services, alert you of upcoming renewals, and visually map out your monthly budget. By highlighting "subscription overlaps," this tool acts as a financial auditor to plug the leaks in your monthly spending.
 
-This project provides a centralized dashboard to monitor and analyze subscription spending.
 
-## ✨ Features
+## ✨ Key Features
 
-* 🔐 **Login & Signup** — Basic user authentication
-* 📊 **Dashboard** — View subscriptions, monthly spending, and yearly estimates
-* 🔍 **Leak Detection** — Identifies multiple subscriptions within the same category
-* 💰 **Budget Tracking** — Set and monitor monthly spending limits
-* 📅 **Renewal Calendar** — Track upcoming subscription renewals
-* 📈 **Reports** — View category-wise subscription spending
-* 💱 **Currency Support** — USD, EUR, GBP, and INR
-* 🌙 **Dark Mode** — Light/dark theme support
-* 💾 **Local Storage** — Stores users, sessions, subscriptions, budgets, and preferences
+* **Interactive Dashboard:** A main hub providing a quick overview of total spending and active subscriptions.
+* **Overlap Detection:** Automatically flags redundant or overlapping services (e.g., paying for two similar music streaming apps)[cite: 1].
+* **Renewal Calendar:** A dedicated calendar view to track exactly when charges will hit your account[cite: 1].
+* **Budget Planner:** Built-in tools to allocate funds and ensure subscription costs do not exceed your monthly limits[cite: 1].
+* **Detailed Reports:** Generates financial breakdowns and visual reports of your spending habits[cite: 1].
 
-## 🛠️ Technologies
+## 🛠️ Tech Stack
 
-* HTML5
-* CSS3
-* JavaScript
-* Local Storage API
-* DOM Manipulation
-* JSON
-* Browser APIs
+This project is built using a lightweight, native web stack without the need for heavy frameworks[cite: 1]:
+* **Structure:** HTML5[cite: 1]
+* **Styling:** CSS3 (Custom modular stylesheets for each feature)[cite: 1]
+* **Interactivity:** Vanilla JavaScript[cite: 1]
 
-## 🧠 How Leak Detection Works
+## 📂 Repository Structure
 
-Subscriptions are grouped by category. If multiple subscriptions exist in the same category, the application identifies potential overlaps and calculates the recurring cost of the additional subscriptions.
-
-Example:
-
-```text
-Video
-├── Netflix       $15/month
-├── Prime Video    $9/month
-└── Disney+       $12/month
-
-Potential spending leak detected
-```
-
-## 🏗️ Project Structure
+The project is modularly organized to separate core features and their respective assets[cite: 1]:
 
 ```text
 Subscription-Leak-Detector/
 │
-├── index.html
-├── login.html
-├── budget.html
-├── calendar.html
-├── css/
-├── js/
-├── dashboard 2/
-├── overlaps/
-├── reports/
-└── subscription/
-```
-
-## ▶️ How to Run
-
-No backend or installation is required.
-
-Open `index.html` in a modern browser, or use VS Code Live Server.
-
-## 🔒 Note
-
-This is a frontend prototype. User and subscription data are stored in browser Local Storage and should not be used for real financial or sensitive information.
-
-## 🚀 Future Scope
-
-* Backend database
-* Secure authentication
-* Email renewal reminders
-* Real-time currency rates
-* Bank/payment API integration
-* AI-based subscription recommendations
-* Cloud synchronization
-
-## 🎓 Project Purpose
-
-This project demonstrates practical use of HTML, CSS, JavaScript, DOM manipulation, browser APIs, Local Storage, data processing, and financial tracking concepts.
+├── index.html            # Main landing page
+├── login.html            # User authentication interface
+├── dashboard 2/          # Core user dashboard views and logic
+├── budget.html           # Budget planner interface
+├── calendar.html         # Renewal calendar view
+│
+├── overlaps/             # Overlap detection logic and UI
+│   ├── index.html
+│   ├── css/style.css
+│   └── js/script.js
+│
+├── reports/              # Financial reporting module
+│   ├── reports.html
+│   ├── css/style.css
+│   └── js/script.js
+│
+├── subscription/         # Subscription entry and management
+│   ├── subscription.html
+│   ├── css/style.css
+│   └── js/script.js
+│
+├── css/                  # Global stylesheets
+├── js/                   # Global scripts
+└── design/               # UI/UX documentation, design specs, and wireframes
