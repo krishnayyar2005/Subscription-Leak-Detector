@@ -6,6 +6,28 @@ A comprehensive web application designed to help users track their recurring exp
 
 Managing multiple subscriptions across streaming, software, and utilities can quickly become overwhelming. The **Subscription Leak Detector** provides a centralized dashboard to monitor all active services, alert you of upcoming renewals, and visually map out your monthly budget. By highlighting "subscription overlaps," this tool acts as a financial auditor to plug the leaks in your monthly spending.
 
+## 📸 Application Interface
+
+Here is a look at the core interfaces of the application:
+
+### Landing & Login
+![Landing Page](design/landing_page/screen.png)
+![Login Page](design/login_page/screen.png)
+
+### User Dashboard
+Get a quick overview of total spending and active subscriptions.
+![Dashboard](design/dashboard/screen.png)
+
+### Subscription Management & Overlaps
+Track individual services and automatically flag redundant subscriptions.
+![Subscriptions](design/subscriptions/screen.png)
+![Overlaps](design/overlaps/screen.png)
+
+### Budgeting & Reports
+Visually map out your monthly limits, view financial breakdowns, and track when charges will hit your account.
+![Budget Planner](design/budget_planner/screen.png)
+![Renewal Calendar](design/renewel_calender/screen.png)
+![Reports](design/reports/screen.png)
 
 ## ✨ Key Features
 
