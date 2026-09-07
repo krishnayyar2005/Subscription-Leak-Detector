@@ -1,6 +1,8 @@
 # 🔍 Subscription Leak Detector
 
-A comprehensive web application designed to help users track their recurring expenses, manage budgets, and identify wasted money on overlapping or forgotten subscriptions. 
+A comprehensive web application designed to help users track their recurring expenses, manage budgets, and identify wasted money on overlapping or forgotten subscriptions.
+
+* **Live Demo:** [https://subscription-leak-detector-iota.vercel.app/](https://subscription-leak-detector-iota.vercel.app/)
 
 ## 🚀 Project Overview
 
@@ -32,21 +34,22 @@ Visually map out your monthly limits, view financial breakdowns, and track when 
 ## ✨ Key Features
 
 * **Interactive Dashboard:** A main hub providing a quick overview of total spending and active subscriptions.
-* **Overlap Detection:** Automatically flags redundant or overlapping services (e.g., paying for two similar music streaming apps)[cite: 1].
-* **Renewal Calendar:** A dedicated calendar view to track exactly when charges will hit your account[cite: 1].
-* **Budget Planner:** Built-in tools to allocate funds and ensure subscription costs do not exceed your monthly limits[cite: 1].
-* **Detailed Reports:** Generates financial breakdowns and visual reports of your spending habits[cite: 1].
+* **Overlap Detection:** Automatically flags redundant or overlapping services (e.g., paying for two similar music streaming apps).
+* **Renewal Calendar:** A dedicated calendar view to track exactly when charges will hit your account.
+* **Budget Planner:** Built-in tools to allocate funds and ensure subscription costs do not exceed your monthly limits.
+* **Detailed Reports:** Generates financial breakdowns and visual reports of your spending habits.
 
 ## 🛠️ Tech Stack
 
-This project is built using a lightweight, native web stack without the need for heavy frameworks[cite: 1]:
-* **Structure:** HTML5[cite: 1]
-* **Styling:** CSS3 (Custom modular stylesheets for each feature)[cite: 1]
-* **Interactivity:** Vanilla JavaScript[cite: 1]
+This project is built using a lightweight, native web stack without the need for heavy frameworks:
+* **Structure:** HTML5
+* **Styling:** CSS3 (Custom modular stylesheets for each feature)
+* **Interactivity:** Vanilla JavaScript
+* **Deployment:** Vercel
 
 ## 📂 Repository Structure
 
-The project is modularly organized to separate core features and their respective assets[cite: 1]:
+The project is modularly organized to separate core features and their respective assets:
 
 ```text
 Subscription-Leak-Detector/
