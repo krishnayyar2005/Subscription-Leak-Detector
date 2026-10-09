@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isLogin && loginForm) {
             document.body.innerHTML = '<div class="auth-main"><div class="text-center"><span class="material-symbols-outlined font-display text-primary animate-fade-in" style="font-size:48px; font-variation-settings: \'FILL\' 1;">sync</span><h2 class="font-headline mt-4">Redirecting to Dashboard...</h2></div></div>';
             setTimeout(() => {
-                window.location.href = 'dashboard 2/dashboard.html';
+                window.location.href = '../dashboard/dashboard.html';
             }, 800);
             return; // stop executing further auth logic
         }
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // If NOT logged in, and NOT on an unprotected page (login/landing), block access
         if (!isLogin && !isLanding) {
             // Protected pages are 1 level deep
-            window.location.replace('../login.html');
+            window.location.replace('../login/login.html');
             return;
         }
     }
@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const newUser = { id: Date.now().toString(), name: name, email: email, password: password };
             users.push(newUser);
             localStorage.setItem('essara_users', JSON.stringify(users));
-            window.location.href = 'login.html';
+            window.location.href = '../login/login.html';
         });
     }
 
@@ -295,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 1. Auth Guard
         const session = JSON.parse(localStorage.getItem('essara_session'));
         if (!session) {
-            window.location.href = 'login.html';
+            window.location.href = '../login/login.html';
             return;
         }
 
@@ -357,7 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (document.getElementById('subscriptions-list-container')) renderSubscriptions();
             if (document.getElementById('overlaps-list-container')) renderOverlaps();
             if (document.getElementById('view-reports')) renderReports();
-            if (document.getElementById('budget-current-spend')) renderBudget();
+            if (document.getElementById('view-budget')) renderBudget();
             if (document.getElementById('view-calendar')) renderCalendar();
         };
 
@@ -421,14 +421,44 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const overviewOverlaps = document.getElementById('dashboard-overlaps-container');
-            overviewOverlaps.innerHTML = overlaps.slice(0, 2).map(o => `
-                <div class="border border-outline-variant rounded p-md bg-surface" style="padding: 16px; border: 1px solid var(--outline-variant); border-radius: var(--radius-md); margin-bottom: 8px;">
-                    <div class="flex-between mb-sm" style="display: flex; justify-content: space-between;">
-                        <span class="font-label-caps text-on-surface-variant">Category: ${o.category}</span>
-                        <span class="bg-error-container text-error font-label-caps px-2 py-1 rounded">Leak: ${formatMoney(o.leak)}/mo</span>
-                    </div>
+            if (overviewOverlaps) {
+                overviewOverlaps.innerHTML = overlaps.slice(0, 3).map(o => `
+<div class="border-2 border-on-surface rounded-xl p-space-md bg-surface-container-lowest flex flex-col gap-space-md shadow-[2px_2px_0px_#1a1a28]">
+    <div class="flex items-center justify-between border-b border-outline-variant pb-space-xs">
+        <span class="font-label-lg text-label-lg uppercase tracking-wide text-on-surface flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+            ${o.category}
+        </span>
+        <span class="font-label-sm text-label-sm text-tertiary font-bold bg-tertiary-fixed px-2 py-0.5 rounded-full border border-on-surface">
+            -$${(o.leak * 12).toFixed(2)}/yr potential leak
+        </span>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md items-center">
+        ${o.items.map((item, idx) => `
+        <div class="p-space-sm bg-surface-container-low border-2 border-on-surface rounded-lg flex items-center justify-between">
+            <div class="flex items-center gap-space-sm">
+                <div class="w-9 h-9 rounded-lg bg-surface-container-lowest border border-on-surface flex items-center justify-center font-headline-sm text-headline-sm ${idx === 0 ? 'text-primary' : 'text-tertiary'}">
+                    <span class="material-symbols-outlined text-xl">category</span>
                 </div>
-            `).join('') || '<p style="padding: 16px; color: var(--on-surface-variant); font-size: 14px;">No overlaps yet.</p>';
+                <div class="flex flex-col ml-2">
+                    <span class="font-title-md text-title-md text-on-surface font-bold">${item.name}</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">${formatMoney(normalizeCost(item.cost, item.cycle))}/mo</span>
+                </div>
+            </div>
+            ${idx === 0 
+                ? `<span class="px-2.5 py-1 bg-secondary-container text-on-secondary-fixed font-label-sm text-label-sm font-bold rounded-full border border-on-surface flex items-center gap-1">
+                    <span class="material-symbols-outlined text-xs">done</span> Kept
+                   </span>`
+                : `<button class="px-3 py-1 bg-tertiary-container text-on-error font-label-sm text-label-sm font-bold rounded-lg border-2 border-on-surface shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#1a1a28] transition-all whitespace-nowrap" type="button" onclick="window.deleteSub('${item.id}')">
+                    Mark Redundant
+                   </button>`
+            }
+        </div>
+        `).join('')}
+    </div>
+</div>
+                `).join('') || '<p class="font-body-sm text-on-surface-variant p-4">No overlaps identified.</p>';
+            }
 
             // Upcoming
             const today = new Date();
@@ -438,19 +468,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 const diffDays = Math.ceil((date - today) / (1000 * 60 * 60 * 24));
                 return { ...s, diffDays };
             }).filter(s => s.diffDays >= 0).sort((a, b) => a.diffDays - b.diffDays).slice(0, 3);
-
-            document.getElementById('dashboard-upcoming-container').innerHTML = upcoming.map(s => `
-                <li class="upcoming-item">
-                    <div class="upcoming-item__left">
-                        <div class="upcoming-item__dot ${s.diffDays <= 3 ? 'upcoming-item__dot--urgent' : 'upcoming-item__dot--ok'}"></div>
-                        <div class="upcoming-item__info">
-                            <p class="upcoming-item__name">${s.name}</p>
-                            <p class="upcoming-item__time">${s.diffDays === 0 ? 'Today' : 'In ' + s.diffDays + ' days'}</p>
-                        </div>
-                    </div>
-                    <span class="upcoming-item__cost">${formatMoney(s.cost)}</span>
-                </li>
-            `).join('') || '<p style="padding: 16px; color: var(--on-surface-variant); font-size: 14px;">No upcoming renewals.</p>';
+            
+            const upcomingContainer = document.getElementById('dashboard-upcoming-container');
+            if (upcomingContainer) {
+                upcomingContainer.innerHTML = upcoming.map((s, index) => `
+<div class="${index === 0 ? 'pt-space-xs' : 'pt-space-sm'} flex items-center justify-between gap-space-sm">
+    <div class="flex items-center gap-space-sm">
+        <div class="w-10 h-10 rounded-lg bg-surface-container-high border-2 border-on-surface flex items-center justify-center font-headline-sm text-headline-sm text-on-surface">
+            <span class="material-symbols-outlined text-lg">event</span>
+        </div>
+        <div class="flex flex-col">
+            <span class="font-title-md text-title-md text-on-surface">${s.name}</span>
+            <span class="inline-block px-2 py-0.5 bg-surface-container-highest text-on-surface border border-on-surface rounded text-label-sm font-label-sm w-fit font-bold mt-0.5">
+                ${s.diffDays === 0 ? 'Today' : 'In ' + s.diffDays + ' days'}
+            </span>
+        </div>
+    </div>
+    <div class="text-right">
+        <div class="font-tabular-stat text-title-lg text-on-surface">${formatMoney(s.cost)}</div>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">${s.cycle}</span>
+    </div>
+</div>
+                `).join('') || '<p class="font-body-sm text-on-surface-variant p-4">No upcoming renewals.</p>';
+            }
         };
 
         const renderSubscriptions = (filter = 'All', searchQuery = '') => {
@@ -596,22 +636,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const renderBudget = () => {
             const total = getMonthlyTotal();
             const pct = Math.min((total / budget) * 100, 100);
-
-            document.getElementById('budget-current-spend').textContent = formatMoney(total);
-            document.getElementById('budget-goal-display').textContent = formatMoney(budget);
-            document.getElementById('budget-remaining-display').textContent = formatMoney(Math.max(budget - total, 0));
-
-            document.getElementById('budget-percentage').textContent = pct.toFixed(1) + '%';
-            document.getElementById('budget-progress-bar').style.width = pct + '%';
-            document.getElementById('budget-progress-bar').style.backgroundColor = pct > 90 ? 'var(--error)' : 'var(--primary)';
-
+            
+            document.getElementById('budget-stat-current').textContent = formatMoney(total);
+            document.getElementById('budget-stat-goal').textContent = formatMoney(budget);
+            document.getElementById('budget-stat-remaining').textContent = formatMoney(Math.max(budget - total, 0));
+            
+            document.getElementById('budget-utilization-pct').textContent = pct.toFixed(1) + '%';
+            document.getElementById('budget-progress-track').style.width = pct + '%';
+            document.getElementById('budget-progress-track').style.backgroundColor = pct > 90 ? 'var(--error)' : 'var(--primary)';
+            
+            const budgetInput = document.getElementById('budget-input');
+            if (budgetInput && document.activeElement !== budgetInput) {
+                const rate = currencyRates[currentCurrency] || 1;
+                budgetInput.value = (budget * rate).toFixed(2);
+            }
+            
             const cats = {};
             subs.forEach(s => {
                 const norm = normalizeCost(s.cost, s.cycle);
                 cats[s.category] = (cats[s.category] || 0) + norm;
             });
 
-            document.getElementById('budget-categories-container').innerHTML = Object.keys(cats).sort((a, b) => cats[b] - cats[a]).map(c => {
+            document.getElementById('budget-category-list').innerHTML = Object.keys(cats).sort((a,b) => cats[b]-cats[a]).map(c => {
                 const catPct = (cats[c] / budget) * 100;
                 return `
                 <div class="grid-12-cols gap-4 p-4 data-table-row items-center">
@@ -630,8 +676,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const renderCalendar = () => {
             const today = new Date();
             const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-            document.getElementById('cal-month').textContent = today.toLocaleString('default', { month: 'long', year: 'numeric' });
-
+            document.getElementById('cal-month-label').textContent = today.toLocaleString('default', { month: 'long', year: 'numeric' });
+            
             const grid = document.getElementById('calendar-grid');
             let html = '';
             for (let i = 1; i <= daysInMonth; i++) {
@@ -653,7 +699,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return { ...s, diff };
             }).sort((a, b) => a.diff - b.diff).slice(0, 5);
 
-            document.getElementById('cal-upcoming-list').innerHTML = upcoming.map(s => `
+            document.getElementById('upcoming-renewals-list').innerHTML = upcoming.map(s => `
                 <div class="flex-between p-2 border-b border-outline-variant">
                     <div>
                         <h3 class="font-body font-medium">${s.name}</h3>
@@ -772,7 +818,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const logoutBtnEl = document.getElementById('logout-btn');
-        if (logoutBtnEl) logoutBtnEl.addEventListener('click', () => { localStorage.removeItem('essara_session'); window.location.href = 'login.html'; });
+        if (logoutBtnEl) logoutBtnEl.addEventListener('click', () => { localStorage.removeItem('essara_session'); window.location.href = '../login/login.html'; });
 
         // Add Sub Form & Modal Flow
         const subMethod = document.getElementById('sub-method');
@@ -825,17 +871,40 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        const budgetForm = document.getElementById('budget-form');
-        if (budgetForm) {
-            budgetForm.addEventListener('submit', (e) => {
+        const budgetSaveBtn = document.getElementById('budget-save-btn');
+        if (budgetSaveBtn) {
+            budgetSaveBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                const rawBudget = parseFloat(document.getElementById('budget-input').value);
-                const rate = currencyRates[currentCurrency] || 1;
-                budget = rawBudget / rate;
-                saveBudget();
-                renderDashboard();
+                const rawBudget = parseFloat(document.getElementById('budget-input').value.replace(/,/g, ''));
+                if (!isNaN(rawBudget)) {
+                    const rate = currencyRates[currentCurrency] || 1;
+                    budget = rawBudget / rate;
+                    saveBudget();
+                    renderDashboard();
+                }
             });
         }
+        
+        const presetBtns = document.querySelectorAll('.preset-btn');
+        presetBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const val = e.target.closest('.preset-btn').getAttribute('data-preset');
+                if (val !== 'custom') {
+                    const budgetInput = document.getElementById('budget-input');
+                    if (budgetInput) {
+                        budgetInput.value = parseFloat(val).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        presetBtns.forEach(b => {
+                            b.classList.remove('bg-primary', 'text-on-primary');
+                            if (!b.classList.contains('bg-surface-container-high')) {
+                                b.classList.add('bg-surface-container', 'text-on-surface');
+                            }
+                        });
+                        e.target.closest('.preset-btn').classList.remove('bg-surface-container', 'bg-surface-container-high', 'text-on-surface');
+                        e.target.closest('.preset-btn').classList.add('bg-primary', 'text-on-primary');
+                    }
+                }
+            });
+        });
 
         // New users start with an empty slate
         if (subs.length === 0) {

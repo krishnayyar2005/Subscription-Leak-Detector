@@ -5,106 +5,125 @@
    ================================================================ */
 
 /* ===== Font Imports ===== */
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap');
+500;
+600;
+700&family=Space+Grotesk:wght@600;
+700&display=swap');
 
-/* ===== Design Tokens (CSS Custom Properties) ===== */
+
 :root {
-  /* --- Palette --- */
-  --background:               #f8f9ff;
-  --surface:                  #f8f9ff;
-  --surface-bright:           #f8f9ff;
-  --surface-dim:              #cbdbf5;
-  --surface-container-lowest: #ffffff;
-  --surface-container-low:    #eff4ff;
-  --surface-container:        #e5eeff;
-  --surface-container-high:   #dce9ff;
-  --surface-container-highest:#d3e4fe;
-  --surface-variant:          #d3e4fe;
+  --background: #F7F6F2;
+  --surface: #F7F6F2;
+  --surface-bright: #FFFFFF;
+  --surface-dim: #E3E0F4;
+  --surface-container-lowest: #FFFFFF;
+  --surface-container-low: #F5F2FF;
+  --surface-container: #EFECFF;
+  --surface-container-high: #E9E6FA;
+  --surface-container-highest: #E3E0F4;
+  --surface-variant: #E3E0F4;
 
-  --on-background:            #0b1c30;
-  --on-surface:               #0b1c30;
-  --on-surface-variant:       #434656;
+  --on-background: #181826;
+  --on-surface: #181826;
+  --on-surface-variant: #464554;
 
-  --primary:                  #0047fa;
-  --on-primary:               #ffffff;
-  --primary-container:        #1a66ff;
-  --primary-fixed-dim:        #b7c4ff;
+  --primary: #4338CA;
+  --on-primary: #FFFFFF;
+  --primary-container: #C3C0FF;
+  --primary-fixed-dim: #E3DFFF;
 
-  --secondary:                #008f83;
-  --on-secondary:             #ffffff;
-  --secondary-container:      #33ffeb;
-  --on-secondary-container:   #005a52;
-  --secondary-fixed-dim:      #6bd8cb;
+  --secondary: #10B981;
+  --on-secondary: #FFFFFF;
+  --secondary-container: #6CF8BB;
+  --on-secondary-container: #00714D;
+  --secondary-fixed-dim: #6FFBBE;
 
-  --tertiary:                 #6f4500;
-  --tertiary-container:       #905a00;
+  --tertiary: #F43F5E;
+  --tertiary-container: #FFB0B5;
 
-  --error:                    #de0a0a;
-  --on-error:                 #ffffff;
-  --error-container:          #ffe6e4;
-  --on-error-container:       #a3000b;
+  --error: #F43F5E;
+  --on-error: #FFFFFF;
+  --error-container: #FFDAD6;
+  --on-error-container: #93000A;
 
-  --outline:                  #737688;
-  --outline-variant:          #c3c5d9;
+  --outline: #181826;
+  --outline-variant: #181826;
 
-  --inverse-surface:          #213145;
-  --inverse-on-surface:       #eaf1ff;
+  --inverse-surface: #2F2F3E;
+  --inverse-on-surface: #F2EFFF;
 
-  /* --- Typography Families --- */
-  --font-display:  'Geist', sans-serif;
-  --font-headline: 'Geist', sans-serif;
-  --font-body:     'Inter', sans-serif;
-  --font-mono:     'JetBrains Mono', monospace;
-  --font-label:    'Inter', sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-headline: 'Space Grotesk', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'Space Grotesk', sans-serif;
+  --font-label: 'Space Grotesk', sans-serif;
 
-  /* --- Spacing (8px scale) --- */
-  --space-xs:   4px;
-  --space-sm:   8px;
-  --space-md:   16px;
-  --space-lg:   24px;
-  --space-xl:   40px;
-  --gutter:     24px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+  --gutter: 24px;
   --container-max: 1280px;
 
-  /* --- Radii --- */
-  --radius-sm:   2px;
-  --radius-default: 4px;
-  --radius-md:   6px;
-  --radius-lg:   8px;
-  --radius-xl:   12px;
+  --radius-sm: 4px;
+  --radius-default: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
   --radius-full: 9999px;
+
+  --shadow-sm: 2px 2px 0px var(--outline);
+  --shadow-md: 4px 4px 0px var(--outline);
+  --shadow-lg: 6px 6px 0px var(--outline);
+  --shadow-xl: 8px 8px 0px var(--outline);
+  --border-width: 1.5px;
+  --border-width-thick: 2px;
 }
 
-/* --- Dark Mode Overrides --- */
 html.dark {
-  --background:               #101827;
-  --surface:                  #1e293b;
-  --surface-container-lowest: #0f172a;
-  --surface-container-low:    #1e293b;
-  --surface-container:        #283548;
-  --surface-container-high:   #334155;
-  --surface-container-highest:#3f4f65;
-  --surface-variant:          #334155;
+  --background: #12131C;
+  --surface: #12131C;
+  --surface-bright: #1C1D2A;
+  --surface-dim: #090A0F;
+  --surface-container-lowest: #1C1D2A;
+  --surface-container-low: #252636;
+  --surface-container: #2E3044;
+  --surface-container-high: #383A52;
+  --surface-container-highest: #434560;
+  --surface-variant: #383A52;
 
-  --on-background:            #eaf1ff;
-  --on-surface:               #eaf1ff;
-  --on-surface-variant:       #94a3b8;
+  --on-background: #F7F6F2;
+  --on-surface: #F7F6F2;
+  --on-surface-variant: #A1A1AA;
 
-  --primary:                  #8ca6ff;
-  --on-primary:               #001a73;
-  --primary-fixed-dim:        #8ca6ff;
+  --primary: #4338CA;
+  --on-primary: #FFFFFF;
+  --primary-container: #100069;
+  --on-primary-container: #C3C0FF;
+  --primary-fixed-dim: #4338CA;
 
-  --outline:                  #64748b;
-  --outline-variant:          #475569;
+  --secondary: #10B981;
+  --secondary-container: #005236;
+  --on-secondary-container: #6CF8BB;
+  --secondary-fixed-dim: #10B981;
 
-  --error:                    #ff8a8a;
-  --error-container:          #730808;
-  --on-error-container:       #ffb3b3;
+  --tertiary: #F43F5E;
+  --tertiary-container: #7B0022;
+  --on-tertiary-container: #FFB0B5;
 
-  --secondary-container:      #026a4f;
-  --on-secondary-container:   #34d399;
-  --secondary-fixed-dim:      #10b981;
-  --secondary:                #10b981;
+  --error: #F43F5E;
+  --error-container: #730808;
+  --on-error-container: #FFDAD6;
+
+  --outline: #2E3044;
+  --outline-variant: #434560;
+
+  --shadow-sm: 2px 2px 0px #090A0F;
+  --shadow-md: 4px 4px 0px #090A0F;
+  --shadow-lg: 6px 6px 0px #090A0F;
+  --shadow-xl: 8px 8px 0px #090A0F;
 }
 
 /* ===== Reset ===== */
@@ -180,12 +199,13 @@ img {
    ================================================================ */
 .topnav {
   background-color: var(--surface);
-  border-bottom: 1px solid var(--outline-variant);
+  border-bottom: var(--border-width-thick) solid var(--outline);
   position: sticky;
   top: 0;
   z-index: 50;
   width: 100%;
   transition: background-color 0.25s ease, border-color 0.25s ease;
+  box-shadow: 0 4px 0 0 var(--outline);
 }
 
 .topnav__inner {
@@ -219,7 +239,8 @@ img {
 
 /* Desktop nav links container */
 .topnav__links {
-  display: none; /* hidden on mobile */
+  display: none;
+  /* hidden on mobile */
   align-items: center;
   gap: var(--gutter);
   height: 100%;
@@ -304,7 +325,7 @@ img {
   width: 32px;
   height: 32px;
   border-radius: var(--radius-full);
-  border: 1px solid var(--outline-variant);
+  border: var(--border-width-thick) solid var(--outline);
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -324,6 +345,7 @@ img {
   .topnav__links {
     display: flex;
   }
+
   .currency-select {
     display: block;
   }
@@ -380,7 +402,7 @@ img {
 
 .stat-card {
   background-color: var(--surface-container-lowest);
-  border: 1px solid var(--outline-variant);
+  border: var(--border-width-thick) solid var(--outline);
   border-radius: var(--radius-lg);
   padding: var(--space-md);
   display: flex;
@@ -390,10 +412,12 @@ img {
   position: relative;
   overflow: hidden;
   transition: background-color 0.2s ease;
+  box-shadow: var(--shadow-md);
 }
 
 .stat-card:hover {
-  background-color: var(--surface-container-low);
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-lg);
 }
 
 /* Leak card variant */
@@ -526,10 +550,11 @@ img {
    ================================================================ */
 .card {
   background-color: var(--surface-container-lowest);
-  border: 1px solid var(--outline-variant);
+  border: var(--border-width-thick) solid var(--outline);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
   transition: background-color 0.25s ease, border-color 0.25s ease;
+  box-shadow: var(--shadow-md);
 }
 
 .card__header {
@@ -538,7 +563,7 @@ img {
   align-items: center;
   padding-bottom: var(--space-sm);
   margin-bottom: var(--space-md);
-  border-bottom: 1px solid var(--outline-variant);
+  border-bottom: var(--border-width-thick) solid var(--outline);
 }
 
 .card__title {
@@ -569,7 +594,7 @@ img {
    OVERLAP GROUP (inside Identified Overlaps card)
    ================================================================ */
 .overlap-group {
-  border: 1px solid var(--outline-variant);
+  border: var(--border-width-thick) solid var(--outline);
   border-radius: var(--radius-default);
   padding: var(--space-md);
   background-color: var(--surface);
@@ -622,7 +647,7 @@ img {
 }
 
 .overlap-table thead tr {
-  border-bottom: 1px solid var(--outline-variant);
+  border-bottom: var(--border-width-thick) solid var(--outline);
 }
 
 .overlap-table th {
@@ -776,7 +801,7 @@ img {
    ================================================================ */
 .site-footer {
   background-color: var(--surface-container-lowest);
-  border-top: 1px solid var(--outline-variant);
+  border-top: var(--border-width-thick) solid var(--outline);
   margin-top: auto;
   width: 100%;
   transition: background-color 0.25s ease, border-color 0.25s ease;
@@ -844,6 +869,7 @@ img {
   .site-footer__inner {
     grid-template-columns: 1fr 3fr;
   }
+
   .site-footer__links-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -883,7 +909,7 @@ img {
   right: 0;
   width: 240px;
   background-color: var(--surface-container-lowest);
-  border: 1px solid var(--outline-variant);
+  border: var(--border-width-thick) solid var(--outline);
   border-radius: var(--radius-lg);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   padding: var(--space-xs);
@@ -1037,8 +1063,13 @@ html.dark .profile-dropdown {
 }
 
 @keyframes leak-wave {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .leak-tide__caption {
@@ -1049,7 +1080,7 @@ html.dark .profile-dropdown {
   align-items: flex-end;
   margin-top: var(--space-xl);
   padding-top: var(--space-md);
-  border-top: 1px solid var(--outline-variant);
+  border-top: var(--border-width-thick) solid var(--outline);
 }
 
 .leak-tide__caption-item {

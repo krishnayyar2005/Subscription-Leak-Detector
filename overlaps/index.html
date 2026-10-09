@@ -1,167 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ESSARA - Overlaps & Leaks</title>
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-    <!-- Material Symbols -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="../dashboard 2/css/style.css">
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ESSARA - Overlaps</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style>
+<script src="https://cdn.tailwindcss.com"></script>
+<script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-background":"var(--on-background, #1a1a28)","on-surface":"var(--on-surface, #1a1a28)","outline-variant":"var(--outline-variant, #c7c4d7)","on-tertiary-fixed-variant":"var(--on-tertiary-fixed-variant, #92002a)","on-secondary-container":"var(--on-secondary-container, #00714d)","outline":"var(--outline, #777586)","surface":"var(--surface, #fcf8ff)","on-primary-fixed":"var(--on-primary-fixed, #100069)","primary":"var(--primary, #2a14b4)","secondary-container":"var(--secondary-container, #6cf8bb)","surface-container-high":"var(--surface-container-high, #e9e6fa)","error-container":"var(--error-container, #ffdad6)","inverse-primary":"var(--inverse-primary, #c3c0ff)","on-primary":"var(--on-primary, #ffffff)","on-tertiary":"var(--on-tertiary, #ffffff)","on-surface-variant":"var(--on-surface-variant, #464554)","on-primary-fixed-variant":"var(--on-primary-fixed-variant, #372abf)","surface-container":"var(--surface-container, #efecff)","background":"var(--background, #fcf8ff)","on-tertiary-container":"var(--on-tertiary-container, #ffb0b5)","surface-container-low":"var(--surface-container-low, #f5f2ff)","on-secondary":"var(--on-secondary, #ffffff)","on-secondary-fixed":"var(--on-secondary-fixed, #002113)","on-error-container":"var(--on-error-container, #93000a)","primary-fixed-dim":"var(--primary-fixed-dim, #c3c0ff)","surface-tint":"var(--surface-tint, #5148d7)","secondary":"var(--secondary, #006c49)","surface-dim":"var(--surface-dim, #dad8ec)","tertiary-fixed":"var(--tertiary-fixed, #ffdadb)","tertiary-fixed-dim":"var(--tertiary-fixed-dim, #ffb2b7)","inverse-on-surface":"var(--inverse-on-surface, #f2efff)","on-secondary-fixed-variant":"var(--on-secondary-fixed-variant, #005236)","on-tertiary-fixed":"var(--on-tertiary-fixed, #40000d)","on-error":"var(--on-error, #ffffff)","secondary-fixed-dim":"var(--secondary-fixed-dim, #4edea3)","secondary-fixed":"var(--secondary-fixed, #6ffbbe)","surface-container-lowest":"var(--surface-container-lowest, #ffffff)","surface-variant":"var(--surface-variant, #e3e0f4)","primary-fixed":"var(--primary-fixed, #e3dfff)","inverse-surface":"var(--inverse-surface, #2f2f3e)","tertiary-container":"var(--tertiary-container, #a60031)","error":"var(--error, #ba1a1a)","tertiary":"var(--tertiary, #7b0022)","surface-bright":"var(--surface-bright, #fcf8ff)","primary-container":"var(--primary-container, #4338ca)","surface-container-highest":"var(--surface-container-highest, #e3e0f4)","on-primary-container":"var(--on-primary-container, #c1beff)"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"margin-mobile":"1rem","margin-desktop":"2.5rem","space-md":"1rem",margin:"1.5rem","gutter-mobile":"0.75rem","space-xl":"2.25rem","space-lg":"1.5rem","space-xs":"0.25rem","gutter-desktop":"1.5rem","space-sm":"0.5rem",gutter:"1.25rem"},fontFamily:{display:["Space Grotesk"],"label-lg":["Space Grotesk"],"body-sm":["Plus Jakarta Sans"],"tabular-stat":["Space Grotesk"],"label-sm":["Space Grotesk"],"label-md":["Space Grotesk"],"body-md":["Plus Jakarta Sans"],"headline-md":["Space Grotesk"],"title-md":["Plus Jakarta Sans"],"headline-sm":["Space Grotesk"],"body-lg":["Plus Jakarta Sans"],"display-mobile":["Space Grotesk"],"title-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Space Grotesk"],"headline-lg":["Space Grotesk"]},fontSize:{display:["56px",{lineHeight:"64px",letterSpacing:"-0.03em",fontWeight:"700"}],"label-lg":["14px",{lineHeight:"20px",letterSpacing:"0.02em",fontWeight:"600"}],"body-sm":["12px",{lineHeight:"18px",fontWeight:"400"}],"tabular-stat":["32px",{lineHeight:"38px",letterSpacing:"-0.02em",fontWeight:"700"}],"label-sm":["10px",{lineHeight:"14px",letterSpacing:"0.06em",fontWeight:"700"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.04em",fontWeight:"600"}],"body-md":["14px",{lineHeight:"22px",fontWeight:"400"}],"headline-md":["26px",{lineHeight:"32px",letterSpacing:"-0.015em",fontWeight:"600"}],"title-md":["16px",{lineHeight:"24px",fontWeight:"600"}],"headline-sm":["20px",{lineHeight:"28px",letterSpacing:"-0.01em",fontWeight:"600"}],"body-lg":["16px",{lineHeight:"26px",fontWeight:"400"}],"display-mobile":["38px",{lineHeight:"44px",letterSpacing:"-0.02em",fontWeight:"700"}],"title-lg":["18px",{lineHeight:"26px",letterSpacing:"-0.01em",fontWeight:"700"}],"headline-lg-mobile":["28px",{lineHeight:"34px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-lg":["36px",{lineHeight:"44px",letterSpacing:"-0.02em",fontWeight:"700"}]}}}};</script>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  /* Patch for overlaps-list-container dynamic elements injected by script.js */
+  #overlaps-list-container {
+    display: flex; flex-direction: column; gap: 1.5rem;
+  }
+  #overlaps-list-container > .bg-surface {
+    background-color: var(--surface-container-lowest);
+    border: 2px solid var(--on-surface);
+    border-radius: 0.75rem;
+    box-shadow: 4px 4px 0px #1a1a28;
+    overflow: hidden;
+  }
+  #overlaps-list-container .bg-surface-container-low {
+    background-color: var(--surface-container-low);
+    padding: 1rem 1.5rem;
+    border-bottom: 2px solid var(--on-surface);
+  }
+  #overlaps-list-container .text-primary { color: var(--primary); }
+  #overlaps-list-container .bg-surface-variant { 
+    background-color: var(--primary-container); color: var(--on-primary); 
+    border-radius: 8px; width: 40px; height: 40px; display: flex; 
+    align-items: center; justify-content: center; font-weight: bold; 
+  }
+  #overlaps-list-container .font-headline-md { font-family: "Space Grotesk", sans-serif; font-size: 20px; font-weight: 600; color: var(--on-surface); }
+  #overlaps-list-container .text-error { color: var(--on-error-container); }
+  #overlaps-list-container .bg-error-10 { 
+    background-color: var(--error-container); border: none; padding: 4px 16px; 
+    border-radius: 9999px; display: inline-flex; flex-direction: row; 
+    align-items: center; gap: 8px; font-weight: bold;
+  }
+  
+  /* Table styling patch */
+  #overlaps-list-container table { width: 100%; border-collapse: collapse; }
+  #overlaps-list-container th { 
+    padding: 0.5rem 1rem; font-family: "Space Grotesk", sans-serif; 
+    font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--on-surface); 
+  }
+  #overlaps-list-container tr.bg-surface { border-bottom: 2px solid var(--on-surface); background-color: var(--surface-container-low); }
+  #overlaps-list-container td { padding: 1rem 1.5rem; font-family: "Plus Jakarta Sans", sans-serif; font-size: 14px; }
+  #overlaps-list-container .bg-error-5 { background-color: var(--surface-container-lowest); }
+  #overlaps-list-container .hover\:bg-error-10:hover { background-color: var(--surface-container-low); }
+  #overlaps-list-container tbody tr { border-bottom: 2px solid var(--on-surface); }
+  #overlaps-list-container tbody tr:last-child { border-bottom: none; }
+  
+  #overlaps-list-container .bg-secondary-10 { 
+    background-color: var(--secondary-container); color: var(--on-secondary-fixed); 
+    border-radius: 9999px; padding: 4px 12px; border: none; font-weight: bold; display: inline-flex;
+  }
+  #overlaps-list-container .bg-error-10.text-error {
+     background-color: var(--error-container); color: var(--tertiary);
+     border-radius: 9999px; padding: 4px 12px; border: none; font-weight: bold; display: inline-flex;
+  }
+  #overlaps-list-container .border-secondary-20 { border: none; }
+  #overlaps-list-container .border-error-20 { border: none; }
+  #overlaps-list-container .font-label-caps { font-family: "Space Grotesk", sans-serif; text-transform: uppercase; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; }
+  #overlaps-list-container .font-data-mono { font-family: "Space Grotesk", sans-serif; font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+  
+  /* Icon buttons patch */
+  #overlaps-list-container .text-on-surface-variant:hover { color: var(--tertiary); cursor: pointer; }
+</style>
 </head>
-<body>
+<body class="bg-surface font-body-md text-on-surface antialiased">
+<header class="fixed top-0 left-0 w-full z-50 bg-surface-container-lowest border-b-2 border-on-surface shadow-[0_4px_0_0_#1a1a28]" id="topnav">
+<div class="h-20 w-full px-margin-desktop flex items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-lg">
+<a class="flex items-center gap-space-sm group" data-path="overview" href="../dashboard/dashboard.html">
+<img alt="ESSARA Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9VjBNIxNDiZkQvDeIENwyRQ8r7KVx8gFpyPBaQr9JZzwyHj2oAvGMoHg5aT173T0KWjvKGnjR6IV6xe5jjI3OU0DYyvONBmR3rkpf4tHl2JIJ1zXTBVbFx4UAwSlbiJrPlqJNljOeyzF-voI-Q1Zx3Vk4b4lZR9P7kOehH_kZLn6uOk_Sd4I8ThKTlAVyMqQbfumCZnyIe5zpMEGkQVenJAtJqW8WKxZsbnwMQ2MGlB2bZhu0Xyw"/>
+<span class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface group-hover:text-primary transition-colors">ESSARA</span>
+</a>
+<nav class="flex items-center gap-space-xs p-1 bg-surface-container-low border-2 border-on-surface rounded-lg" data-active-classes="bg-primary-container text-on-primary font-bold shadow-[2px_2px_0px_#1a1a28] border-2 border-on-surface" id="dashboard-nav">
+<a class="px-space-md py-1.5 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-all rounded" data-path="overview" href="../dashboard/dashboard.html">Overview</a>
+<a class="px-space-md py-1.5 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-all rounded" data-path="subscriptions" href="../subscription/subscription.html">Subscriptions</a>
+<a aria-current="page" class="px-space-md py-1.5 transition-all rounded bg-primary-container text-on-primary font-bold shadow-[2px_2px_0px_#1a1a28] border-2 border-on-surface" data-path="overlaps" href="../overlaps/index.html">Overlaps</a>
+<a class="px-space-md py-1.5 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-all rounded" data-path="reports" href="../reports/reports.html">Reports</a>
+<a class="px-space-md py-1.5 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-all rounded" data-path="budget" href="../budget/budget.html">Budget</a>
+<a class="px-space-md py-1.5 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-all rounded" data-path="calendar" href="../calendar/calendar.html">Calendar</a>
+</nav>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="relative">
+<select aria-label="Currency Selector" class="appearance-none bg-surface-container-low border-2 border-on-surface rounded-lg px-space-md py-1.5 font-label-md text-label-md text-on-surface pr-8 shadow-[2px_2px_0px_#1a1a28] focus:outline-none cursor-pointer" id="currency-select">
+<option value="USD">USD $</option>
+<option value="EUR">EUR €</option>
+<option value="GBP">GBP £</option>
+<option value="INR">INR ₹</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface pointer-events-none text-base">expand_more</span>
+</div>
+<button aria-label="Toggle Dark Mode" class="p-2 bg-surface-container-low border-2 border-on-surface rounded-lg shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#1a1a28] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center justify-center" id="theme-toggle" type="button">
+<span class="material-symbols-outlined text-on-surface text-xl" id="theme-icon">dark_mode</span>
+</button>
+<div class="relative group" id="profile-menu-container">
+<button class="flex items-center gap-space-xs p-1 bg-surface-container-low border-2 border-on-surface rounded-full shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#1a1a28] transition-all" id="profile-icon" type="button">
+<div class="relative">
+<img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDu7pO4kC26aUIRlcST_3q_9tgdE4O20AgoDCcykK1hykCwT9PlJZ79P82wn7hbKMuF5KDRnBiRVUsOjsSDYgv0rfZ_IB5K5DvdpRX1sxq_qt8w56fHgEY0TUeCO6rg7Nl6Qe0Bl5OeeVUJq0ChunOFzMzqqtQeFL_KN-sadm75GqDHiIi3Qc7LKFjcl2n8kF1B6NpCGyDWiZRzCibTEyP3CE-lo-wS6nSuT69lBVoB4NnuUuL2LBo"/>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-secondary border border-surface-container-lowest rounded-full"></span>
+</div>
+<span class="material-symbols-outlined text-on-surface pr-1 text-sm hidden sm:inline-block">expand_more</span>
+</button>
+<div class="absolute right-0 mt-2 w-64 bg-surface-container-lowest border-2 border-on-surface rounded-xl shadow-[6px_6px_0px_#1a1a28] p-space-md opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity z-50" id="profile-dropdown">
+<div class="border-b-2 border-on-surface pb-space-sm mb-space-sm">
+<div class="font-title-md text-title-md text-on-surface" id="user-display-name">Alex Morgan</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant" id="user-display-email">alex.morgan@essara.io</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<a class="px-space-sm py-1.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" data-path="overview" href="../dashboard/dashboard.html">Account Settings</a>
+<a class="px-space-sm py-1.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" data-path="overview" href="../dashboard/dashboard.html">Billing &amp; Plans</a>
+<a class="mt-space-xs flex items-center justify-between px-space-sm py-2 font-label-md text-label-md text-on-error bg-tertiary-container border-2 border-on-surface rounded-lg shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#1a1a28] transition-all" data-path="login" href="../login/login.html" id="logout-btn">
+<span>Log out</span>
+<span class="material-symbols-outlined text-base">logout</span>
+</a>
+</div>
+</div>
+</div>
+<button aria-label="Open Mobile Navigation" class="xl:hidden p-2 bg-surface-container-low border-2 border-on-surface rounded-lg shadow-[2px_2px_0px_#1a1a28]" type="button">
+<span class="material-symbols-outlined text-on-surface">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main class="w-full pt-20 bg-surface min-h-[calc(100vh-5rem)]">
+<div class="flex flex-col w-full">
+<!-- Interactive Audit & Resolution Bar -->
+<div class="w-full max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-space-lg flex flex-col gap-space-lg">
+<!-- Header Context -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="space-y-space-xs">
+<div class="inline-flex items-center gap-space-xs px-space-sm py-0.5 rounded-full bg-surface-container-high text-on-surface">
+<span class="material-symbols-outlined text-base text-primary">rule_folder</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Redundancy Engine v3.4</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Subscription Overlaps</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+          Automated analysis detected duplicate capabilities across active accounts. Pruning marked redundancies will instantly recover trapped budget.
+        </p>
+</div>
+</div>
 
-    <!-- ===== Top Navigation Bar ===== -->
-    <nav class="topnav" id="topnav">
-        <div class="topnav__inner">
-            <!-- Brand -->
-            <div class="topnav__left">
-                <a href="../index.html" class="topnav__brand">ESSARA</a>
-                <!-- Desktop Nav Links -->
-                <div class="topnav__links" id="nav-links">
-                    <a href="../dashboard 2/dashboard.html" class="topnav__link">Overview</a>
-                    <a href="../subscription/subscription.html" class="topnav__link">Subscriptions</a>
-                    <a href="index.html" class="topnav__link topnav__link--active">Overlaps</a>
-                    <a href="../reports/reports.html" class="topnav__link">Reports</a>
-                    <a href="../budget.html" class="topnav__link">Budget</a>
-                    <a href="../calendar.html" class="topnav__link">Calendar</a>
-                </div>
-            </div>
-            <!-- Actions -->
-            <div class="topnav__actions">
-                <select class="currency-select" id="currency-select">
-                    <option value="USD">USD ($)</option>
-                    <option value="EUR">EUR (€)</option>
-                    <option value="GBP">GBP (£)</option>
-                    <option value="INR">INR (₹)</option>
-                </select>
-                <button class="icon-btn" id="theme-toggle" aria-label="Toggle dark mode">
-                    <span class="material-symbols-outlined">dark_mode</span>
-                </button>
-                <div class="profile-menu-container" id="profile-menu-container">
-                    <div class="avatar" id="profile-icon" role="button" tabindex="0">
-                        <span class="material-symbols-outlined">person</span>
-                    </div>
-                    <div class="profile-dropdown" id="profile-dropdown">
-                        <div class="profile-dropdown__header">
-                            <span class="profile-dropdown__name" id="user-display-name"></span>
-                            <span class="profile-dropdown__email" id="user-display-email"></span>
-                        </div>
-                        <div class="profile-dropdown__divider"></div>
-                        <button class="profile-dropdown__item profile-dropdown__item--danger" id="logout-btn">
-                            <span class="material-symbols-outlined" style="font-size: 18px;">logout</span>
-                            Log out
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+<!-- Stat Row: Structured 3-Card Array -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- Stat 1: Groups Detected -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-md flex flex-col justify-between relative overflow-hidden border-2 border-on-surface shadow-[4px_4px_0px_#1a1a28]">
+<div class="flex items-center justify-between pb-space-sm border-b-2 border-on-surface">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Cluster Detection</span>
+<span class="p-1 rounded bg-surface-container text-primary border border-on-surface">
+<span class="material-symbols-outlined text-lg">stacks</span>
+</span>
+</div>
+<div class="mt-space-md">
+<div class="font-tabular-stat text-tabular-stat text-on-surface"><span id="stat-active-groups">0</span> Groups</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xs">
+            Active overlapping utility categories
+          </p>
+</div>
+<div class="mt-space-md pt-space-xs flex items-center gap-1.5 text-primary">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-sm text-label-sm font-semibold uppercase tracking-wide">Live sync active</span>
+</div>
+</div>
+<!-- Stat 2: Total Leak -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-md flex flex-col justify-between relative overflow-hidden border-2 border-on-surface shadow-[4px_4px_0px_#1a1a28]">
+<div class="flex items-center justify-between pb-space-sm border-b-2 border-on-surface">
+<span class="font-label-md text-label-md text-on-tertiary-container uppercase tracking-wider">Total Monthly Leak</span>
+<span class="p-1 rounded bg-error-container text-tertiary border border-on-surface">
+<span class="material-symbols-outlined text-lg">warning</span>
+</span>
+</div>
+<div class="mt-space-md">
+<div class="font-tabular-stat text-tabular-stat text-tertiary"><span id="stat-total-leak">$0.00</span> <span class="font-headline-sm text-headline-sm text-on-surface-variant">/yr</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xs">
+            Directly actionable redundancy bleeding from main card
+          </p>
+</div>
+<div class="mt-space-md inline-flex items-center gap-space-xs px-2 py-0.5 rounded-full bg-error-container text-on-error-container w-fit border border-on-error-container">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="font-label-sm text-label-sm font-bold">Priority Resolution</span>
+</div>
+</div>
+<!-- Stat 3: Savings Target -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-md flex flex-col justify-between relative overflow-hidden border-2 border-on-surface shadow-[4px_4px_0px_#1a1a28]">
+<div class="flex items-center justify-between pb-space-sm border-b-2 border-on-surface">
+<span class="font-label-md text-label-md text-on-secondary-container uppercase tracking-wider">Annual Opportunity</span>
+<span class="p-1 rounded bg-secondary-container text-secondary border border-on-surface">
+<span class="material-symbols-outlined text-lg">savings</span>
+</span>
+</div>
+<div class="mt-space-md">
+<div class="font-tabular-stat text-tabular-stat text-secondary"><span id="stat-savings-target">$0.00</span> <span class="font-headline-sm text-headline-sm text-on-surface-variant">/yr</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xs">
+            Cumulative annual savings if marked tools are pruned
+          </p>
+</div>
+<div class="mt-space-md inline-flex items-center gap-space-xs px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed border border-secondary">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+<span class="font-label-sm text-label-sm font-bold">100% safe to cut</span>
+</div>
+</div>
+</div>
+<!-- Redundancy Cluster Deck Header -->
+<div class="flex items-center justify-between mt-space-sm pt-space-xs">
+<div class="flex items-center gap-space-sm">
+<h2 class="font-title-lg text-title-lg text-on-surface font-bold">Detected Overlap Clusters</h2>
+</div>
+<div class="text-on-surface-variant font-body-sm text-body-sm hidden sm:block">
+        Sorted by highest financial bleed
+      </div>
+</div>
 
-    <!-- ===== Main Content ===== -->
-    <main class="main-content">
-        <!-- Header -->
-        <header class="page-header">
-            <h1 class="page-header__title">Subscription Overlaps</h1>
-            <p class="page-header__subtitle max-w-3xl">Identify redundant software within categories. We calculate projected annual leaks based on retaining only the most robust (highest cost) tool per category.</p>
-        </header>
+<!-- Dynamic Injection Container -->
+<section class="flex flex-col gap-6 w-full" id="overlaps-list-container">
+<!-- JS WILL INJECT CONTENT HERE -->
+</section>
 
-        <!-- Summary Cards -->
-        <section class="stats-grid overlaps-stats-grid">
-            <!-- Card 1 -->
-            <article class="stat-card stat-card--overlaps">
-                <div class="stat-card__top">
-                    <span class="stat-card__label">Total Projected Leak</span>
-                    <div class="stat-card__value-wrapper">
-                        <span class="stat-card__value text-error" id="stat-total-leak">$0.00</span>
-                        <span class="stat-card__unit text-error">/yr</span>
-                    </div>
-                </div>
-                <div class="stat-card__bottom">
-                    <span class="stat-card__change stat-card__change--error">
-                        <span class="material-symbols-outlined stat-card__change-icon">trending_up</span> +12% from last month
-                    </span>
-                    <span class="material-symbols-outlined stat-card__bg-icon text-error-container">water_drop</span>
-                </div>
-            </article>
-            
-            <!-- Card 2 -->
-            <article class="stat-card stat-card--overlaps">
-                <div class="stat-card__top">
-                    <span class="stat-card__label">Active Overlap Groups</span>
-                    <div class="stat-card__value-wrapper">
-                        <span class="stat-card__value text-primary" id="stat-active-groups">0</span>
-                    </div>
-                </div>
-                <div class="stat-card__bottom">
-                    <span class="stat-card__subtext">Across 12 subscriptions</span>
-                    <span class="material-symbols-outlined stat-card__bg-icon text-surface-variant">category</span>
-                </div>
-            </article>
-            
-            <!-- Card 3 -->
-            <article class="stat-card stat-card--overlaps">
-                <div class="stat-card__top">
-                    <span class="stat-card__label">Potential Savings Target</span>
-                    <div class="stat-card__value-wrapper">
-                        <span class="stat-card__value text-secondary" id="stat-savings-target">$0.00</span>
-                        <span class="stat-card__unit">/yr</span>
-                    </div>
-                </div>
-                <div class="stat-card__bottom">
-                    <span class="stat-card__subtext">Realistic reduction goal</span>
-                    <span class="material-symbols-outlined stat-card__bg-icon text-secondary-container">savings</span>
-                </div>
-            </article>
-        </section>
-        <!-- Overlap Groups Data -->
-        <section class="flex flex-col gap-6" id="overlaps-list-container">
-            <div class="p-4 text-center font-body text-on-surface-variant">No overlaps yet.</div>
-        </section>
-    </main>
-
-
-
-    <!-- Scripts -->
-    <script src="../js/script.js"></script>
-    <script src="js/script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const trigger = document.getElementById("profile-icon");
-            const dropdown = document.getElementById("profile-dropdown");
-            if (trigger && dropdown) {
-                // Populate user info
-                try {
-                    const session = JSON.parse(localStorage.getItem('essara_session'));
-                    if (session) {
-                        document.getElementById('user-display-name').textContent = session.name;
-                        document.getElementById('user-display-email').textContent = session.email;
-                    }
-                } catch(e) {}
-
-                trigger.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    dropdown.classList.toggle("open");
-                });
-                document.addEventListener("click", (e) => {
-                    if (!dropdown.contains(e.target) && !trigger.contains(e.target)) {
-                        dropdown.classList.remove("open");
-                    }
-                });
-            }
-            const logoutBtn = document.getElementById("logout-btn");
-            if (logoutBtn) {
-                logoutBtn.addEventListener("click", () => {
-                    localStorage.removeItem('essara_session');
-                    window.location.href = '../login.html';
-                });
-            }
-        });
-    </script>
+</div>
+</div>
+</main>
+<script src="../js/script.js"></script>
 </body>
 </html>

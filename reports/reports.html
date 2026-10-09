@@ -1,123 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ESSARA - Reports</title>
-    <meta name="description" content="ESSARA Reports — Category spend breakdown with overlap detection.">
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-    <!-- Material Symbols -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="../dashboard 2/css/style.css">
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ESSARA - Reports</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style>
+<script src="https://cdn.tailwindcss.com"></script>
+<script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-background":"var(--on-background, #1a1a28)","on-surface":"var(--on-surface, #1a1a28)","outline-variant":"var(--outline-variant, #c7c4d7)","on-tertiary-fixed-variant":"var(--on-tertiary-fixed-variant, #92002a)","on-secondary-container":"var(--on-secondary-container, #00714d)","outline":"var(--outline, #777586)","surface":"var(--surface, #fcf8ff)","on-primary-fixed":"var(--on-primary-fixed, #100069)","primary":"var(--primary, #2a14b4)","secondary-container":"var(--secondary-container, #6cf8bb)","surface-container-high":"var(--surface-container-high, #e9e6fa)","error-container":"var(--error-container, #ffdad6)","inverse-primary":"var(--inverse-primary, #c3c0ff)","on-primary":"var(--on-primary, #ffffff)","on-tertiary":"var(--on-tertiary, #ffffff)","on-surface-variant":"var(--on-surface-variant, #464554)","on-primary-fixed-variant":"var(--on-primary-fixed-variant, #372abf)","surface-container":"var(--surface-container, #efecff)","background":"var(--background, #fcf8ff)","on-tertiary-container":"var(--on-tertiary-container, #ffb0b5)","surface-container-low":"var(--surface-container-low, #f5f2ff)","on-secondary":"var(--on-secondary, #ffffff)","on-secondary-fixed":"var(--on-secondary-fixed, #002113)","on-error-container":"var(--on-error-container, #93000a)","primary-fixed-dim":"var(--primary-fixed-dim, #c3c0ff)","surface-tint":"var(--surface-tint, #5148d7)","secondary":"var(--secondary, #006c49)","surface-dim":"var(--surface-dim, #dad8ec)","tertiary-fixed":"var(--tertiary-fixed, #ffdadb)","tertiary-fixed-dim":"var(--tertiary-fixed-dim, #ffb2b7)","inverse-on-surface":"var(--inverse-on-surface, #f2efff)","on-secondary-fixed-variant":"var(--on-secondary-fixed-variant, #005236)","on-tertiary-fixed":"var(--on-tertiary-fixed, #40000d)","on-error":"var(--on-error, #ffffff)","secondary-fixed-dim":"var(--secondary-fixed-dim, #4edea3)","secondary-fixed":"var(--secondary-fixed, #6ffbbe)","surface-container-lowest":"var(--surface-container-lowest, #ffffff)","surface-variant":"var(--surface-variant, #e3e0f4)","primary-fixed":"var(--primary-fixed, #e3dfff)","inverse-surface":"var(--inverse-surface, #2f2f3e)","tertiary-container":"var(--tertiary-container, #a60031)","error":"var(--error, #ba1a1a)","tertiary":"var(--tertiary, #7b0022)","surface-bright":"var(--surface-bright, #fcf8ff)","primary-container":"var(--primary-container, #4338ca)","surface-container-highest":"var(--surface-container-highest, #e3e0f4)","on-primary-container":"var(--on-primary-container, #c1beff)"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"margin-mobile":"1rem","margin-desktop":"2.5rem","space-md":"1rem",margin:"1.5rem","gutter-mobile":"0.75rem","space-xl":"2.25rem","space-lg":"1.5rem","space-xs":"0.25rem","gutter-desktop":"1.5rem","space-sm":"0.5rem",gutter:"1.25rem"},fontFamily:{display:["Space Grotesk"],"label-lg":["Space Grotesk"],"body-sm":["Plus Jakarta Sans"],"tabular-stat":["Space Grotesk"],"label-sm":["Space Grotesk"],"label-md":["Space Grotesk"],"body-md":["Plus Jakarta Sans"],"headline-md":["Space Grotesk"],"title-md":["Plus Jakarta Sans"],"headline-sm":["Space Grotesk"],"body-lg":["Plus Jakarta Sans"],"display-mobile":["Space Grotesk"],"title-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Space Grotesk"],"headline-lg":["Space Grotesk"]},fontSize:{display:["56px",{lineHeight:"64px",letterSpacing:"-0.03em",fontWeight:"700"}],"label-lg":["14px",{lineHeight:"20px",letterSpacing:"0.02em",fontWeight:"600"}],"body-sm":["12px",{lineHeight:"18px",fontWeight:"400"}],"tabular-stat":["32px",{lineHeight:"38px",letterSpacing:"-0.02em",fontWeight:"700"}],"label-sm":["10px",{lineHeight:"14px",letterSpacing:"0.06em",fontWeight:"700"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.04em",fontWeight:"600"}],"body-md":["14px",{lineHeight:"22px",fontWeight:"400"}],"headline-md":["26px",{lineHeight:"32px",letterSpacing:"-0.015em",fontWeight:"600"}],"title-md":["16px",{lineHeight:"24px",fontWeight:"600"}],"headline-sm":["20px",{lineHeight:"28px",letterSpacing:"-0.01em",fontWeight:"600"}],"body-lg":["16px",{lineHeight:"26px",fontWeight:"400"}],"display-mobile":["38px",{lineHeight:"44px",letterSpacing:"-0.02em",fontWeight:"700"}],"title-lg":["18px",{lineHeight:"26px",letterSpacing:"-0.01em",fontWeight:"700"}],"headline-lg-mobile":["28px",{lineHeight:"34px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-lg":["36px",{lineHeight:"44px",letterSpacing:"-0.02em",fontWeight:"700"}]}}}};</script>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  /* Patch for dynamically injected table rows */
+  #reports-table-body .data-table-row { border-bottom: 2px solid var(--on-surface); background-color: var(--surface-container-lowest); transition: background-color 0.2s; }
+  #reports-table-body .data-table-row:hover { background-color: var(--surface-container-low); }
+  #reports-table-body .data-table-row td { padding: 1rem 1.5rem; font-family: "Plus Jakarta Sans", sans-serif; font-size: 14px; }
+  #reports-table-body .font-medium { font-weight: 600; font-family: "Plus Jakarta Sans", sans-serif; }
+  #reports-table-body .font-mono { font-family: "Space Grotesk", sans-serif; font-size: 16px; font-weight: 700; }
+  #reports-table-body .bg-error-container { background-color: var(--error-container); border: none; padding: 4px 12px; border-radius: 9999px; display: inline-flex; font-weight: bold; color: var(--tertiary);}
+  #reports-table-body .bg-secondary-bg { background-color: var(--secondary-container); border: none; padding: 4px 12px; border-radius: 9999px; display: inline-flex; font-weight: bold; color: var(--on-secondary-fixed);}
+  #reports-table-body .font-label-caps { text-transform: uppercase; font-size: 12px; font-family: "Space Grotesk", sans-serif; letter-spacing: 0.04em; }
+</style>
 </head>
-<body>
-
-    <!-- ===== Top Navigation Bar ===== -->
-    <nav class="topnav" id="topnav">
-        <div class="topnav__inner">
-            <!-- Brand -->
-            <div class="topnav__left">
-                <a href="../index.html" class="topnav__brand">ESSARA</a>
-                <!-- Desktop Nav Links -->
-                <div class="topnav__links" id="nav-links">
-                    <a href="../dashboard 2/dashboard.html" class="topnav__link">Overview</a>
-                    <a href="../subscription/subscription.html" class="topnav__link">Subscriptions</a>
-                    <a href="../overlaps/index.html" class="topnav__link">Overlaps</a>
-                    <a href="reports.html" class="topnav__link topnav__link--active">Reports</a>
-                    <a href="../budget.html" class="topnav__link">Budget</a>
-                    <a href="../calendar.html" class="topnav__link">Calendar</a>
-                </div>
-            </div>
-            <!-- Actions -->
-            <div class="topnav__actions">
-                <select class="currency-select" id="currency-select">
-                    <option value="USD">USD ($)</option>
-                    <option value="EUR">EUR (€)</option>
-                    <option value="GBP">GBP (£)</option>
-                    <option value="INR">INR (₹)</option>
-                </select>
-                <button class="icon-btn" id="theme-toggle" aria-label="Toggle dark mode">
-                    <span class="material-symbols-outlined">dark_mode</span>
-                </button>
-                <div class="profile-menu-container" id="profile-menu-container">
-                    <div class="avatar" id="profile-icon" role="button" tabindex="0">
-                        <span class="material-symbols-outlined">person</span>
-                    </div>
-                    <div class="profile-dropdown" id="profile-dropdown">
-                        <div class="profile-dropdown__header">
-                            <span class="profile-dropdown__name" id="user-display-name"></span>
-                            <span class="profile-dropdown__email" id="user-display-email"></span>
-                        </div>
-                        <div class="profile-dropdown__divider"></div>
-                        <button class="profile-dropdown__item profile-dropdown__item--danger" id="logout-btn">
-                            <span class="material-symbols-outlined" style="font-size: 18px;">logout</span>
-                            Log out
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- ===== Main Content ===== -->
-    <main class="main-content" id="view-reports">
-
-        <!-- Page Header -->
-        <div class="reports-header">
-            <div class="reports-header__text">
-                <h1 class="page-header__title">Category Spend Report</h1>
-                <p class="page-header__subtitle">Breakdown of subscription costs normalized across categories.</p>
-            </div>
-            <div class="reports-header__actions">
-                <button class="reports-export-btn" id="reports-export-btn">
-                    <span class="material-symbols-outlined reports-export-btn__icon">download</span>
-                    Export
-                </button>
-            </div>
-        </div>
-
-        <!-- Data Table Container -->
-        <div class="reports-table-card">
-            <div class="reports-table-scroll">
-                <table class="reports-table">
-                    <thead>
-                        <tr>
-                            <th class="reports-table__th reports-table__th--category">Category</th>
-                            <th class="reports-table__th reports-table__th--count">Count</th>
-                            <th class="reports-table__th reports-table__th--monthly">Monthly Total</th>
-                            <th class="reports-table__th reports-table__th--annual">Annual Total</th>
-                            <th class="reports-table__th reports-table__th--status">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="reports-table-body">
-                        <tr>
-                            <td colspan="5" class="reports-table__empty">No subscriptions added yet.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- Table Footer Totals -->
-            <div class="reports-totals" id="reports-totals">
-                <div class="reports-totals__item">
-                    <span class="reports-totals__label">Total Monthly</span>
-                    <span class="reports-totals__value" id="reports-monthly-total">$0.00</span>
-                </div>
-                <div class="reports-totals__item">
-                    <span class="reports-totals__label">Total Annual</span>
-                    <span class="reports-totals__value" id="reports-annual-total">$0.00</span>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- Scripts -->
-    <script src="../js/script.js"></script>
-    <script src="js/script.js"></script>
+<body class="bg-surface font-body-md text-on-surface antialiased">
+<header class="fixed top-0 left-0 w-full z-50 bg-surface-container-lowest border-b-2 border-on-surface shadow-[0_4px_0_0_#1a1a28]" id="topnav">
+<div class="h-20 w-full px-margin-desktop flex items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-lg">
+<a class="flex items-center gap-space-sm group" data-path="overview" href="../dashboard/dashboard.html">
+<img alt="ESSARA Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9VjBNIxNDiZkQvDeIENwyRQ8r7KVx8gFpyPBaQr9JZzwyHj2oAvGMoHg5aT173T0KWjvKGnjR6IV6xe5jjI3OU0DYyvONBmR3rkpf4tHl2JIJ1zXTBVbFx4UAwSlbiJrPlqJNljOeyzF-voI-Q1Zx3Vk4b4lZR9P7kOehH_kZLn6uOk_Sd4I8ThKTlAVyMqQbfumCZnyIe5zpMEGkQVenJAtJqW8WKxZsbnwMQ2MGlB2bZhu0Xyw"/>
+<span class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface group-hover:text-primary transition-colors">ESSARA</span>
+</a>
+<nav class="flex items-center gap-space-xs p-1 bg-surface-container-low border-2 border-on-surface rounded-lg" data-active-classes="bg-primary-container text-on-primary font-bold shadow-[2px_2px_0px_#1a1a28] border-2 border-on-surface" id="dashboard-nav">
+<a class="px-space-md py-1.5 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-all rounded" data-path="overview" href="../dashboard/dashboard.html">Overview</a>
+<a class="px-space-md py-1.5 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-all rounded" data-path="subscriptions" href="../subscription/subscription.html">Subscriptions</a>
+<a class="px-space-md py-1.5 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-all rounded" data-path="overlaps" href="../overlaps/index.html">Overlaps</a>
+<a aria-current="page" class="px-space-md py-1.5 transition-all rounded bg-primary-container text-on-primary font-bold shadow-[2px_2px_0px_#1a1a28] border-2 border-on-surface" data-path="reports" href="../reports/reports.html">Reports</a>
+<a class="px-space-md py-1.5 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-all rounded" data-path="budget" href="../budget/budget.html">Budget</a>
+<a class="px-space-md py-1.5 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-all rounded" data-path="calendar" href="../calendar/calendar.html">Calendar</a>
+</nav>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="relative">
+<select aria-label="Currency Selector" class="appearance-none bg-surface-container-low border-2 border-on-surface rounded-lg px-space-md py-1.5 font-label-md text-label-md text-on-surface pr-8 shadow-[2px_2px_0px_#1a1a28] focus:outline-none cursor-pointer" id="currency-select">
+<option value="USD">USD $</option>
+<option value="EUR">EUR €</option>
+<option value="GBP">GBP £</option>
+<option value="INR">INR ₹</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface pointer-events-none text-base">expand_more</span>
+</div>
+<button aria-label="Toggle Dark Mode" class="p-2 bg-surface-container-low border-2 border-on-surface rounded-lg shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#1a1a28] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center justify-center" id="theme-toggle" type="button">
+<span class="material-symbols-outlined text-on-surface text-xl" id="theme-icon">dark_mode</span>
+</button>
+<div class="relative group" id="profile-menu-container">
+<button class="flex items-center gap-space-xs p-1 bg-surface-container-low border-2 border-on-surface rounded-full shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#1a1a28] transition-all" id="profile-icon" type="button">
+<div class="relative">
+<img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDu7pO4kC26aUIRlcST_3q_9tgdE4O20AgoDCcykK1hykCwT9PlJZ79P82wn7hbKMuF5KDRnBiRVUsOjsSDYgv0rfZ_IB5K5DvdpRX1sxq_qt8w56fHgEY0TUeCO6rg7Nl6Qe0Bl5OeeVUJq0ChunOFzMzqqtQeFL_KN-sadm75GqDHiIi3Qc7LKFjcl2n8kF1B6NpCGyDWiZRzCibTEyP3CE-lo-wS6nSuT69lBVoB4NnuUuL2LBo"/>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-secondary border border-surface-container-lowest rounded-full"></span>
+</div>
+<span class="material-symbols-outlined text-on-surface pr-1 text-sm hidden sm:inline-block">expand_more</span>
+</button>
+<div class="absolute right-0 mt-2 w-64 bg-surface-container-lowest border-2 border-on-surface rounded-xl shadow-[6px_6px_0px_#1a1a28] p-space-md opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity z-50" id="profile-dropdown">
+<div class="border-b-2 border-on-surface pb-space-sm mb-space-sm">
+<div class="font-title-md text-title-md text-on-surface" id="user-display-name">Alex Morgan</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant" id="user-display-email">alex.morgan@essara.io</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<a class="px-space-sm py-1.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" data-path="overview" href="../dashboard/dashboard.html">Account Settings</a>
+<a class="px-space-sm py-1.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" data-path="overview" href="../dashboard/dashboard.html">Billing &amp; Plans</a>
+<a class="mt-space-xs flex items-center justify-between px-space-sm py-2 font-label-md text-label-md text-on-error bg-tertiary-container border-2 border-on-surface rounded-lg shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#1a1a28] transition-all" data-path="login" href="../login/login.html" id="logout-btn">
+<span>Log out</span>
+<span class="material-symbols-outlined text-base">logout</span>
+</a>
+</div>
+</div>
+</div>
+<button aria-label="Open Mobile Navigation" class="xl:hidden p-2 bg-surface-container-low border-2 border-on-surface rounded-lg shadow-[2px_2px_0px_#1a1a28]" type="button">
+<span class="material-symbols-outlined text-on-surface">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main class="w-full pt-20 bg-surface min-h-[calc(100vh-5rem)]" id="view-reports">
+<div class="flex flex-col w-full">
+<div class="w-full max-w-[1280px] mx-auto px-margin-mobile md:px-margin sm:px-margin-desktop py-space-xl flex flex-col gap-space-xl">
+<!-- Header Section with tactile controls -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg">
+<div class="flex flex-col gap-space-xs max-w-2xl">
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm uppercase tracking-wider">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+            Fiscal Audit Q3 Active
+          </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-mono">REF: ESS-REP-2024-09</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Category Spend Report</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Detailed breakdown of software expenditures, tax deductions, and stack allocation.</p>
+</div>
+<!-- Action Tools & Export -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<div class="inline-flex p-1 bg-surface-container-low rounded-lg shadow-sm border-2 border-on-surface">
+<button class="px-space-md py-1.5 font-label-md text-label-md text-on-surface rounded transition-all bg-surface border-2 border-on-surface shadow-[2px_2px_0px_#1a1a28]" type="button">Monthly</button>
+<button class="px-space-md py-1.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface rounded transition-all" type="button">Quarterly</button>
+<button class="px-space-md py-1.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface rounded transition-all" type="button">Yearly</button>
+</div>
+<div class="relative inline-block" id="exportMenuDropdown">
+<button class="flex items-center gap-space-xs px-space-lg py-2.5 bg-primary-container text-on-primary font-label-lg text-label-lg rounded-lg border-2 border-on-surface shadow-[4px_4px_0px_#1a1a28] hover:shadow-[6px_6px_0px_#1a1a28] hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-none transition-all" id="reports-export-btn" type="button">
+<span class="material-symbols-outlined text-lg">download</span>
+<span>Export Report</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Totals & High-Level Metric Tiles -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<!-- Monthly Total Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg flex flex-col justify-between gap-space-md relative overflow-hidden group border-2 border-on-surface shadow-[4px_4px_0px_#1a1a28]">
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-surface-container rounded-full opacity-60 pointer-events-none"></div>
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md uppercase tracking-wide text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-base text-primary">calendar_month</span>
+            Monthly Total
+          </span>
+<span class="px-2 py-0.5 bg-surface-container-high rounded-full font-label-sm text-label-sm text-on-surface border border-on-surface">30 Days</span>
+</div>
+<div>
+<div class="font-tabular-stat text-tabular-stat text-on-surface tracking-tight group-hover:text-primary transition-colors" id="reports-monthly-total">$0.00</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Direct card autopay &amp; corporate credit</p>
+</div>
+<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden border border-on-surface">
+<div class="h-full bg-primary-container rounded-full" style="width: 100%"></div>
+</div>
+</div>
+<!-- Annualized Total Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg flex flex-col justify-between gap-space-md relative overflow-hidden group border-2 border-on-surface shadow-[4px_4px_0px_#1a1a28]">
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-surface-container-high rounded-full opacity-60 pointer-events-none"></div>
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md uppercase tracking-wide text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-base text-secondary">trending_up</span>
+            Annual Total (Run-rate)
+          </span>
+<span class="px-2 py-0.5 bg-secondary-container text-on-secondary-container font-label-sm text-label-sm rounded-full border border-secondary">Projected</span>
+</div>
+<div>
+<div class="font-tabular-stat text-tabular-stat text-on-surface tracking-tight group-hover:text-secondary transition-colors" id="reports-annual-total">$0.00</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Estimated annual recurring SaaS footprint</p>
+</div>
+<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden border border-on-surface">
+<div class="h-full bg-secondary rounded-full" style="width: 100%"></div>
+</div>
+</div>
+<!-- Comparative Quarter Variance with Playful Geometric Badge -->
+<div class="bg-surface-container-low rounded-xl p-space-lg shadow-md flex flex-col justify-between gap-space-md relative overflow-hidden border-2 border-on-surface shadow-[4px_4px_0px_#1a1a28]">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md uppercase tracking-wide text-on-surface-variant">Variance Analysis</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-mono">Q2 → Q3</span>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Playful geometric badge -->
+<div class="inline-flex items-center gap-2 self-start px-3 py-1.5 bg-tertiary-container text-on-tertiary rounded-lg border-2 border-on-surface shadow-[2px_2px_0px_#1a1a28]">
+<span class="material-symbols-outlined text-base animate-pulse">north_east</span>
+<span class="font-headline-sm text-headline-sm leading-none">+12% vs prior quarter</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant mt-1">
+            Driven by 2 new compute clusters in AWS and mid-tier design seats.
+          </div>
+</div>
+<div class="pt-2 flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span>Target Cap: $1,650/mo</span>
+<span class="text-tertiary font-bold">+$190.00 over target</span>
+</div>
+</div>
+</div>
+<!-- Spending Breakdown & Structural Visual Distribution -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- Visual Stack Allocation Bar (Bento summary) -->
+<div class="xl:col-span-12 bg-surface-container-lowest rounded-xl p-space-lg flex flex-col gap-space-md border-2 border-on-surface shadow-[4px_4px_0px_#1a1a28]">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div>
+<h2 class="font-title-lg text-title-lg text-on-surface">Category Allocation Spectrum</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Relative monthly investment distribution across operational layers</p>
+</div>
+<div class="flex items-center gap-space-md flex-wrap text-on-surface font-label-sm text-label-sm">
+<span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-primary-container border border-on-surface"></span> Infrastructure 60.9%</span>
+<span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-secondary border border-on-surface"></span> Dev Tools 23.5%</span>
+<span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-surface-tint border border-on-surface"></span> AI &amp; Design 9.2%</span>
+<span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-surface-dim border border-on-surface"></span> Notes 3.7%</span>
+<span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-outline-variant border border-on-surface"></span> Media 2.7%</span>
+</div>
+</div>
+<!-- Solid multi-segment bar -->
+<div class="w-full h-8 bg-surface-container rounded-lg p-1 flex gap-1 border-2 border-on-surface">
+<div class="h-full bg-primary-container rounded flex items-center justify-center text-on-primary font-label-sm text-label-sm" style="width: 60.87%;" title="Infrastructure &amp; Cloud: 60.9%">60.9%</div>
+<div class="h-full bg-secondary rounded flex items-center justify-center text-on-secondary font-label-sm text-label-sm" style="width: 23.48%;" title="Dev Tools: 23.5%">23.5%</div>
+<div class="h-full bg-surface-tint rounded flex items-center justify-center text-on-primary font-label-sm text-label-sm" style="width: 9.24%;" title="AI &amp; Design: 9.2%">9.2%</div>
+<div class="h-full bg-surface-dim rounded" style="width: 3.7%;" title="Productivity: 3.7%"></div>
+<div class="h-full bg-outline-variant rounded" style="width: 2.71%;" title="Media &amp; Utilities: 2.7%"></div>
+</div>
+</div>
+<!-- Main Category Spend Table Container -->
+<div class="xl:col-span-12 bg-surface-container-lowest rounded-xl flex flex-col border-2 border-on-surface shadow-[4px_4px_0px_#1a1a28]">
+<!-- Table Top Control Utility -->
+<div class="p-space-lg bg-surface-container-low flex flex-col md:flex-row md:items-center justify-between gap-space-md border-b-2 border-on-surface">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface">Category Breakdown</span>
+<span class="px-2.5 py-0.5 bg-surface-container-high rounded-full font-label-sm text-label-sm text-on-surface border border-on-surface">Live Data</span>
+</div>
+</div>
+<!-- Structured Data Table -->
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[700px]">
+<thead>
+<tr class="bg-surface-container font-label-sm text-label-sm text-on-surface uppercase tracking-wider border-b-2 border-on-surface">
+<th class="py-space-md px-space-lg">Category Name</th>
+<th class="py-space-md px-space-md text-center">Active Services</th>
+<th class="py-space-md px-space-md text-right">Monthly Spend</th>
+<th class="py-space-md px-space-md text-right">Annualized</th>
+<th class="py-space-md px-space-md text-center">Status</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md text-on-surface divide-y divide-surface-container" id="reports-table-body">
+<!-- JS will inject table rows here matching the 5 columns -->
+</tbody>
+</table>
+</div>
+</div>
+<!-- Domain Overlap Insight & Redundancy Alert Banner -->
+<div class="xl:col-span-12 bg-surface-container-lowest rounded-xl p-space-lg flex flex-col md:flex-row items-center justify-between gap-space-lg border-2 border-on-surface shadow-[4px_4px_0px_#1a1a28]">
+<div class="flex items-center gap-space-md">
+<div class="w-14 h-14 rounded-xl bg-tertiary-container border-2 border-on-surface flex items-center justify-center text-on-tertiary flex-shrink-0 shadow-[2px_2px_0px_#1a1a28]">
+<span class="material-symbols-outlined text-3xl">auto_fix_high</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">AI &amp; Design Stack Overlap Identified</h3>
+<span class="px-2 py-0.5 bg-tertiary-container text-on-tertiary rounded-full font-label-sm text-label-sm border border-on-surface">High Impact</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+              Midjourney ($30/mo) and OpenAI DALL-E enterprise credits show a 94% prompt capability overlap.
+              Consolidation yields <strong class="text-secondary font-bold">$360.00/yr</strong> in reclaimed capital.
+            </p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm flex-shrink-0 w-full md:w-auto">
+<button class="w-full md:w-auto px-space-lg py-2.5 bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md rounded-lg shadow-sm transition-all border-2 border-on-surface shadow-[2px_2px_0px_#1a1a28]" type="button">Dismiss</button>
+<button class="w-full md:w-auto px-space-lg py-2.5 bg-tertiary-container text-on-tertiary font-label-lg text-label-lg rounded-lg transition-all flex items-center justify-center gap-1.5 border-2 border-on-surface shadow-[2px_2px_0px_#1a1a28] hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#1a1a28]" type="button">
+<span class="material-symbols-outlined text-lg">merge</span>
+<span>Consolidate Stack</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script src="../js/script.js"></script>
 </body>
 </html>

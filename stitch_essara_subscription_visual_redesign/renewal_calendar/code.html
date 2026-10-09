@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-background":"var(--on-background, #1a1a28)","on-surface":"var(--on-surface, #1a1a28)","outline-variant":"var(--outline-variant, #c7c4d7)","on-tertiary-fixed-variant":"var(--on-tertiary-fixed-variant, #92002a)","on-secondary-container":"var(--on-secondary-container, #00714d)","outline":"var(--outline, #777586)","surface":"var(--surface, #fcf8ff)","on-primary-fixed":"var(--on-primary-fixed, #100069)","primary":"var(--primary, #2a14b4)","secondary-container":"var(--secondary-container, #6cf8bb)","surface-container-high":"var(--surface-container-high, #e9e6fa)","error-container":"var(--error-container, #ffdad6)","inverse-primary":"var(--inverse-primary, #c3c0ff)","on-primary":"var(--on-primary, #ffffff)","on-tertiary":"var(--on-tertiary, #ffffff)","on-surface-variant":"var(--on-surface-variant, #464554)","on-primary-fixed-variant":"var(--on-primary-fixed-variant, #372abf)","surface-container":"var(--surface-container, #efecff)","background":"var(--background, #fcf8ff)","on-tertiary-container":"var(--on-tertiary-container, #ffb0b5)","surface-container-low":"var(--surface-container-low, #f5f2ff)","on-secondary":"var(--on-secondary, #ffffff)","on-secondary-fixed":"var(--on-secondary-fixed, #002113)","on-error-container":"var(--on-error-container, #93000a)","primary-fixed-dim":"var(--primary-fixed-dim, #c3c0ff)","surface-tint":"var(--surface-tint, #5148d7)","secondary":"var(--secondary, #006c49)","surface-dim":"var(--surface-dim, #dad8ec)","tertiary-fixed":"var(--tertiary-fixed, #ffdadb)","tertiary-fixed-dim":"var(--tertiary-fixed-dim, #ffb2b7)","inverse-on-surface":"var(--inverse-on-surface, #f2efff)","on-secondary-fixed-variant":"var(--on-secondary-fixed-variant, #005236)","on-tertiary-fixed":"var(--on-tertiary-fixed, #40000d)","on-error":"var(--on-error, #ffffff)","secondary-fixed-dim":"var(--secondary-fixed-dim, #4edea3)","secondary-fixed":"var(--secondary-fixed, #6ffbbe)","surface-container-lowest":"var(--surface-container-lowest, #ffffff)","surface-variant":"var(--surface-variant, #e3e0f4)","primary-fixed":"var(--primary-fixed, #e3dfff)","inverse-surface":"var(--inverse-surface, #2f2f3e)","tertiary-container":"var(--tertiary-container, #a60031)","error":"var(--error, #ba1a1a)","tertiary":"var(--tertiary, #7b0022)","surface-bright":"var(--surface-bright, #fcf8ff)","primary-container":"var(--primary-container, #4338ca)","surface-container-highest":"var(--surface-container-highest, #e3e0f4)","on-primary-container":"var(--on-primary-container, #c1beff)"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"margin-mobile":"1rem","margin-desktop":"2.5rem","space-md":"1rem",margin:"1.5rem","gutter-mobile":"0.75rem","space-xl":"2.25rem","space-lg":"1.5rem","space-xs":"0.25rem","gutter-desktop":"1.5rem","space-sm":"0.5rem",gutter:"1.25rem"},fontFamily:{display:["Space Grotesk"],"label-lg":["Space Grotesk"],"body-sm":["Plus Jakarta Sans"],"tabular-stat":["Space Grotesk"],"label-sm":["Space Grotesk"],"label-md":["Space Grotesk"],"body-md":["Plus Jakarta Sans"],"headline-md":["Space Grotesk"],"title-md":["Plus Jakarta Sans"],"headline-sm":["Space Grotesk"],"body-lg":["Plus Jakarta Sans"],"display-mobile":["Space Grotesk"],"title-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Space Grotesk"],"headline-lg":["Space Grotesk"]},fontSize:{display:["56px",{lineHeight:"64px",letterSpacing:"-0.03em",fontWeight:"700"}],"label-lg":["14px",{lineHeight:"20px",letterSpacing:"0.02em",fontWeight:"600"}],"body-sm":["12px",{lineHeight:"18px",fontWeight:"400"}],"tabular-stat":["32px",{lineHeight:"38px",letterSpacing:"-0.02em",fontWeight:"700"}],"label-sm":["10px",{lineHeight:"14px",letterSpacing:"0.06em",fontWeight:"700"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.04em",fontWeight:"600"}],"body-md":["14px",{lineHeight:"22px",fontWeight:"400"}],"headline-md":["26px",{lineHeight:"32px",letterSpacing:"-0.015em",fontWeight:"600"}],"title-md":["16px",{lineHeight:"24px",fontWeight:"600"}],"headline-sm":["20px",{lineHeight:"28px",letterSpacing:"-0.01em",fontWeight:"600"}],"body-lg":["16px",{lineHeight:"26px",fontWeight:"400"}],"display-mobile":["38px",{lineHeight:"44px",letterSpacing:"-0.02em",fontWeight:"700"}],"title-lg":["18px",{lineHeight:"26px",letterSpacing:"-0.01em",fontWeight:"700"}],"headline-lg-mobile":["28px",{lineHeight:"34px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-lg":["36px",{lineHeight:"44px",letterSpacing:"-0.02em",fontWeight:"700"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 w-full z-50 bg-surface-container-lowest border-b-2 border-on-surface shadow-[0_4px_0_0_#1a1a28]"><div class="h-20 w-full px-margin-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><a class="flex items-center gap-space-sm group" data-path="overview" href="#"><img alt="ESSARA Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9VjBNIxNDiZkQvDeIENwyRQ8r7KVx8gFpyPBaQr9JZzwyHj2oAvGMoHg5aT173T0KWjvKGnjR6IV6xe5jjI3OU0DYyvONBmR3rkpf4tHl2JIJ1zXTBVbFx4UAwSlbiJrPlqJNljOeyzF-voI-Q1Zx3Vk4b4lZR9P7kOehH_kZLn6uOk_Sd4I8ThKTlAVyMqQbfumCZnyIe5zpMEGkQVenJAtJqW8WKxZsbnwMQ2MGlB2bZhu0Xyw"/><span class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface group-hover:text-primary transition-colors">ESSARA</span></a><nav class="hidden xl:flex items-center gap-space-xs p-1 bg-surface-container-low border-2 border-on-surface rounded-lg" data-active-classes="bg-primary-container text-on-primary font-bold shadow-[2px_2px_0px_#1a1a28] border-2 border-on-surface"><a class="px-space-md py-1.5 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-all rounded" data-path="overview" href="#">Overview</a><a class="px-space-md py-1.5 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-all rounded" data-path="subscriptions" href="#">Subscriptions</a><a class="px-space-md py-1.5 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-all rounded" data-path="overlaps" href="#">Overlaps</a><a class="px-space-md py-1.5 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-all rounded" data-path="reports" href="#">Reports</a><a class="px-space-md py-1.5 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-all rounded" data-path="budget" href="#">Budget</a><a aria-current="page" class="px-space-md py-1.5 transition-all rounded bg-primary-container text-on-primary font-bold shadow-[2px_2px_0px_#1a1a28] border-2 border-on-surface" data-path="calendar" href="#">Calendar</a></nav></div><div class="flex items-center gap-space-md"><div class="relative hidden sm:block"><select aria-label="Currency Selector" class="appearance-none bg-surface-container-low border-2 border-on-surface rounded-lg px-space-md py-1.5 font-label-md text-label-md text-on-surface pr-8 shadow-[2px_2px_0px_#1a1a28] focus:outline-none cursor-pointer"><option value="USD">USD $</option><option value="EUR">EUR €</option><option value="GBP">GBP £</option><option value="INR">INR ₹</option></select><span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface pointer-events-none text-base">expand_more</span></div><button aria-label="Toggle Dark Mode" class="p-2 bg-surface-container-low border-2 border-on-surface rounded-lg shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#1a1a28] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center justify-center" type="button"><span class="material-symbols-outlined text-on-surface text-xl">dark_mode</span></button><div class="relative group"><button class="flex items-center gap-space-xs p-1 bg-surface-container-low border-2 border-on-surface rounded-full shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#1a1a28] transition-all" type="button"><div class="relative"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDu7pO4kC26aUIRlcST_3q_9tgdE4O20AgoDCcykK1hykCwT9PlJZ79P82wn7hbKMuF5KDRnBiRVUsOjsSDYgv0rfZ_IB5K5DvdpRX1sxq_qt8w56fHgEY0TUeCO6rg7Nl6Qe0Bl5OeeVUJq0ChunOFzMzqqtQeFL_KN-sadm75GqDHiIi3Qc7LKFjcl2n8kF1B6NpCGyDWiZRzCibTEyP3CE-lo-wS6nSuT69lBVoB4NnuUuL2LBo"/><span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-secondary border border-surface-container-lowest rounded-full"></span></div><span class="material-symbols-outlined text-on-surface pr-1 text-sm hidden sm:inline-block">expand_more</span></button><div class="absolute right-0 mt-2 w-64 bg-surface-container-lowest border-2 border-on-surface rounded-xl shadow-[6px_6px_0px_#1a1a28] p-space-md opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity z-50"><div class="border-b-2 border-on-surface pb-space-sm mb-space-sm"><div class="font-title-md text-title-md text-on-surface">Alex Morgan</div><div class="font-body-sm text-body-sm text-on-surface-variant">alex.morgan@essara.io</div></div><div class="flex flex-col gap-space-xs"><a class="px-space-sm py-1.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" data-path="overview" href="#">Account Settings</a><a class="px-space-sm py-1.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" data-path="overview" href="#">Billing &amp; Plans</a><a class="mt-space-xs flex items-center justify-between px-space-sm py-2 font-label-md text-label-md text-on-error bg-tertiary-container border-2 border-on-surface rounded-lg shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#1a1a28] transition-all" data-path="login" href="#"><span>Log out</span><span class="material-symbols-outlined text-base">logout</span></a></div></div></div><button aria-label="Open Mobile Navigation" class="xl:hidden p-2 bg-surface-container-low border-2 border-on-surface rounded-lg shadow-[2px_2px_0px_#1a1a28]" type="button"><span class="material-symbols-outlined text-on-surface">menu</span></button></div></div></header><main class="w-full pt-20 bg-surface min-h-[calc(100vh-5rem)]"><div class="flex flex-col w-full">
+<div class="w-full max-w-[1280px] mx-auto px-margin-mobile sm:px-gutter md:px-margin-desktop py-space-xl flex flex-col gap-space-xl">
+<!-- Page Header & Action Bar -->
+<header class="flex flex-col md:flex-row md:items-end justify-between gap-space-md border-b-2 border-on-surface pb-space-lg">
+<div class="flex flex-col gap-space-xs max-w-2xl">
+<div class="inline-flex items-center gap-space-xs px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed border-2 border-on-surface w-fit mb-1 shadow-[2px_2px_0px_#1a1a28]">
+<span class="material-symbols-outlined text-sm font-bold">event_upcoming</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Audit &amp; Liquidity Defense</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight uppercase">Renewal Calendar</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant font-medium">Anticipate upcoming charges and cancel before auto-renewal deadlines.</p>
+</div>
+<!-- Quick Metrics Ribbon -->
+<div class="flex items-center gap-space-sm sm:gap-space-md flex-wrap">
+<div class="bg-surface-container-lowest border-2 border-on-surface rounded-xl p-3 px-4 shadow-[4px_4px_0px_#1a1a28] flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center border-2 border-on-surface text-primary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block uppercase">Monthly Pipeline</span>
+<span class="font-tabular-stat text-headline-sm text-on-surface font-bold">$450.99</span>
+</div>
+</div>
+<div class="bg-tertiary-fixed border-2 border-on-surface rounded-xl p-3 px-4 shadow-[4px_4px_0px_#1a1a28] flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-tertiary-container flex items-center justify-center border-2 border-on-surface text-on-tertiary">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-tertiary-fixed block uppercase">Impending (7d)</span>
+<span class="font-tabular-stat text-headline-sm text-on-tertiary-fixed font-bold">2 Charges</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Calendar Controls Bar -->
+<div class="bg-surface-container-lowest border-2 border-on-surface rounded-xl p-space-md shadow-[4px_4px_0px_#1a1a28] flex flex-col md:flex-row items-center justify-between gap-space-md">
+<!-- Navigation Month/Year -->
+<div class="flex items-center gap-space-md w-full md:w-auto justify-between md:justify-start">
+<div class="flex items-center gap-space-xs">
+<button aria-label="Previous Month" class="w-10 h-10 rounded-lg bg-surface-container-low border-2 border-on-surface flex items-center justify-center shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#1a1a28] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all" type="button">
+<span class="material-symbols-outlined text-on-surface">chevron_left</span>
+</button>
+<button aria-label="Next Month" class="w-10 h-10 rounded-lg bg-surface-container-low border-2 border-on-surface flex items-center justify-center shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#1a1a28] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all" type="button">
+<span class="material-symbols-outlined text-on-surface">chevron_right</span>
+</button>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-md text-headline-md text-on-surface tracking-tight">April 2025</span>
+<span class="font-label-md text-label-md px-2 py-0.5 bg-primary-fixed text-on-primary-fixed border border-on-surface rounded-full font-bold">Active Cycle</span>
+</div>
+</div>
+<!-- Quick View Toggles & Export -->
+<div class="flex items-center gap-space-sm w-full md:w-auto justify-end">
+<div class="inline-flex p-1 bg-surface-container-low border-2 border-on-surface rounded-lg shadow-[2px_2px_0px_#1a1a28]">
+<button class="px-space-md py-1.5 font-label-md text-label-md rounded bg-primary-container text-on-primary border border-on-surface shadow-[1px_1px_0px_#1a1a28] flex items-center gap-1.5 transition-all" type="button">
+<span class="material-symbols-outlined text-base">calendar_view_month</span>
+<span>Monthly View</span>
+</button>
+<button class="px-space-md py-1.5 font-label-md text-label-md rounded text-on-surface-variant hover:text-on-surface flex items-center gap-1.5 transition-all" type="button">
+<span class="material-symbols-outlined text-base">view_agenda</span>
+<span>Agenda</span>
+</button>
+</div>
+<button class="p-2 sm:px-space-md sm:py-2 bg-surface-container-lowest border-2 border-on-surface rounded-lg font-label-md text-label-md text-on-surface shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#1a1a28] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-base">file_download</span>
+<span class="hidden sm:inline">Export .iCal</span>
+</button>
+</div>
+</div>
+<!-- Calendar Viewport -->
+<div class="w-full bg-surface-container-lowest border-2 border-on-surface rounded-xl shadow-[4px_4px_0px_#1a1a28] overflow-hidden flex flex-col">
+<!-- Days of Week Header -->
+<div class="grid grid-cols-7 border-b-2 border-on-surface bg-surface-container-high text-center">
+<div class="py-2.5 font-label-lg text-label-lg text-on-surface border-r-2 border-on-surface uppercase tracking-wider">Sun</div>
+<div class="py-2.5 font-label-lg text-label-lg text-on-surface border-r-2 border-on-surface uppercase tracking-wider">Mon</div>
+<div class="py-2.5 font-label-lg text-label-lg text-on-surface border-r-2 border-on-surface uppercase tracking-wider">Tue</div>
+<div class="py-2.5 font-label-lg text-label-lg text-on-surface border-r-2 border-on-surface uppercase tracking-wider">Wed</div>
+<div class="py-2.5 font-label-lg text-label-lg text-on-surface border-r-2 border-on-surface uppercase tracking-wider">Thu</div>
+<div class="py-2.5 font-label-lg text-label-lg text-on-surface border-r-2 border-on-surface uppercase tracking-wider">Fri</div>
+<div class="py-2.5 font-label-lg text-label-lg text-on-surface uppercase tracking-wider">Sat</div>
+</div>
+<!-- 7x5 Calendar Matrix -->
+<div class="grid grid-cols-7 auto-rows-fr bg-on-surface gap-[2px]">
+<!-- Week 1 -->
+<!-- Mar 30 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-low p-2 flex flex-col justify-between opacity-50">
+<span class="font-label-md text-label-md text-on-surface-variant font-bold">30</span>
+</div>
+<!-- Mar 31 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-low p-2 flex flex-col justify-between opacity-50">
+<span class="font-label-md text-label-md text-on-surface-variant font-bold">31</span>
+</div>
+<!-- Apr 1 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">1</span>
+</div>
+<!-- Apr 2 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">2</span>
+</div>
+<!-- Apr 3 - AWS Cloud -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors relative group">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface font-bold">3</span>
+<span class="w-2 h-2 rounded-full bg-error border border-on-surface"></span>
+</div>
+<div class="flex flex-col gap-1 mt-1">
+<div class="px-2 py-1 bg-tertiary-fixed border-2 border-on-surface rounded-md shadow-[2px_2px_0px_#1a1a28] flex flex-col gap-0.5 group-hover:-translate-y-0.5 transition-transform">
+<div class="flex items-center justify-between text-on-tertiary-fixed">
+<span class="font-label-sm text-label-sm font-bold truncate">AWS Cloud</span>
+<span class="font-tabular-stat text-xs font-bold">$320.00</span>
+</div>
+<span class="font-body-sm text-[10px] leading-tight text-on-tertiary-fixed-variant truncate">High impact charge</span>
+</div>
+</div>
+</div>
+<!-- Apr 4 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">4</span>
+</div>
+<!-- Apr 5 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">5</span>
+</div>
+<!-- Week 2 -->
+<!-- Apr 6 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">6</span>
+</div>
+<!-- Apr 7 - Notion Team -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors relative group">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface font-bold">7</span>
+</div>
+<div class="flex flex-col gap-1 mt-1">
+<div class="px-2 py-1 bg-surface-container-high border-2 border-on-surface rounded-md shadow-[2px_2px_0px_#1a1a28] flex flex-col gap-0.5 group-hover:-translate-y-0.5 transition-transform">
+<div class="flex items-center justify-between text-on-surface">
+<span class="font-label-sm text-label-sm font-bold truncate">Notion Team</span>
+<span class="font-tabular-stat text-xs font-bold">$10.00</span>
+</div>
+<span class="font-body-sm text-[10px] leading-tight text-on-surface-variant truncate">Workspace Pro</span>
+</div>
+</div>
+</div>
+<!-- Apr 8 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">8</span>
+</div>
+<!-- Apr 9 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">9</span>
+</div>
+<!-- Apr 10 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">10</span>
+</div>
+<!-- Apr 11 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">11</span>
+</div>
+<!-- Apr 12 - GitHub Team -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors relative group">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface font-bold">12</span>
+</div>
+<div class="flex flex-col gap-1 mt-1">
+<div class="px-2 py-1 bg-primary-fixed border-2 border-on-surface rounded-md shadow-[2px_2px_0px_#1a1a28] flex flex-col gap-0.5 group-hover:-translate-y-0.5 transition-transform">
+<div class="flex items-center justify-between text-on-primary-fixed">
+<span class="font-label-sm text-label-sm font-bold truncate">GitHub Team</span>
+<span class="font-tabular-stat text-xs font-bold">$21.00</span>
+</div>
+<span class="font-body-sm text-[10px] leading-tight text-on-primary-fixed-variant truncate">5 Seats</span>
+</div>
+</div>
+</div>
+<!-- Week 3 -->
+<!-- Apr 13 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">13</span>
+</div>
+<!-- Apr 14 - Midjourney AI -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors relative group">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface font-bold">14</span>
+</div>
+<div class="flex flex-col gap-1 mt-1">
+<div class="px-2 py-1 bg-secondary-fixed border-2 border-on-surface rounded-md shadow-[2px_2px_0px_#1a1a28] flex flex-col gap-0.5 group-hover:-translate-y-0.5 transition-transform">
+<div class="flex items-center justify-between text-on-secondary-fixed">
+<span class="font-label-sm text-label-sm font-bold truncate">Midjourney AI</span>
+<span class="font-tabular-stat text-xs font-bold">$60.00</span>
+</div>
+<span class="font-body-sm text-[10px] leading-tight text-on-secondary-fixed-variant truncate">Standard Tier</span>
+</div>
+</div>
+</div>
+<!-- Apr 15 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">15</span>
+</div>
+<!-- Apr 16 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">16</span>
+</div>
+<!-- Apr 17 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">17</span>
+</div>
+<!-- Apr 18 - Spotify Duo -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors relative group">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface font-bold">18</span>
+</div>
+<div class="flex flex-col gap-1 mt-1">
+<div class="px-2 py-1 bg-secondary-container border-2 border-on-surface rounded-md shadow-[2px_2px_0px_#1a1a28] flex flex-col gap-0.5 group-hover:-translate-y-0.5 transition-transform">
+<div class="flex items-center justify-between text-on-secondary-container">
+<span class="font-label-sm text-label-sm font-bold truncate">Spotify Duo</span>
+<span class="font-tabular-stat text-xs font-bold">$14.99</span>
+</div>
+<span class="font-body-sm text-[10px] leading-tight text-on-secondary-fixed-variant truncate">Family/Music</span>
+</div>
+</div>
+</div>
+<!-- Apr 19 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">19</span>
+</div>
+<!-- Week 4 -->
+<!-- Apr 20 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">20</span>
+</div>
+<!-- Apr 21 - ChatGPT Plus -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors relative group">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface font-bold">21</span>
+</div>
+<div class="flex flex-col gap-1 mt-1">
+<div class="px-2 py-1 bg-primary-fixed-dim border-2 border-on-surface rounded-md shadow-[2px_2px_0px_#1a1a28] flex flex-col gap-0.5 group-hover:-translate-y-0.5 transition-transform">
+<div class="flex items-center justify-between text-on-primary-fixed">
+<span class="font-label-sm text-label-sm font-bold truncate">ChatGPT Plus</span>
+<span class="font-tabular-stat text-xs font-bold">$20.00</span>
+</div>
+<span class="font-body-sm text-[10px] leading-tight text-on-primary-fixed-variant truncate">OpenAI Sub</span>
+</div>
+</div>
+</div>
+<!-- Apr 22 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">22</span>
+</div>
+<!-- Apr 23 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">23</span>
+</div>
+<!-- Apr 24 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">24</span>
+</div>
+<!-- Apr 25 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">25</span>
+</div>
+<!-- Apr 26 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">26</span>
+</div>
+<!-- Week 5 -->
+<!-- Apr 27 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">27</span>
+</div>
+<!-- Apr 28 - Figma Pro -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors relative group">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface font-bold">28</span>
+</div>
+<div class="flex flex-col gap-1 mt-1">
+<div class="px-2 py-1 bg-tertiary-fixed-dim border-2 border-on-surface rounded-md shadow-[2px_2px_0px_#1a1a28] flex flex-col gap-0.5 group-hover:-translate-y-0.5 transition-transform">
+<div class="flex items-center justify-between text-on-tertiary-fixed">
+<span class="font-label-sm text-label-sm font-bold truncate">Figma Pro</span>
+<span class="font-tabular-stat text-xs font-bold">$15.00</span>
+</div>
+<span class="font-body-sm text-[10px] leading-tight text-on-tertiary-fixed-variant truncate">Editor Seat</span>
+</div>
+</div>
+</div>
+<!-- Apr 29 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">29</span>
+</div>
+<!-- Apr 30 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-lowest p-2 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="font-label-md text-label-md text-on-surface font-bold">30</span>
+</div>
+<!-- May 1 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-low p-2 flex flex-col justify-between opacity-50">
+<span class="font-label-md text-label-md text-on-surface-variant font-bold">1</span>
+</div>
+<!-- May 2 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-low p-2 flex flex-col justify-between opacity-50">
+<span class="font-label-md text-label-md text-on-surface-variant font-bold">2</span>
+</div>
+<!-- May 3 -->
+<div class="min-h-[110px] md:min-h-[125px] bg-surface-container-low p-2 flex flex-col justify-between opacity-50">
+<span class="font-label-md text-label-md text-on-surface-variant font-bold">3</span>
+</div>
+</div>
+</div>
+<!-- Upcoming Renewals List Card -->
+<div class="bg-surface-container-lowest border-2 border-on-surface rounded-xl shadow-[4px_4px_0px_#1a1a28] flex flex-col overflow-hidden">
+<!-- Section Header -->
+<div class="p-space-lg border-b-2 border-on-surface flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm bg-surface-container-low">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary flex items-center justify-center border-2 border-on-surface shadow-[2px_2px_0px_#1a1a28]">
+<span class="material-symbols-outlined text-base">format_list_bulleted</span>
+</div>
+<div>
+<h2 class="font-title-lg text-title-lg text-on-surface font-bold">Upcoming Renewals</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Chronological schedule of impending debit transactions for April 2025.</p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-base text-secondary">verified_user</span>
+<span>7 Active Subscriptions Scheduled</span>
+</div>
+</div>
+<!-- Renewals Feed -->
+<div class="divide-y-2 divide-on-surface">
+<!-- Row 1: AWS Cloud -->
+<div class="p-space-md sm:p-space-lg flex flex-col md:flex-row md:items-center justify-between gap-space-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-space-md">
+<!-- Date Badge -->
+<div class="flex flex-col items-center justify-center w-14 h-14 bg-tertiary-fixed text-on-tertiary-fixed border-2 border-on-surface rounded-lg shadow-[2px_2px_0px_#1a1a28] flex-shrink-0">
+<span class="font-label-sm text-[10px] leading-none uppercase font-bold">Apr</span>
+<span class="font-headline-sm text-headline-sm font-bold leading-tight">03</span>
+</div>
+<!-- Logo & Service Details -->
+<div class="flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded-lg bg-[#FF9900]/10 border-2 border-on-surface flex items-center justify-center font-headline-sm font-bold text-on-surface shadow-[2px_2px_0px_#1a1a28] flex-shrink-0">
+<span class="material-symbols-outlined text-2xl text-on-surface">cloud</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-title-md text-title-md text-on-surface font-bold">AWS Cloud Services</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold border border-on-surface bg-error-container text-on-error-container">Critical Leak Risk</span>
+</div>
+<div class="flex items-center gap-space-sm text-on-surface-variant font-body-sm text-body-sm flex-wrap">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">credit_card</span> Chase Sapphire Reserve (...4920)</span>
+<span>•</span>
+<span>Auto-renews at 00:00 UTC</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-space-lg pl-16 md:pl-0">
+<div class="text-right">
+<div class="font-tabular-stat text-tabular-stat text-on-surface font-bold">$320.00</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Normalized Monthly</div>
+</div>
+<button class="px-space-md py-2 bg-tertiary-container text-on-tertiary font-label-md text-label-md font-bold rounded-lg border-2 border-on-surface shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#1a1a28] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center gap-1.5 flex-shrink-0" type="button">
+<span class="material-symbols-outlined text-base">cancel</span>
+<span>Manage / Cancel</span>
+</button>
+</div>
+</div>
+<!-- Row 2: Notion Team -->
+<div class="p-space-md sm:p-space-lg flex flex-col md:flex-row md:items-center justify-between gap-space-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-space-md">
+<div class="flex flex-col items-center justify-center w-14 h-14 bg-surface-container-high text-on-surface border-2 border-on-surface rounded-lg shadow-[2px_2px_0px_#1a1a28] flex-shrink-0">
+<span class="font-label-sm text-[10px] leading-none uppercase font-bold">Apr</span>
+<span class="font-headline-sm text-headline-sm font-bold leading-tight">07</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded-lg bg-surface-container-lowest border-2 border-on-surface flex items-center justify-center font-headline-sm font-bold text-on-surface shadow-[2px_2px_0px_#1a1a28] flex-shrink-0">
+<span class="material-symbols-outlined text-2xl text-on-surface">notes</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-title-md text-title-md text-on-surface font-bold">Notion Team</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold border border-on-surface bg-surface-container text-on-surface-variant">Productivity</span>
+</div>
+<div class="flex items-center gap-space-sm text-on-surface-variant font-body-sm text-body-sm flex-wrap">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">account_balance</span> Mercury Business Checking (...1094)</span>
+<span>•</span>
+<span>1 Seat active</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-space-lg pl-16 md:pl-0">
+<div class="text-right">
+<div class="font-tabular-stat text-tabular-stat text-on-surface font-bold">$10.00</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Normalized Monthly</div>
+</div>
+<button class="px-space-md py-2 bg-surface-container-lowest text-on-surface font-label-md text-label-md font-bold rounded-lg border-2 border-on-surface shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#1a1a28] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center gap-1.5 flex-shrink-0" type="button">
+<span class="material-symbols-outlined text-base">settings</span>
+<span>Manage / Cancel</span>
+</button>
+</div>
+</div>
+<!-- Row 3: GitHub Team -->
+<div class="p-space-md sm:p-space-lg flex flex-col md:flex-row md:items-center justify-between gap-space-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-space-md">
+<div class="flex flex-col items-center justify-center w-14 h-14 bg-primary-fixed text-on-primary-fixed border-2 border-on-surface rounded-lg shadow-[2px_2px_0px_#1a1a28] flex-shrink-0">
+<span class="font-label-sm text-[10px] leading-none uppercase font-bold">Apr</span>
+<span class="font-headline-sm text-headline-sm font-bold leading-tight">12</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded-lg bg-surface-container-lowest border-2 border-on-surface flex items-center justify-center font-headline-sm font-bold text-on-surface shadow-[2px_2px_0px_#1a1a28] flex-shrink-0">
+<span class="material-symbols-outlined text-2xl text-on-surface">terminal</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-title-md text-title-md text-on-surface font-bold">GitHub Team</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold border border-on-surface bg-primary-fixed text-on-primary-fixed">Dev Stack</span>
+</div>
+<div class="flex items-center gap-space-sm text-on-surface-variant font-body-sm text-body-sm flex-wrap">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">credit_card</span> AMEX Platinum (...8831)</span>
+<span>•</span>
+<span>5 Seats ($4.20/user)</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-space-lg pl-16 md:pl-0">
+<div class="text-right">
+<div class="font-tabular-stat text-tabular-stat text-on-surface font-bold">$21.00</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Normalized Monthly</div>
+</div>
+<button class="px-space-md py-2 bg-surface-container-lowest text-on-surface font-label-md text-label-md font-bold rounded-lg border-2 border-on-surface shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#1a1a28] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center gap-1.5 flex-shrink-0" type="button">
+<span class="material-symbols-outlined text-base">settings</span>
+<span>Manage / Cancel</span>
+</button>
+</div>
+</div>
+<!-- Row 4: Midjourney AI -->
+<div class="p-space-md sm:p-space-lg flex flex-col md:flex-row md:items-center justify-between gap-space-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-space-md">
+<div class="flex flex-col items-center justify-center w-14 h-14 bg-secondary-fixed text-on-secondary-fixed border-2 border-on-surface rounded-lg shadow-[2px_2px_0px_#1a1a28] flex-shrink-0">
+<span class="font-label-sm text-[10px] leading-none uppercase font-bold">Apr</span>
+<span class="font-headline-sm text-headline-sm font-bold leading-tight">14</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded-lg bg-surface-container-lowest border-2 border-on-surface flex items-center justify-center font-headline-sm font-bold text-on-surface shadow-[2px_2px_0px_#1a1a28] flex-shrink-0">
+<span class="material-symbols-outlined text-2xl text-on-surface">psychology</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-title-md text-title-md text-on-surface font-bold">Midjourney AI</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold border border-on-surface bg-secondary-container text-on-secondary-fixed-variant">Generative Stack</span>
+</div>
+<div class="flex items-center gap-space-sm text-on-surface-variant font-body-sm text-body-sm flex-wrap">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">credit_card</span> Chase Sapphire Reserve (...4920)</span>
+<span>•</span>
+<span>Standard Plan</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-space-lg pl-16 md:pl-0">
+<div class="text-right">
+<div class="font-tabular-stat text-tabular-stat text-on-surface font-bold">$60.00</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Normalized Monthly</div>
+</div>
+<button class="px-space-md py-2 bg-surface-container-lowest text-on-surface font-label-md text-label-md font-bold rounded-lg border-2 border-on-surface shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#1a1a28] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center gap-1.5 flex-shrink-0" type="button">
+<span class="material-symbols-outlined text-base">settings</span>
+<span>Manage / Cancel</span>
+</button>
+</div>
+</div>
+<!-- Row 5: Spotify Duo -->
+<div class="p-space-md sm:p-space-lg flex flex-col md:flex-row md:items-center justify-between gap-space-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-space-md">
+<div class="flex flex-col items-center justify-center w-14 h-14 bg-secondary-container text-on-secondary-container border-2 border-on-surface rounded-lg shadow-[2px_2px_0px_#1a1a28] flex-shrink-0">
+<span class="font-label-sm text-[10px] leading-none uppercase font-bold">Apr</span>
+<span class="font-headline-sm text-headline-sm font-bold leading-tight">18</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded-lg bg-surface-container-lowest border-2 border-on-surface flex items-center justify-center font-headline-sm font-bold text-on-surface shadow-[2px_2px_0px_#1a1a28] flex-shrink-0">
+<span class="material-symbols-outlined text-2xl text-on-surface">headphones</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-title-md text-title-md text-on-surface font-bold">Spotify Duo</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold border border-on-surface bg-secondary-container text-on-secondary-fixed">Media / Streaming</span>
+</div>
+<div class="flex items-center gap-space-sm text-on-surface-variant font-body-sm text-body-sm flex-wrap">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">account_balance_wallet</span> Apple Pay (...1122)</span>
+<span>•</span>
+<span>2 accounts enabled</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-space-lg pl-16 md:pl-0">
+<div class="text-right">
+<div class="font-tabular-stat text-tabular-stat text-on-surface font-bold">$14.99</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Normalized Monthly</div>
+</div>
+<button class="px-space-md py-2 bg-surface-container-lowest text-on-surface font-label-md text-label-md font-bold rounded-lg border-2 border-on-surface shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#1a1a28] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center gap-1.5 flex-shrink-0" type="button">
+<span class="material-symbols-outlined text-base">settings</span>
+<span>Manage / Cancel</span>
+</button>
+</div>
+</div>
+<!-- Row 6: ChatGPT Plus -->
+<div class="p-space-md sm:p-space-lg flex flex-col md:flex-row md:items-center justify-between gap-space-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-space-md">
+<div class="flex flex-col items-center justify-center w-14 h-14 bg-primary-fixed-dim text-on-primary-fixed border-2 border-on-surface rounded-lg shadow-[2px_2px_0px_#1a1a28] flex-shrink-0">
+<span class="font-label-sm text-[10px] leading-none uppercase font-bold">Apr</span>
+<span class="font-headline-sm text-headline-sm font-bold leading-tight">21</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded-lg bg-surface-container-lowest border-2 border-on-surface flex items-center justify-center font-headline-sm font-bold text-on-surface shadow-[2px_2px_0px_#1a1a28] flex-shrink-0">
+<span class="material-symbols-outlined text-2xl text-on-surface">smart_toy</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-title-md text-title-md text-on-surface font-bold">ChatGPT Plus</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold border border-on-surface bg-primary-fixed text-on-primary-fixed-variant">AI / Workspace</span>
+</div>
+<div class="flex items-center gap-space-sm text-on-surface-variant font-body-sm text-body-sm flex-wrap">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">credit_card</span> AMEX Platinum (...8831)</span>
+<span>•</span>
+<span>GPT-4o Access</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-space-lg pl-16 md:pl-0">
+<div class="text-right">
+<div class="font-tabular-stat text-tabular-stat text-on-surface font-bold">$20.00</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Normalized Monthly</div>
+</div>
+<button class="px-space-md py-2 bg-surface-container-lowest text-on-surface font-label-md text-label-md font-bold rounded-lg border-2 border-on-surface shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#1a1a28] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center gap-1.5 flex-shrink-0" type="button">
+<span class="material-symbols-outlined text-base">settings</span>
+<span>Manage / Cancel</span>
+</button>
+</div>
+</div>
+<!-- Row 7: Figma Pro -->
+<div class="p-space-md sm:p-space-lg flex flex-col md:flex-row md:items-center justify-between gap-space-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-space-md">
+<div class="flex flex-col items-center justify-center w-14 h-14 bg-tertiary-fixed-dim text-on-tertiary-fixed border-2 border-on-surface rounded-lg shadow-[2px_2px_0px_#1a1a28] flex-shrink-0">
+<span class="font-label-sm text-[10px] leading-none uppercase font-bold">Apr</span>
+<span class="font-headline-sm text-headline-sm font-bold leading-tight">28</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded-lg bg-surface-container-lowest border-2 border-on-surface flex items-center justify-center font-headline-sm font-bold text-on-surface shadow-[2px_2px_0px_#1a1a28] flex-shrink-0">
+<span class="material-symbols-outlined text-2xl text-on-surface">draw</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-title-md text-title-md text-on-surface font-bold">Figma Pro</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold border border-on-surface bg-surface-variant text-on-surface">Design Team</span>
+</div>
+<div class="flex items-center gap-space-sm text-on-surface-variant font-body-sm text-body-sm flex-wrap">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">account_balance</span> Mercury Business Checking (...1094)</span>
+<span>•</span>
+<span>1 Full Seat</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-space-lg pl-16 md:pl-0">
+<div class="text-right">
+<div class="font-tabular-stat text-tabular-stat text-on-surface font-bold">$15.00</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Normalized Monthly</div>
+</div>
+<button class="px-space-md py-2 bg-surface-container-lowest text-on-surface font-label-md text-label-md font-bold rounded-lg border-2 border-on-surface shadow-[2px_2px_0px_#1a1a28] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#1a1a28] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center gap-1.5 flex-shrink-0" type="button">
+<span class="material-symbols-outlined text-base">settings</span>
+<span>Manage / Cancel</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card Footer Summary -->
+<div class="p-space-md bg-surface-container-low border-t-2 border-on-surface flex flex-col sm:flex-row items-center justify-between gap-space-sm">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Notice: Cancellation usually requires at least 24 hours before 00:00 on the renewal date to avoid fee retention.</span>
+<button class="font-label-md text-label-md text-primary font-bold hover:underline flex items-center gap-1" type="button">
+<span>Set Renewal Alerts</span>
+<span class="material-symbols-outlined text-sm">notifications_active</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Sync active states on app shell top nav bar
+  document.addEventListener('DOMContentLoaded', () => {
+    const navLinks = document.querySelectorAll('header nav a');
+    navLinks.forEach(link => {
+      if (link.getAttribute('data-path') === 'calendar') {
+        link.className = 'px-space-md py-1.5 font-label-lg text-label-lg bg-primary-container text-on-primary font-bold shadow-[2px_2px_0px_#1a1a28] border-2 border-on-surface rounded';
+      } else {
+        link.className = 'px-space-md py-1.5 font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-all rounded';
+      }
+    });
+  });
+</script></main></body></html>

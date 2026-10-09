@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Session & Global State
     const session = JSON.parse(localStorage.getItem('essara_session'));
     if (!session) {
-        window.location.href = 'login.html';
+        window.location.href = '../login/login.html';
         return;
     }
 
