@@ -1,8 +1,9 @@
-﻿// Load environment variables FIRST before anything else
+// Load environment variables FIRST before anything else
 // This makes process.env.PORT, process.env.MONGO_URI etc. available everywhere
 require("dotenv").config()
 
 const express=require("express")
+const connectDB=require("./config/db")
 
 // Import our hand-written middlewares
 const corsMiddleware=require("./middleware/cors")
@@ -39,7 +40,11 @@ app.use(errorHandler)
 
 // --- START SERVER ---
 
+// Connect to MongoDB Atlas first, then start the HTTP server
+// This order matters: we want the DB ready before accepting any requests
 const PORT=process.env.PORT||8080
-app.listen(PORT,()=>{
-    console.log(`Server is running in http://localhost:${PORT}/`)
+connectDB().then(()=>{
+    app.listen(PORT,()=>{
+        console.log(`Server is running in http://localhost:${PORT}/`)
+    })
 })
