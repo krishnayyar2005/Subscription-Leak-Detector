@@ -143,4 +143,23 @@ const loginUser=async(req,res,next)=>{
     }
 }
 
-module.exports={registerUser,loginUser}
+// -------------------------------------------------------
+// getMyProfile - handles GET /api/auth/me
+// This is a PROTECTED route - authMiddleware runs before this controller
+// and attaches the logged-in user to req.user.
+// Because authMiddleware already did the DB lookup and excluded the password,
+// this controller has zero DB work - it just reads from req.user.
+// -------------------------------------------------------
+const getMyProfile=(req,res)=>{
+    // req.user was attached by authMiddleware - it contains the full user
+    // document EXCEPT the password field (stripped by .select("-password"))
+    res.status(200).json({
+        user:{
+            id:req.user._id,
+            name:req.user.name,
+            email:req.user.email
+        }
+    })
+}
+
+module.exports={registerUser,loginUser,getMyProfile}
