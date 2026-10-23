@@ -3,11 +3,10 @@
 // They do NOT contain any business logic - that lives in controllers/.
 
 const express=require("express")
-const {registerUser}=require("../controllers/authController")
+const {registerUser,loginUser}=require("../controllers/authController")
 
-// Import only the middleware we need on this router right now.
-// validateLogin will be wired up when the login route is added.
-const {validateRegister}=require("../middleware/validate")
+// Import validation middleware for both routes
+const {validateRegister,validateLogin}=require("../middleware/validate")
 
 // express.Router() creates a mini-application that handles a subset of routes
 // We mount it in server.js under "/api/auth", so:
@@ -18,5 +17,10 @@ const router=express.Router()
 // Middleware chain: validateRegister runs first; if it calls next(),
 // registerUser runs; if validateRegister returns a 400, registerUser never runs.
 router.post("/register",validateRegister,registerUser)
+
+// POST /login  (full path: POST /api/auth/login)
+// validateLogin checks email format + password presence before loginUser runs.
+// We do NOT check password strength on login - just that the field exists.
+router.post("/login",validateLogin,loginUser)
 
 module.exports=router

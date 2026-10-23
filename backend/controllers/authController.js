@@ -3,6 +3,7 @@
 // They receive the request, do the work, and send back a response.
 
 const bcrypt=require("bcrypt")
+const jwt=require("jsonwebtoken")
 const User=require("../models/User")
 
 // -------------------------------------------------------
@@ -64,4 +65,82 @@ const registerUser=async(req,res,next)=>{
     }
 }
 
-module.exports={registerUser}
+// -------------------------------------------------------
+// loginUser - handles POST /api/auth/login
+// Expected req.body: { "email": "user@example.com", "password": "Secret@123" }
+// -------------------------------------------------------
+const loginUser=async(req,res,next)=>{
+    try{
+        // Step 1: Normalise the email the same way the schema does
+        // The schema has lowercase:true, so "USER@EXAMPLE.COM" is stored as
+        // "user@example.com". We must normalise here too so the lookup matches.
+        const {email,password}=req.body
+        const normalised_email=email.toLowerCase().trim()
+
+        // Step 2: Look for the user in the database
+        // findOne returns the document (with the hashed password) or null
+        const find_user=await User.findOne({email:normalised_email})
+        if(!find_user){
+            // 401 Unauthorized - we deliberately use the SAME message whether
+            // the email doesn't exist OR the password is wrong.
+            // Reason: telling an attacker "email not found" lets them enumerate
+            // which emails are registered. A vague message gives them no info.
+            return res.status(401).json({message:"Invalid email or password"})
+        }
+
+        // Step 3: Compare the plain-text password the user sent
+        // against the bcrypt hash stored in the database.
+        // bcrypt.compare() handles the salt internally - we never touch it.
+        const password_matches=await bcrypt.compare(password,find_user.password)
+        if(!password_matches){
+            // Same vague message as above - don't reveal which field is wrong
+            return res.status(401).json({message:"Invalid email or password"})
+        }
+
+        // Step 4: Check that JWT_SECRET is configured before trying to sign
+        // If it is missing the app should crash loudly (500) rather than
+        // silently issue unsigned tokens or throw a cryptic error
+        if(!process.env.JWT_SECRET){
+            const config_error=new Error("JWT_SECRET is not set - cannot issue token")
+            config_error.statusCode=500
+            return next(config_error)
+        }
+
+        // Step 5: Create a JSON Web Token (JWT)
+        // -------------------------------------------------------
+        // A JWT is a compact, URL-safe string that has three parts:
+        //   Header  . Payload . Signature
+        // - PAYLOAD: the data we want to carry. We put the user's id so that
+        //   protected routes can know WHO made the request without another DB call.
+        //   { id: "6adae656..." }
+        // - SECRET: process.env.JWT_SECRET is a private string known only to the
+        //   server. It is used to sign the token so that nobody can tamper with
+        //   the payload (changing id to an admin id, for example) without
+        //   invalidating the signature.
+        // - expiresIn: "7d" means the token becomes invalid after 7 days.
+        //   The "exp" (expiration) claim is embedded in the payload automatically.
+        // -------------------------------------------------------
+        const token=jwt.sign(
+            {id:find_user._id},          // payload - who the token represents
+            process.env.JWT_SECRET,       // secret - only the server knows this
+            {expiresIn:"7d"}             // token expires in 7 days
+        )
+
+        // Step 6: Send back the token and safe user info
+        // IMPORTANT: never include the password hash in the response
+        res.status(200).json({
+            message:"Login Successful",
+            token:token,
+            user:{
+                id:find_user._id,
+                name:find_user.name,
+                email:find_user.email
+            }
+        })
+    }
+    catch(error){
+        next(error)
+    }
+}
+
+module.exports={registerUser,loginUser}
