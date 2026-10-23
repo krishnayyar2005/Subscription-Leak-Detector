@@ -9,6 +9,10 @@ const connectDB=require("./config/db")
 const corsMiddleware=require("./middleware/cors")
 const {errorHandler,notFoundMiddleware}=require("./middleware/errorHandler")
 
+// Import route files
+// Each route file handles a group of related endpoints
+const authRoutes=require("./routes/authRoutes")
+
 // Create the Express application
 const app=express()
 
@@ -28,6 +32,11 @@ app.use(corsMiddleware)
 app.get("/",(req,res)=>{
     res.json({message:"Welcome to Subscription Leak Detector API"})
 })
+
+// --- AUTH ROUTES ---
+// All endpoints under /api/auth are handled by authRoutes
+// e.g. POST /api/auth/register
+app.use("/api/auth",authRoutes)
 
 // --- CATCH-ALL MIDDLEWARE (must come after all routes) ---
 
