@@ -12,6 +12,7 @@ const {errorHandler,notFoundMiddleware}=require("./middleware/errorHandler")
 // Import route files
 // Each route file handles a group of related endpoints
 const authRoutes=require("./routes/authRoutes")
+const subscriptionRoutes=require("./routes/subscriptionRoutes")
 
 // Create the Express application
 const app=express()
@@ -37,6 +38,11 @@ app.get("/",(req,res)=>{
 // All endpoints under /api/auth are handled by authRoutes
 // e.g. POST /api/auth/register
 app.use("/api/auth",authRoutes)
+
+// --- SUBSCRIPTION ROUTES ---
+// All endpoints under /api/subscriptions are handled by subscriptionRoutes
+// e.g. GET /api/subscriptions
+app.use("/api/subscriptions",subscriptionRoutes)
 
 // --- CATCH-ALL MIDDLEWARE (must come after all routes) ---
 
