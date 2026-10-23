@@ -1,6 +1,8 @@
-﻿// config/db.js - Responsible for connecting to MongoDB Atlas using Mongoose
+// config/db.js - Responsible for connecting to MongoDB Atlas using Mongoose
 
 const mongoose=require("mongoose")
+const dns=require("dns")
+dns.setServers(["1.1.1.1","8.8.8.8"]) // use public DNS servers so Node can resolve the Atlas SRV record
 
 // -------------------------------------------------------------------
 // WHAT IS MongoDB Atlas?
