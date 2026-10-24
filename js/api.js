@@ -96,3 +96,20 @@ async function fetchSubscriptions() {
   return []
 }
 
+// Fetch server-side subscription analysis from backend API
+async function fetchAnalysis() {
+  const result = await apiRequest("/subscriptions/analysis", "GET")
+  if (result.ok && result.data) {
+    return result.data
+  }
+  const errorMsg = result.data && result.data.message ? result.data.message : "Failed to load analysis"
+  console.error("fetchAnalysis error:", errorMsg)
+  return {
+    summary: { activeCount: 0, monthlyTotal: 0, annualTotal: 0 },
+    byCategory: [],
+    overlaps: { overlapCount: 0, totalMonthlyLeak: 0, totalAnnualLeak: 0, overlaps: [] },
+    leakPercentage: 0
+  }
+}
+
+
