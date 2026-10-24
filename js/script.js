@@ -115,11 +115,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Session Check & Route Guard
     const sessionData = localStorage.getItem('essara_session');
+    const token = localStorage.getItem('essara_token');
     const currentPath = window.location.pathname;
     const isLogin = currentPath.endsWith('login.html');
     const isLanding = currentPath.endsWith('index.html') || (currentPath.endsWith('/') && !currentPath.includes('dashboard'));
 
-    if (sessionData) {
+    if (sessionData && !token) {
+        localStorage.removeItem('essara_session');
+        if (!isLogin) {
+            window.location.replace('../login/login.html');
+            return;
+        }
+    }
+
+    if (sessionData && token) {
         // If logged in and on login page, redirect to dashboard
         if (isLogin && loginForm) {
             document.body.innerHTML = '<div class="auth-main"><div class="text-center"><span class="material-symbols-outlined font-display text-primary animate-fade-in" style="font-size:48px; font-variation-settings: \'FILL\' 1;">sync</span><h2 class="font-headline mt-4">Redirecting to Dashboard...</h2></div></div>';
@@ -209,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
         };
 
-        loginForm.addEventListener('submit', (e) => {
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             clearErrors();
 
@@ -229,19 +238,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // User login validation
-            const users = JSON.parse(localStorage.getItem('essara_users')) || [];
-            const userMatch = users.find(u => u.email === email && u.password === password);
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
+            if (submitBtn) submitBtn.disabled = true;
 
-            if (userMatch) {
-                localStorage.setItem('essara_session', JSON.stringify({ id: userMatch.id, email: userMatch.email, name: userMatch.name }));
-                window.location.reload(); // Will trigger the session check and redirect
-            } else {
-                showError('Invalid email or password.');
+            try {
+                const res = await apiRequest('/auth/login', 'POST', { email, password });
+                if (res.ok) {
+                    localStorage.setItem('essara_token', res.data.token);
+                    localStorage.setItem('essara_session', JSON.stringify({
+                        id: res.data.user.id,
+                        email: res.data.user.email,
+                        name: res.data.user.name
+                    }));
+                    window.location.reload(); // Will trigger the session check and redirect
+                } else {
+                    showError(res.data && res.data.message ? res.data.message : 'Invalid email or password.');
+                }
+            } finally {
+                if (submitBtn) submitBtn.disabled = false;
             }
         });
 
-        signupForm.addEventListener('submit', (e) => {
+        signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             clearErrors();
 
@@ -271,19 +289,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Actual Existing Email Check
-            const users = JSON.parse(localStorage.getItem('essara_users')) || [];
-            if (users.find(u => u.email === email)) {
-                showError('An account with this email already exists.');
-                emailInput.classList.add('has-error');
-                return;
-            }
+            const submitBtn = signupForm.querySelector('button[type="submit"]');
+            if (submitBtn) submitBtn.disabled = true;
 
-            // Success
-            const newUser = { id: Date.now().toString(), name: name, email: email, password: password };
-            users.push(newUser);
-            localStorage.setItem('essara_users', JSON.stringify(users));
-            window.location.href = '../login/login.html';
+            try {
+                const res = await apiRequest('/auth/register', 'POST', { name, email, password });
+                if (res.ok) {
+                    window.location.href = '../login/login.html';
+                } else {
+                    const msg = (res.data && res.data.errors && res.data.errors.length)
+                        ? res.data.errors.join(' ')
+                        : (res.data && res.data.message ? res.data.message : 'Registration failed.');
+                    showError(msg);
+                    if (res.status === 409) {
+                        emailInput.classList.add('has-error');
+                    }
+                }
+            } finally {
+                if (submitBtn) submitBtn.disabled = false;
+            }
         });
     }
 
@@ -818,7 +842,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const logoutBtnEl = document.getElementById('logout-btn');
-        if (logoutBtnEl) logoutBtnEl.addEventListener('click', () => { localStorage.removeItem('essara_session'); window.location.href = '../login/login.html'; });
+        if (logoutBtnEl) logoutBtnEl.addEventListener('click', () => {
+            localStorage.removeItem('essara_token');
+            localStorage.removeItem('essara_session');
+            window.location.href = '../login/login.html';
+        });
 
         // Add Sub Form & Modal Flow
         const subMethod = document.getElementById('sub-method');
