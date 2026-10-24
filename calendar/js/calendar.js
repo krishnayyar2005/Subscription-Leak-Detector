@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     // 1. Session & Global State
     const session = JSON.parse(localStorage.getItem('essara_session'));
     if (!session) {
@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    const subs = JSON.parse(localStorage.getItem('essara_subscriptions_' + session.id)) || [];
+    const subs = await fetchSubscriptions();
     // Global state is handled by script.js, including formatMoney.
 
     // 2. DOM Elements
@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. Date Logic Helpers
     const getNextRenewal = (sub) => {
+        if (!sub.date) return null;
         let d = new Date(sub.date);
         d.setHours(0,0,0,0);
         let prevD = new Date(d);
@@ -54,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const viewEnd = new Date(year, month + 1, 0);
         
         subs.forEach(sub => {
+            if (!sub.date) return;
             let d = new Date(sub.date);
             d.setHours(0,0,0,0);
             
@@ -174,12 +176,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const renderUpcoming = () => {
-        if (subs.length === 0) {
+        const datedSubs = subs.filter(sub => sub.date);
+        if (datedSubs.length === 0) {
             upcomingListEl.innerHTML = '<div class="empty-state-text">No upcoming renewals</div>';
             return;
         }
 
-        const upcoming = subs.map(sub => getNextRenewal(sub))
+        const upcoming = datedSubs.map(sub => getNextRenewal(sub))
+            .filter(Boolean)
             .sort((a, b) => a.diffDays - b.diffDays)
             .slice(0, 10); // Show top 10
 
