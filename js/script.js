@@ -325,6 +325,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // 2. State Management
         let subs = await fetchSubscriptions();
+        let analysis = await fetchAnalysis();
         const savedBudgetRaw = localStorage.getItem('essara_budget_' + session.id);
         let budget = savedBudgetRaw ? parseFloat(savedBudgetRaw) : null;
         let currentCurrency = localStorage.getItem('essara_currency') || 'USD';
@@ -347,29 +348,39 @@ document.addEventListener('DOMContentLoaded', async () => {
             return currencySymbols[currentCurrency] + converted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         };
 
+        // Subscription overlaps and leaks calculated by the Express API analysis endpoint
         const getOverlaps = () => {
-            const categories = {};
-            subs.forEach(s => {
-                if (!categories[s.category]) categories[s.category] = [];
-                categories[s.category].push(s);
-            });
-            const overlaps = [];
-            let totalLeak = 0;
+            if (!analysis || !analysis.overlaps || !analysis.overlaps.overlaps) {
+                return { overlaps: [], totalLeak: 0 };
+            }
 
-            Object.keys(categories).forEach(cat => {
-                const items = categories[cat];
-                if (items.length > 1) {
-                    // Sort descending by normalized cost
-                    items.sort((a, b) => normalizeCost(b.cost, b.cycle) - normalizeCost(a.cost, a.cycle));
-                    const leak = items.slice(1).reduce((sum, item) => sum + normalizeCost(item.cost, item.cycle), 0);
-                    overlaps.push({ category: cat, items: items, leak: leak });
-                    totalLeak += leak;
+            const overlaps = [];
+            analysis.overlaps.overlaps.forEach(entry => {
+                const rawItems = [entry.keep, ...(entry.redundant || [])];
+                const items = [];
+                rawItems.forEach(item => {
+                    if (!item) return;
+                    const matchedSub = subs.find(s => s.id === item.id);
+                    if (matchedSub) {
+                        items.push(matchedSub);
+                    }
+                });
+
+                if (items.length > 0) {
+                    overlaps.push({
+                        category: entry.category,
+                        items: items,
+                        leak: entry.monthlyLeak
+                    });
                 }
             });
+
+            const totalLeak = analysis.overlaps.totalMonthlyLeak || 0;
             return { overlaps, totalLeak };
         };
 
-        const getMonthlyTotal = () => subs.reduce((sum, s) => sum + normalizeCost(s.cost, s.cycle), 0);
+        // Total monthly spend calculated by the Express API analysis endpoint
+        const getMonthlyTotal = () => (analysis && analysis.summary ? analysis.summary.monthlyTotal : 0);
 
         // 4. Tab Routing
         // Removed: Navigation is now handled natively via multi-page HTML links
@@ -629,24 +640,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             `).join('') || '<div class="p-4 text-center font-body text-on-surface-variant">No overlaps yet.</div>';
         };
 
+        // Reports breakdown generated using the Express API analysis endpoint
         const renderReports = () => {
-            const cats = {};
-            subs.forEach(s => {
-                if (!cats[s.category]) cats[s.category] = { count: 0, cost: 0 };
-                cats[s.category].count++;
-                cats[s.category].cost += normalizeCost(s.cost, s.cycle);
-            });
+            const categories = (analysis && analysis.byCategory) ? analysis.byCategory : [];
             const { overlaps } = getOverlaps();
             const overlapCats = overlaps.map(o => o.category);
 
-            document.getElementById('reports-table-body').innerHTML = Object.keys(cats).map(c => `
+            document.getElementById('reports-table-body').innerHTML = categories.map(c => `
                 <tr class="data-table-row">
-                    <td class="py-4 px-4 font-medium">${c}</td>
-                    <td class="py-4 px-4 text-center font-mono">${cats[c].count}</td>
-                    <td class="py-4 px-4 text-right font-mono">${formatMoney(cats[c].cost)}</td>
-                    <td class="py-4 px-4 text-right font-mono text-on-surface-variant">${formatMoney(cats[c].cost * 12)}</td>
+                    <td class="py-4 px-4 font-medium">${c.category}</td>
+                    <td class="py-4 px-4 text-center font-mono">${c.count}</td>
+                    <td class="py-4 px-4 text-right font-mono">${formatMoney(c.monthly)}</td>
+                    <td class="py-4 px-4 text-right font-mono text-on-surface-variant">${formatMoney(c.annual)}</td>
                     <td class="py-4 px-4 text-center">
-                        ${overlapCats.includes(c) ? '<span class="bg-error-container text-error font-label-caps px-2 py-1 rounded">Overlap</span>' : '<span class="bg-secondary-bg text-secondary font-label-caps px-2 py-1 rounded">Healthy</span>'}
+                        ${overlapCats.includes(c.category) ? '<span class="bg-error-container text-error font-label-caps px-2 py-1 rounded">Overlap</span>' : '<span class="bg-secondary-bg text-secondary font-label-caps px-2 py-1 rounded">Healthy</span>'}
                     </td>
                 </tr>
             `).join('');
@@ -745,6 +752,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.filterSubs = (cat) => { currentFilter = cat; renderSubscriptions(cat, getSearchQuery()); };
         window.reloadDashboardData = async () => {
             subs = await fetchSubscriptions();
+            analysis = await fetchAnalysis();
             renderDashboard();
         };
 
@@ -755,6 +763,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const res = await apiRequest("/subscriptions/" + id, "DELETE");
                 if (res.ok) {
                     subs = subs.filter(s => s.id !== id);
+                    analysis = await fetchAnalysis();
                     renderDashboard();
                 } else {
                     alert(res.data && res.data.message ? res.data.message : "Failed to delete subscription");
@@ -909,6 +918,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     document.getElementById('step-processing').classList.add('hidden');
                     document.getElementById('step-success').classList.remove('hidden');
                     subs.push(mapSubscription(res.data.subscription));
+                    analysis = await fetchAnalysis();
                     renderDashboard();
                     setTimeout(() => { payModal.classList.add('hidden'); form.reset(); }, 1500);
                 } else {
