@@ -1,0 +1,1402 @@
+{
+  "info": {
+    "_postman_id": "a7c8e9d0-1234-4567-89ab-cdef01234567",
+    "name": "Subscription Leak Detector",
+    "description": "Postman collection for Subscription Leak Detector API. Includes Health, Authentication, Subscription CRUD, and Leak Analysis endpoints with automated tests for teacher demonstration.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "demoEmail",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "subscriptionId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "1. Health",
+      "description": "Endpoints to check server availability and unmatched route handling.",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ""
+              ]
+            },
+            "description": "Demonstrates that the API server is healthy and responding. Returns HTTP 200 with a welcome message."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Check that status code is 200 OK",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Check welcome message in response body",
+                  "pm.test(\"Welcome message is correct\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.message).to.eql(\"Welcome to Subscription Leak Detector API\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Unmatched Route (404)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/abc",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "abc"
+              ]
+            },
+            "description": "Demonstrates centralized 404 notFoundMiddleware. Requesting any non-existent route returns HTTP 404 Route Not Found."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Check that status code is 404 Not Found",
+                  "pm.test(\"Status code is 404\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "// Check error message format",
+                  "pm.test(\"Error message is Route Not Found\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.message).to.eql(\"Route Not Found\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2. Auth",
+      "description": "User registration, password validation, authentication, JWT issuing, and profile endpoints.",
+      "item": [
+        {
+          "name": "Register Valid User",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Demo User\",\n  \"email\": \"{{demoEmail}}\",\n  \"password\": \"Demo@1234\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            },
+            "description": "Registers a new user account. Uses pre-request script to generate a unique demoEmail so runs never collide. Returns HTTP 201 without exposing password hash."
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Generate a unique demo email if not already set",
+                  "if (!pm.collectionVariables.get(\"demoEmail\")) {",
+                  "    pm.collectionVariables.set(\"demoEmail\", \"demo\" + Date.now() + \"@example.com\");",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Check status code is 201 Created",
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "// Check success message and user object without password",
+                  "pm.test(\"User registered successfully without password\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.message).to.eql(\"User Registered Successfully\");",
+                  "    pm.expect(data.user).to.be.an(\"object\");",
+                  "    pm.expect(data.user.email).to.eql(pm.collectionVariables.get(\"demoEmail\"));",
+                  "    pm.expect(data.user.password).to.be.undefined;",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Register Duplicate User",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Demo User\",\n  \"email\": \"{{demoEmail}}\",\n  \"password\": \"Demo@1234\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            },
+            "description": "Attempts to register the exact same email again. Fails fast with HTTP 409 Conflict to prevent duplicate accounts."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Check status code is 409 Conflict",
+                  "pm.test(\"Status code is 409\", function () {",
+                  "    pm.response.to.have.status(409);",
+                  "});",
+                  "",
+                  "// Check duplicate message",
+                  "pm.test(\"Message is User Already Exists\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.message).to.eql(\"User Already Exists\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Register Weak Password",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Weak User\",\n  \"email\": \"weak@example.com\",\n  \"password\": \"abc\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            },
+            "description": "Demonstrates validateRegister middleware rejecting a password under 8 characters without uppercase or special character before the controller runs. Returns HTTP 400."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Check status code is 400 Bad Request",
+                  "pm.test(\"Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "// Check validation error structure",
+                  "pm.test(\"Response contains validation errors array\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.message).to.eql(\"Validation failed\");",
+                  "    pm.expect(data.errors).to.be.an(\"array\").that.is.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login Wrong Password",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{demoEmail}}\",\n  \"password\": \"WrongPassword123!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Attempts login with wrong password. bcrypt.compare() fails and returns HTTP 401 with vague message to prevent user enumeration."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Check status code is 401 Unauthorized",
+                  "pm.test(\"Status code is 401\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "// Check generic failure message",
+                  "pm.test(\"Message is Invalid email or password\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.message).to.eql(\"Invalid email or password\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login Valid",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{demoEmail}}\",\n  \"password\": \"Demo@1234\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Logs in with correct credentials, issues a signed JWT valid for 7 days, and stores the token into the collection variable {{token}}."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Check status code is 200 OK",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Save the JWT token into collection variables",
+                  "pm.test(\"Token is received and stored in collection variable\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.token).to.be.a(\"string\").that.is.not.empty;",
+                  "    pm.collectionVariables.set(\"token\", data.token);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get My Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
+            },
+            "description": "Demonstrates protected route GET /api/auth/me. authMiddleware verifies Bearer token, attaches req.user (excluding password), and returns profile."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Check status code is 200 OK",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Check user profile data and absence of password",
+                  "pm.test(\"Profile matches logged in user with no password exposed\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.user.email).to.eql(pm.collectionVariables.get(\"demoEmail\"));",
+                  "    pm.expect(data.user.password).to.be.undefined;",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get My Profile With No Token",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
+            },
+            "description": "Demonstrates that calling GET /api/auth/me without an Authorization header immediately triggers HTTP 401 Unauthorized."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Check status code is 401 Unauthorized",
+                  "pm.test(\"Status code is 401\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "// Check access denied message",
+                  "pm.test(\"Message is Access denied. No token provided\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.message).to.eql(\"Access denied. No token provided\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "3. Subscriptions (CRUD)",
+      "description": "Endpoints to create, read, update, and validate user-scoped subscriptions.",
+      "item": [
+        {
+          "name": "Get Subscriptions With No Token",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions"
+              ]
+            },
+            "description": "Demonstrates that all subscription endpoints are protected at router level by authMiddleware. Returns HTTP 401."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 401\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add Subscription - Spotify",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Spotify\",\n  \"category\": \"Music\",\n  \"cost\": 9.99,\n  \"cycle\": \"Monthly\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions"
+              ]
+            },
+            "description": "Creates Spotify ($9.99/Monthly) in Music category. Saves the generated _id into collection variable {{subscriptionId}} for later tests."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "// Save generated subscription _id for subsequent tests",
+                  "pm.test(\"Saves subscriptionId into collection variable\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.subscription).to.be.an(\"object\");",
+                  "    const id = data.subscription._id || data.subscription.id;",
+                  "    pm.expect(id).to.be.a(\"string\");",
+                  "    pm.collectionVariables.set(\"subscriptionId\", id);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add Subscription - Apple Music",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Apple Music\",\n  \"category\": \"Music\",\n  \"cost\": 99,\n  \"cycle\": \"Yearly\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions"
+              ]
+            },
+            "description": "Creates Apple Music ($99/Yearly) in Music category. Returns HTTP 201."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add Subscription - YouTube Music",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"YouTube Music\",\n  \"category\": \"Music\",\n  \"cost\": 4,\n  \"cycle\": \"Weekly\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions"
+              ]
+            },
+            "description": "Creates YouTube Music ($4/Weekly) in Music category. Returns HTTP 201."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add Subscription - Netflix",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Netflix\",\n  \"category\": \"Video\",\n  \"cost\": 15.49,\n  \"cycle\": \"Monthly\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions"
+              ]
+            },
+            "description": "Creates Netflix ($15.49/Monthly) in Video category. Returns HTTP 201."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add Subscription - Prime Video",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Prime Video\",\n  \"category\": \"Video\",\n  \"cost\": 139,\n  \"cycle\": \"Yearly\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions"
+              ]
+            },
+            "description": "Creates Prime Video ($139/Yearly) in Video category. Returns HTTP 201."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add Subscription - Disney Plus",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Disney Plus\",\n  \"category\": \"Video\",\n  \"cost\": 7.99,\n  \"cycle\": \"Monthly\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions"
+              ]
+            },
+            "description": "Creates Disney Plus ($7.99/Monthly) in Video category. Returns HTTP 201."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add Subscription - Gym",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Gym\",\n  \"category\": \"Fitness\",\n  \"cost\": 30,\n  \"cycle\": \"Monthly\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions"
+              ]
+            },
+            "description": "Creates Gym ($30/Monthly) in Fitness category. Single subscription in this category (no overlap). Returns HTTP 201."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add Subscription - Notion",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Notion\",\n  \"category\": \"Other\",\n  \"cost\": 8,\n  \"cycle\": \"Monthly\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions"
+              ]
+            },
+            "description": "Creates Notion ($8/Monthly) in Other category. Included in spend breakdown but ignored in overlap detector. Returns HTTP 201."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add Subscription - Figma",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Figma\",\n  \"category\": \"Other\",\n  \"cost\": 12,\n  \"cycle\": \"Monthly\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions"
+              ]
+            },
+            "description": "Creates Figma ($12/Monthly) in Other category. Returns HTTP 201."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add Invalid Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Bad Sub\",\n  \"category\": \"Banana\",\n  \"cost\": 10,\n  \"cycle\": \"Monthly\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions"
+              ]
+            },
+            "description": "Demonstrates schema validation rejecting category Banana. Centralized errorHandler maps ValidationError to HTTP 400."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get All Subscriptions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions"
+              ]
+            },
+            "description": "Retrieves all subscriptions for the logged-in user. Verifies count of 9 and that user is populated with name and email."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Returns 9 subscriptions with populated user\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.count).to.eql(9);",
+                  "    pm.expect(data.subscriptions).to.be.an(\"array\").with.lengthOf(9);",
+                  "    pm.expect(data.subscriptions[0].user).to.be.an(\"object\");",
+                  "    pm.expect(data.subscriptions[0].user.name).to.be.a(\"string\");",
+                  "    pm.expect(data.subscriptions[0].user.email).to.be.a(\"string\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get One Subscription By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions/{{subscriptionId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions",
+                "{{subscriptionId}}"
+              ]
+            },
+            "description": "Retrieves a single subscription by its unique ID using {{subscriptionId}}. Returns HTTP 200."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Subscription is Spotify\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.name).to.eql(\"Spotify\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Spotify",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cost\": 12.99\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions/{{subscriptionId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions",
+                "{{subscriptionId}}"
+              ]
+            },
+            "description": "Updates Spotify cost to $12.99 using findOneAndUpdate with user-scoping. Returns HTTP 200 with updated document."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Cost is updated to 12.99\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.subscription.cost).to.eql(12.99);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get With Invalid ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions/abc123",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions",
+                "abc123"
+              ]
+            },
+            "description": "Demonstrates Mongoose CastError handling when passing invalid ID string abc123. Centralized errorHandler returns HTTP 400 Invalid ID."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Message is Invalid ID\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.message).to.eql(\"Invalid ID\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "4. Analysis",
+      "description": "Endpoints for calculating spend breakdown, billing-cycle normalization, and duplicate overlap leaks.",
+      "item": [
+        {
+          "name": "Reset Spotify Cost",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cost\": 9.99\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions/{{subscriptionId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions",
+                "{{subscriptionId}}"
+              ]
+            },
+            "description": "Resets Spotify cost back to $9.99 so analysis calculations produce the exact expected benchmark numbers. Returns HTTP 200."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Cost is reset to 9.99\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.subscription.cost).to.eql(9.99);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Analysis",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions/analysis",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions",
+                "analysis"
+              ]
+            },
+            "description": "Computes user-scoped spend summary, category spend breakdown (sorted descending), and duplicate leak detection. Returns HTTP 200."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Summary values match benchmarks\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.summary.activeCount).to.eql(9);",
+                  "    pm.expect(data.summary.monthlyTotal).to.be.closeTo(120.68, 0.01);",
+                  "    pm.expect(data.summary.annualTotal).to.be.closeTo(1448.2, 0.01);",
+                  "});",
+                  "",
+                  "pm.test(\"Overlaps detected correctly in Music and Video\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.overlaps.overlapCount).to.eql(2);",
+                  "    pm.expect(data.overlaps.totalMonthlyLeak).to.be.closeTo(37.81, 0.01);",
+                  "    pm.expect(data.overlaps.totalAnnualLeak).to.be.closeTo(453.76, 0.01);",
+                  "});",
+                  "",
+                  "pm.test(\"byCategory is sorted with Music first\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.byCategory).to.be.an(\"array\").with.lengthOf(4);",
+                  "    pm.expect(data.byCategory[0].category).to.eql(\"Music\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Analysis With No Token",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions/analysis",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions",
+                "analysis"
+              ]
+            },
+            "description": "Demonstrates that GET /api/subscriptions/analysis is protected by authMiddleware. Returns HTTP 401."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 401\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "5. Cleanup",
+      "description": "Cleanup endpoint to demonstrate resource deletion and 404 response on deleted resource.",
+      "item": [
+        {
+          "name": "Delete Spotify",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions/{{subscriptionId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions",
+                "{{subscriptionId}}"
+              ]
+            },
+            "description": "Deletes Spotify subscription using findOneAndDelete with user-scoping. Returns HTTP 200."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Message is Subscription Deleted Successfully\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.message).to.eql(\"Subscription Deleted Successfully\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Deleted Subscription (404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions/{{subscriptionId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "subscriptions",
+                "{{subscriptionId}}"
+              ]
+            },
+            "description": "Attempts to fetch the deleted Spotify ID. Controller returns HTTP 404 Subscription Not Found."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "pm.test(\"Message is Subscription Not Found\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data.message).to.eql(\"Subscription Not Found\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
