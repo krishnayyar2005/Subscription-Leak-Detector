@@ -2,7 +2,7 @@
    ESSARA Budget Planner — Logic
    ================================================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const viewBudget = document.getElementById('view-budget');
     if (!viewBudget) return;
 
@@ -32,6 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const session = JSON.parse(localStorage.getItem('essara_session'));
     if (!session) return; // handled by global route guard in script.js
 
+    let subs = await fetchSubscriptions();
+
     // Currency handling uses the global window.formatMoney from script.js
 
     const normalizeCost = (cost, cycle) => {
@@ -56,7 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const renderBudgetPage = () => {
-        const subs = JSON.parse(localStorage.getItem('essara_subscriptions_' + session.id)) || [];
         
         // Stored budget is MONTHLY in base currency
         const savedBudgetRaw = localStorage.getItem('essara_budget_' + session.id);
@@ -205,8 +206,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Hook into the global reload function so it re-renders on currency change
     const origReload = window.reloadDashboardData;
-    window.reloadDashboardData = () => {
-        if (typeof origReload === 'function') origReload();
+    window.reloadDashboardData = async () => {
+        if (typeof origReload === 'function') await origReload();
+        subs = await fetchSubscriptions();
         renderBudgetPage();
     };
 
