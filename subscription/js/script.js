@@ -41,51 +41,74 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Prevent default form submission and save to localStorage
+    // Prevent default form submission and save to MongoDB via API
     if (form) {
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            const session = JSON.parse(localStorage.getItem('essara_session'));
+            const token = localStorage.getItem('essara_token');
+            if (!session || !token) {
+                showMessage('You must be logged in to add subscriptions.', 'error');
+                return;
+            }
+
+            const name = document.getElementById('sub-name').value.trim();
+            const category = document.getElementById('sub-category').value;
+            const cost = document.getElementById('sub-cost').value;
+            const cycle = document.getElementById('sub-cycle').value;
+            const date = document.getElementById('sub-date').value;
+
+            const paymentMethodInput = document.getElementById('payment-method');
+            const cardDigitsInputEl = document.getElementById('card-digits');
+            const paymentMethod = paymentMethodInput ? paymentMethodInput.value : '';
+            const cardDigits = cardDigitsInputEl ? cardDigitsInputEl.value.trim() : '';
+
+            const currentCurrency = localStorage.getItem('essara_currency') || 'USD';
+            const currencyRates = { 'USD': 1, 'EUR': 0.92, 'GBP': 0.79, 'INR': 83.00 };
+            const rate = currencyRates[currentCurrency] || 1;
+            const baseCost = parseFloat(cost) / rate;
+
+            const payload = {
+                name,
+                category,
+                cost: baseCost,
+                cycle
+            };
+            if (date) {
+                payload.renewalDate = date;
+            }
+            if (paymentMethod) {
+                payload.paymentMethod = paymentMethod;
+            }
+            if ((paymentMethod === 'cc' || paymentMethod === 'dc') && cardDigits) {
+                payload.cardDigits = cardDigits;
+            }
+
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn) submitBtn.disabled = true;
+
             try {
-                const session = JSON.parse(localStorage.getItem('essara_session'));
-                if (!session) {
-                    showMessage('You must be logged in to add subscriptions.', 'error');
-                    return;
-                }
-
-                const name = document.getElementById('sub-name').value;
-                const category = document.getElementById('sub-category').value;
-                const cost = document.getElementById('sub-cost').value;
-                const cycle = document.getElementById('sub-cycle').value;
-                const date = document.getElementById('sub-date').value;
-
-                const currentCurrency = localStorage.getItem('essara_currency') || 'USD';
-                const currencyRates = { 'USD': 1, 'EUR': 0.92, 'GBP': 0.79, 'INR': 83.00 };
-                const rate = currencyRates[currentCurrency] || 1;
-                const baseCost = parseFloat(cost) / rate;
-
-                let subs = JSON.parse(localStorage.getItem('essara_subscriptions_' + session.id)) || [];
-                
-                subs.push({
-                    id: Date.now().toString(),
-                    name,
-                    category,
-                    cost: baseCost,
-                    cycle,
-                    date
-                });
-
-                localStorage.setItem('essara_subscriptions_' + session.id, JSON.stringify(subs));
-                showMessage('Subscription added successfully!', 'success');
-                form.reset();
-                
-                // If the global render method is available, re-render the UI live
-                if (typeof window.reloadDashboardData === 'function') {
-                    window.reloadDashboardData();
+                const res = await apiRequest('/subscriptions', 'POST', payload);
+                if (res.ok) {
+                    showMessage('Subscription added successfully!', 'success');
+                    form.reset();
+                    
+                    // If the global render method is available, re-render the UI live
+                    if (typeof window.reloadDashboardData === 'function') {
+                        window.reloadDashboardData();
+                    }
+                } else {
+                    const errorMsg = (res.data && res.data.errors && res.data.errors.length)
+                        ? res.data.errors.join(' ')
+                        : (res.data && res.data.message ? res.data.message : 'Failed to save subscription.');
+                    showMessage(errorMsg, 'error');
                 }
             } catch (err) {
                 console.error('Error saving subscription:', err);
                 showMessage('Failed to save subscription.', 'error');
+            } finally {
+                if (submitBtn) submitBtn.disabled = false;
             }
         });
     }

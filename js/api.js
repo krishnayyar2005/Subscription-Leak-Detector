@@ -70,3 +70,29 @@ async function apiRequest(path, method = "GET", body = null) {
     }
   }
 }
+
+// Convert MongoDB subscription document into the shape expected by frontend UI
+function mapSubscription(sub) {
+  return {
+    id: sub._id,
+    name: sub.name,
+    category: sub.category,
+    cost: sub.cost,
+    cycle: sub.cycle,
+    date: sub.renewalDate ? sub.renewalDate.slice(0, 10) : "",
+    method: sub.paymentMethod || "",
+    last4: sub.cardDigits || ""
+  }
+}
+
+// Fetch all subscriptions for the logged in user from backend API
+async function fetchSubscriptions() {
+  const result = await apiRequest("/subscriptions", "GET")
+  if (result.ok && result.data && result.data.subscriptions) {
+    return result.data.subscriptions.map(mapSubscription)
+  }
+  const errorMsg = result.data && result.data.message ? result.data.message : "Failed to load subscriptions"
+  console.error("fetchSubscriptions error:", errorMsg)
+  return []
+}
+

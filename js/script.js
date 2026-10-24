@@ -8,7 +8,7 @@
     } catch (e) { }
 })();
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     // ==========================================
     // Theme Toggle
     // ==========================================
@@ -324,7 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // 2. State Management
-        let subs = JSON.parse(localStorage.getItem('essara_subscriptions_' + session.id)) || [];
+        let subs = await fetchSubscriptions();
         const savedBudgetRaw = localStorage.getItem('essara_budget_' + session.id);
         let budget = savedBudgetRaw ? parseFloat(savedBudgetRaw) : null;
         let currentCurrency = localStorage.getItem('essara_currency') || 'USD';
@@ -332,7 +332,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const currencyRates = { 'USD': 1, 'EUR': 0.92, 'GBP': 0.79, 'INR': 83.00 };
         const currencySymbols = { 'USD': '$', 'EUR': '€', 'GBP': '£', 'INR': '₹' };
 
-        const saveSubs = () => localStorage.setItem('essara_subscriptions_' + session.id, JSON.stringify(subs));
         const saveBudget = () => localStorage.setItem('essara_budget_' + session.id, budget.toString());
 
         // 3. Core Helpers
@@ -744,18 +743,22 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         window.filterSubs = (cat) => { currentFilter = cat; renderSubscriptions(cat, getSearchQuery()); };
-        window.reloadDashboardData = () => {
-            subs = JSON.parse(localStorage.getItem('essara_subscriptions_' + session.id)) || [];
+        window.reloadDashboardData = async () => {
+            subs = await fetchSubscriptions();
             renderDashboard();
         };
 
-        window.deleteSub = (id) => {
+        window.deleteSub = async (id) => {
             const sub = subs.find(s => s.id === id);
             if (!sub) return;
             if (confirm(`Are you sure you want to delete ${sub.name}?`)) {
-                subs = subs.filter(s => s.id !== id);
-                saveSubs();
-                renderDashboard();
+                const res = await apiRequest("/subscriptions/" + id, "DELETE");
+                if (res.ok) {
+                    subs = subs.filter(s => s.id !== id);
+                    renderDashboard();
+                } else {
+                    alert(res.data && res.data.message ? res.data.message : "Failed to delete subscription");
+                }
             }
         };
 
@@ -885,17 +888,34 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             document.getElementById('close-payment-modal').addEventListener('click', () => payModal.classList.add('hidden'));
-            document.getElementById('submit-pin').addEventListener('click', () => {
+            document.getElementById('submit-pin').addEventListener('click', async () => {
                 document.getElementById('step-pin').classList.add('hidden');
                 document.getElementById('step-processing').classList.remove('hidden');
-                setTimeout(() => {
+
+                const payload = {
+                    name: tempSubData.name,
+                    category: tempSubData.category,
+                    cost: tempSubData.cost,
+                    cycle: tempSubData.cycle
+                };
+                if (tempSubData.date) payload.renewalDate = tempSubData.date;
+                if (tempSubData.method) payload.paymentMethod = tempSubData.method;
+                if ((tempSubData.method === 'cc' || tempSubData.method === 'dc') && tempSubData.last4) {
+                    payload.cardDigits = tempSubData.last4;
+                }
+
+                const res = await apiRequest('/subscriptions', 'POST', payload);
+                if (res.ok) {
                     document.getElementById('step-processing').classList.add('hidden');
                     document.getElementById('step-success').classList.remove('hidden');
-                    subs.push(tempSubData);
-                    saveSubs();
+                    subs.push(mapSubscription(res.data.subscription));
                     renderDashboard();
                     setTimeout(() => { payModal.classList.add('hidden'); form.reset(); }, 1500);
-                }, 1000);
+                } else {
+                    document.getElementById('step-processing').classList.add('hidden');
+                    document.getElementById('step-pin').classList.remove('hidden');
+                    alert(res.data && res.data.message ? res.data.message : 'Failed to add subscription');
+                }
             });
         }
 
@@ -933,11 +953,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
-
-        // New users start with an empty slate
-        if (subs.length === 0) {
-            saveSubs();
-        }
 
         // Expose shared formatMoney for external pages (like Calendar, Budget)
         window.formatMoney = formatMoney;
