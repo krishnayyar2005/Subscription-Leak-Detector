@@ -215,26 +215,9 @@ An automated Postman test suite covering positive, negative, and edge test cases
 
 ---
 
-## 🎓 Course Syllabus Coverage
-
-The following table maps academic web and backend engineering syllabus concepts to their exact implementation in this project:
-
-| Syllabus Topic | Practical Application in Project | File / Directory Reference |
-|---|---|---|
-| **Express Routing & Body Parsing** | Modular routers mounted with `express.Router()`; JSON request payload handling via `express.json()` | `backend/routes/authRoutes.js`<br>`backend/routes/subscriptionRoutes.js`<br>`backend/server.js` |
-| **Custom Middleware Architecture** | Route protection via Bearer token verification, hand-written CORS headers, and pre-controller request validators | `backend/middleware/auth.js`<br>`backend/middleware/cors.js`<br>`backend/middleware/validate.js` |
-| **Centralized Error Handling** | Dedicated 4-argument Express error handler intercepting runtime exceptions, Mongoose cast errors, duplicate keys, and 404s | `backend/middleware/errorHandler.js`<br>`backend/server.js` |
-| **Authentication & Cryptography** | Salted password hashing via `bcrypt` (10 salt rounds); stateless session management via `jsonwebtoken` (JWT) | `backend/controllers/authController.js`<br>`backend/models/User.js`<br>`backend/middleware/auth.js` |
-| **Database Modeling & Validation** | Strict Mongoose schemas with required fields, enum cycle constraints, positive number validation, and User-Subscription relationships | `backend/models/User.js`<br>`backend/models/Subscription.js`<br>`backend/config/db.js` |
-| **Client-Side API Integration** | Asynchronous HTTP requests using native `fetch`, `async/await`, dynamic DOM injection, and token headers | `js/api.js`<br>`js/script.js`<br>`budget/js/budget.js`<br>`calendar/js/calendar.js` |
-| **State & Preference Persistence** | Browser `localStorage` management for JWT session tokens, active currency, theme mode, and per-user budget limits | `js/api.js`<br>`js/script.js`<br>`budget/js/budget.js` |
-| **Configuration & Environments** | Environment variable management isolating secrets (`MONGO_URI`, `JWT_SECRET`, `PORT`) from source control | `backend/server.js`<br>`backend/config/db.js`<br>`backend/.env.example` |
-| **API Testing & Verification** | Complete Postman collection test scripts validating HTTP status codes, response shapes, and error structures | `backend/postman/Subscription-Leak-Detector.postman_collection.json` |
-
----
 
 ## 👥 Team & Credits
 
-- **Project Developer(s)**: `[Student Name / Team Members Placeholder]`
+- **Project Developer(s)**: `[Krish Nayyar , Kairav, Ramandeep]`
 - **Course**: Backend Engineering (BEE) / College Capstone Project
 - **Academic Year**: 2025–2026
