@@ -9,7 +9,8 @@ const {
     getSubscriptions,
     getSubscriptionById,
     updateSubscription,
-    deleteSubscription
+    deleteSubscription,
+    getAnalysis
 }=require("../controllers/subscriptionController")
 
 const router=express.Router()
@@ -30,6 +31,11 @@ router.post("/",createSubscription)
 
 // GET /api/subscriptions -> Get all subscriptions belonging to the logged-in user
 router.get("/",getSubscriptions)
+
+// GET /api/subscriptions/analysis -> Compute spend summary, category breakdown, and overlap leaks
+// WHY ABOVE /:id? Express evaluates routes in the exact order they are declared.
+// If /:id came first, Express would treat "/analysis" as an ID parameter and pass "analysis" to getSubscriptionById!
+router.get("/analysis",getAnalysis)
 
 // the /analysis route will be added ABOVE this line later, because /:id would otherwise treat the word analysis as an id
 router.get("/:id",getSubscriptionById)
