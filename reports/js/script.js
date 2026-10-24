@@ -4,7 +4,8 @@
    with the pixel-accurate version matching design/reports/screen.png.
    ================================================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    let subs = await fetchSubscriptions();
 
     // --- Category icon mapping ---
     // Maps subscription category names to Material Symbols icon names
@@ -68,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const session = JSON.parse(localStorage.getItem('essara_session'));
             if (!session) return;
 
-            const subs = JSON.parse(localStorage.getItem('essara_subscriptions_' + session.id)) || [];
             const currentCurrency = localStorage.getItem('essara_currency') || 'USD';
             const currencyRates = { 'USD': 1, 'EUR': 0.92, 'GBP': 0.79, 'INR': 83.00 };
             const currencySymbols = { 'USD': '$', 'EUR': '€', 'GBP': '£', 'INR': '₹' };
@@ -143,7 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const renderReportsEnhanced = () => {
-            const subs = JSON.parse(localStorage.getItem('essara_subscriptions_' + session.id)) || [];
 
             const tbody = document.getElementById('reports-table-body');
             const totalsBar = document.getElementById('reports-totals');
@@ -209,8 +208,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Expose for currency change re-renders.
         const origReload = window.reloadDashboardData;
-        window.reloadDashboardData = () => {
-            if (typeof origReload === 'function') origReload();
+        window.reloadDashboardData = async () => {
+            if (typeof origReload === 'function') await origReload();
+            subs = await fetchSubscriptions();
             renderReportsPage();
         };
 
@@ -231,7 +231,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const cc = localStorage.getItem('essara_currency') || 'USD';
             const rates = { 'USD': 1, 'EUR': 0.92, 'GBP': 0.79, 'INR': 83.00 };
             const symbols = { 'USD': '$', 'EUR': '€', 'GBP': '£', 'INR': '₹' };
-            const subs = JSON.parse(localStorage.getItem('essara_subscriptions_' + session.id)) || [];
 
             const fmtMoney = (amount) => {
                 const converted = amount * rates[cc];
