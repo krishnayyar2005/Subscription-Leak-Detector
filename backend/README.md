@@ -1,111 +1,110 @@
 # Subscription Leak Detector - Backend API
 
-The Subscription Leak Detector Backend is a RESTful API built to help individuals uncover and eliminate hidden recurring expenses in their personal subscriptions. A **cost leak** happens when a user unknowingly pays for multiple overlapping subscriptions in the same category (such as paying simultaneously for Spotify and Apple Music in "Music", or Netflix and Disney+ in "Video"). Rather than expecting users to calculate complex cycle conversions in their head, this API normalizes all subscriptions into unified monthly and annual equivalents, identifies redundant services, and highlights exactly how much money is leaking each month and year.
-
----
+The Subscription Leak Detector backend is a RESTful API that helps people find and cut hidden recurring costs in their subscriptions. A cost leak occurs when someone unknowingly pays for several overlapping services in one category, for example Spotify and Apple Music under "Music", or Netflix and Disney+ under "Video". Instead of making users convert billing cycles by hand, the API converts every subscription into standard monthly and annual figures, flags the redundant services, and shows exactly how much money is being lost each month and each year.
 
 ## Tech Stack
 
-- **Node.js**: Asynchronous JavaScript runtime environment.
-- **Express 5**: Fast, unopinionated web application framework for routing and middleware.
-- **MongoDB Atlas**: Fully managed cloud NoSQL database for document storage.
-- **Mongoose 9**: Object Data Modeling (ODM) library providing strict schema validation, models, and type casting.
-- **JSON Web Token (jsonwebtoken)**: Stateless token-based user authentication and route protection.
-- **bcrypt**: Industry-standard adaptive cryptographic hashing algorithm (salt rounds: 10) for securing user passwords.
-
----
+- **Node.js:** Asynchronous JavaScript runtime.
+- **Express 5:** Lightweight, flexible web framework used for routing and middleware.
+- **MongoDB Atlas:** Fully managed cloud NoSQL database that stores the documents.
+- **Mongoose 9:** ODM library that provides strict schemas, models, and type casting.
+- **JSON Web Token (jsonwebtoken):** Stateless token-based authentication and route protection.
+- **bcrypt:** Widely trusted adaptive hashing algorithm (10 salt rounds) used to secure user passwords.
 
 ## Folder Structure
 
-```text
+```
 backend/
 ├── config/
-│   └── db.js                 # Establishes connection to MongoDB Atlas using Mongoose and custom DNS servers
+│   └── db.js                 # Connects to MongoDB Atlas through Mongoose, using custom DNS servers
 ├── controllers/
-│   ├── authController.js     # Business logic for user registration, login, and profile fetching
-│   └── subscriptionController.js # CRUD handlers and spend analysis engine for subscriptions
+│   ├── authController.js     # Logic for user registration, login, and fetching the profile
+│   └── subscriptionController.js # CRUD handlers and the spend analysis engine for subscriptions
 ├── middleware/
-│   ├── auth.js               # JWT verification middleware protecting private routes and attaching req.user
-│   ├── cors.js               # Hand-written CORS headers enabling browser communication
-│   ├── errorHandler.js       # Centralized error handler and 404 unmatched route handler
-│   └── validate.js           # Pre-controller request validation for user registration and login
+│   ├── auth.js               # Verifies the JWT, protects private routes, and attaches req.user
+│   ├── cors.js               # Hand-written CORS headers that allow browser requests
+│   ├── errorHandler.js       # Central error handler plus the 404 handler for unmatched routes
+│   └── validate.js           # Validates registration and login requests before they reach controllers
 ├── models/
-│   ├── Subscription.js       # Mongoose schema and model definition for subscription records
-│   └── User.js               # Mongoose schema and model definition for user accounts
+│   ├── Subscription.js       # Mongoose schema and model for subscription records
+│   └── User.js               # Mongoose schema and model for user accounts
 ├── postman/
 │   └── Subscription-Leak-Detector.postman_collection.json # Automated Postman test suite (v2.1 schema)
 ├── routes/
-│   ├── authRoutes.js         # Routes mapping for /api/auth endpoints
-│   └── subscriptionRoutes.js # Routes mapping for /api/subscriptions endpoints
+│   ├── authRoutes.js         # Route definitions for /api/auth endpoints
+│   └── subscriptionRoutes.js # Route definitions for /api/subscriptions endpoints
 ├── utils/
-│   ├── normalizeCost.js      # Pure mathematical functions to normalize billing cycles to monthly/annual costs
-│   └── overlapDetector.js    # Logic grouping categories, picking keep vs redundant, and computing leaks
-├── .env.example              # Template documenting required environment variable keys
-├── .gitignore                # Prevents committing node_modules and sensitive .env files
-├── package.json              # Project metadata, dependencies, and npm run scripts
-├── server.js                 # Application entry point wiring middleware, database, and routes
+│   ├── normalizeCost.js      # Pure functions that convert billing cycles to monthly/annual costs
+│   └── overlapDetector.js    # Groups categories, chooses keep vs redundant, and calculates leaks
+├── .env.example              # Template listing the required environment variable keys
+├── .gitignore                # Keeps node_modules and sensitive .env files out of Git
+├── package.json              # Project metadata, dependencies, and npm scripts
+├── server.js                 # Entry point that wires together middleware, database, and routes
 └── STYLE_GUIDE.md            # Coding standards and formatting rules for all backend code
 ```
 
----
-
 ## Setup & Installation
 
-1. Open your terminal and navigate to the backend directory:
-   ```bash
+1. Open your terminal and move into the backend directory:
+
+   ```
    cd backend
    ```
 
-2. Install project dependencies:
-   ```bash
+2. Install the project dependencies:
+
+   ```
    npm install
    ```
 
-3. Create your `.env` configuration file from `.env.example`:
-   ```bash
+3. Create your `.env` file from the example template:
+
+   ```
    cp .env.example .env
    ```
 
-4. Configure the environment variables inside `.env`:
-   - `PORT`: The HTTP port for the server to listen on (e.g. `8080`).
-   - `MONGO_URI`: The MongoDB Atlas connection string (e.g. `mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<database>?retryWrites=true&w=majority`).
-   - `JWT_SECRET`: A secure, secret string used to sign and verify JSON Web Tokens.
+4. Fill in the environment variables inside `.env`:
 
-   *(Never commit your real `.env` file or credentials to Git).*
+   - `PORT`: Port the HTTP server listens on (e.g. 8080).
+   - `MONGO_URI`: MongoDB Atlas connection string (e.g. `mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<database>?retryWrites=true&w=majority`).
+   - `JWT_SECRET`: A strong, private string used to sign and verify JSON Web Tokens.
+
+   (Never commit your real `.env` file or credentials to Git.)
 
 5. Start the development server:
-   ```bash
+
+   ```
    npm start
    ```
-   The terminal will output:
-   ```text
+
+   The terminal should print:
+
+   ```
    MongoDB Connected Successfully
    Server is running in http://localhost:8080/
    ```
 
----
-
 ## API Endpoints Reference
 
 | Method | Endpoint | Auth Required | Purpose | Success Status |
-|---|---|:---:|---|:---:|
-| `GET` | `/` | No | Server health check and welcome message | `200 OK` |
-| `POST` | `/api/auth/register` | No | Register a new user account with hashed password | `201 Created` |
-| `POST` | `/api/auth/login` | No | Authenticate user credentials and issue a 7-day JWT | `200 OK` |
-| `GET` | `/api/auth/me` | Yes | Retrieve current logged-in user's profile | `200 OK` |
-| `GET` | `/api/subscriptions` | Yes | Get all subscriptions belonging to logged-in user | `200 OK` |
-| `POST` | `/api/subscriptions` | Yes | Create a new subscription for logged-in user | `201 Created` |
-| `GET` | `/api/subscriptions/analysis` | Yes | Spend breakdown, category grouping, and overlap detection | `200 OK` |
-| `GET` | `/api/subscriptions/:id` | Yes | Get single subscription by ID (user-scoped) | `200 OK` |
-| `PUT` | `/api/subscriptions/:id` | Yes | Update subscription by ID (user-scoped) | `200 OK` |
-| `DELETE`| `/api/subscriptions/:id` | Yes | Delete subscription by ID (user-scoped) | `200 OK` |
-
----
+|--------|----------|---------------|---------|----------------|
+| GET | `/` | No | Health check and welcome message | 200 OK |
+| POST | `/api/auth/register` | No | Create a new user account with a hashed password | 201 Created |
+| POST | `/api/auth/login` | No | Verify credentials and issue a 7-day JWT | 200 OK |
+| GET | `/api/auth/me` | Yes | Fetch the profile of the logged-in user | 200 OK |
+| GET | `/api/subscriptions` | Yes | List all subscriptions owned by the logged-in user | 200 OK |
+| POST | `/api/subscriptions` | Yes | Add a new subscription for the logged-in user | 201 Created |
+| GET | `/api/subscriptions/analysis` | Yes | Spend breakdown, category grouping, and overlap detection | 200 OK |
+| GET | `/api/subscriptions/:id` | Yes | Fetch one subscription by ID (user-scoped) | 200 OK |
+| PUT | `/api/subscriptions/:id` | Yes | Update a subscription by ID (user-scoped) | 200 OK |
+| DELETE | `/api/subscriptions/:id` | Yes | Remove a subscription by ID (user-scoped) | 200 OK |
 
 ## Request & Response Examples
 
 ### 1. Register User (`POST /api/auth/register`)
-**Request Body:**
+
+Request Body:
+
 ```json
 {
   "name": "Demo User",
@@ -113,7 +112,9 @@ backend/
   "password": "Demo@1234"
 }
 ```
-**Response (`201 Created`):**
+
+Response (201 Created):
+
 ```json
 {
   "message": "User Registered Successfully",
@@ -126,14 +127,18 @@ backend/
 ```
 
 ### 2. Login User (`POST /api/auth/login`)
-**Request Body:**
+
+Request Body:
+
 ```json
 {
   "email": "demo@example.com",
   "password": "Demo@1234"
 }
 ```
-**Response (`200 OK`):**
+
+Response (200 OK):
+
 ```json
 {
   "message": "Login Successful",
@@ -147,12 +152,16 @@ backend/
 ```
 
 ### 3. Create Subscription (`POST /api/subscriptions`)
-**Headers:**
-```text
+
+Headers:
+
+```
 Authorization: Bearer <token>
 Content-Type: application/json
 ```
-**Request Body:**
+
+Request Body:
+
 ```json
 {
   "name": "Spotify",
@@ -161,7 +170,9 @@ Content-Type: application/json
   "cycle": "Monthly"
 }
 ```
-**Response (`201 Created`):**
+
+Response (201 Created):
+
 ```json
 {
   "message": "Subscription Added Successfully",
@@ -179,11 +190,15 @@ Content-Type: application/json
 ```
 
 ### 4. Spend & Overlap Analysis (`GET /api/subscriptions/analysis`)
-**Headers:**
-```text
+
+Headers:
+
+```
 Authorization: Bearer <token>
 ```
-**Response (`200 OK`):**
+
+Response (200 OK):
+
 ```json
 {
   "summary": {
@@ -294,54 +309,57 @@ Authorization: Bearer <token>
 }
 ```
 
----
-
 ## How the Algorithm Works
 
 ### 1. Billing-Cycle Normalization
-Subscriptions bill on different intervals: weekly, monthly, and yearly. Before comparing or summing costs, each subscription is mathematically converted into unified monthly and annual equivalents:
-- **Weekly**: `cost * 4.345` (based on 52.14 weeks per year ÷ 12 months)
-- **Monthly**: `cost`
-- **Yearly**: `cost / 12`
-- **Annual Cost**: `monthly * 12`
 
-> **Note on Precision**: All intermediate sums and cycle calculations maintain full floating-point precision. Values are rounded to 2 decimal places using `round2` **only** at the very end when constructing the final HTTP response, preventing compounding rounding errors.
+Subscriptions are billed weekly, monthly, or yearly. Before any costs are compared or added up, each one is converted into a common monthly and annual equivalent:
+
+- **Weekly:** `cost * 4.345` (52.14 weeks per year ÷ 12 months)
+- **Monthly:** `cost`
+- **Yearly:** `cost / 12`
+- **Annual Cost:** `monthly * 12`
+
+**Note on Precision:** Every intermediate sum and cycle conversion keeps full floating-point precision. Rounding to 2 decimal places with `round2` happens only at the final step, when the HTTP response is built, so rounding errors never pile up.
 
 ### 2. Overlap & Leak Detection
-- **Grouping**: Subscriptions are grouped by category (case-insensitive and trimmed).
-- **Exclusion of "Other"**: The `"Other"` category is preserved in `byCategory` for total spend tracking, but is deliberately skipped during overlap detection because unrelated miscellaneous services (e.g. cloud backups and meal prep) are not true functional duplicates.
-- **Singletons Ignored**: Categories with only 1 active subscription have no duplicates and are skipped.
-- **Keep vs. Redundant**: For overlapping categories, items are sorted descending by normalized monthly cost. The priciest item is marked as **Keep** (assuming the user values or uses that primary service the most).
-- **Leak Calculation**: All other subscriptions in that category are marked as **Redundant**. The sum of their monthly costs is the `monthlyLeak`, and `annualLeak = monthlyLeak * 12`.
+
+- **Grouping:** Subscriptions are grouped by category (trimmed and case-insensitive).
+- **"Other" is excluded:** The "Other" category still appears in `byCategory` so total spend is tracked, but it is intentionally skipped during overlap detection, since unrelated miscellaneous services (such as cloud backups and meal prep) are not real functional duplicates.
+- **Singletons are skipped:** A category with just 1 active subscription has nothing to duplicate, so it is ignored.
+- **Keep vs. Redundant:** In an overlapping category, items are sorted from highest to lowest normalized monthly cost. The most expensive one is marked **Keep**, on the assumption that it is the service the user values or uses most.
+- **Leak Calculation:** Every other subscription in the category is marked **Redundant**. Their combined monthly cost is the `monthlyLeak`, and `annualLeak = monthlyLeak * 12`.
 
 ### Worked Example (Music Category)
-Suppose a user has:
-1. **Spotify**: $9.99 / month = **$9.99 / month**
-2. **Apple Music**: $99.00 / year = $99 ÷ 12 = **$8.25 / month**
-3. **YouTube Music**: $4.00 / week = $4 × 4.345 = **$17.38 / month**
 
-- **Keep**: YouTube Music ($17.38/mo) is the priciest service.
-- **Redundant Leaks**: Spotify ($9.99/mo) + Apple Music ($8.25/mo).
-- **Monthly Leak**: `9.99 + 8.25 = $18.24 / month`
-- **Annual Leak**: `18.24 * 12 = $218.88 / year`
+Say a user has:
 
----
+- Spotify: $9.99 / month = $9.99 / month
+- Apple Music: $99.00 / year = $99 ÷ 12 = $8.25 / month
+- YouTube Music: $4.00 / week = $4 × 4.345 = $17.38 / month
+
+**Keep:** YouTube Music ($17.38/mo), the most expensive service.
+**Redundant:** Spotify ($9.99/mo) and Apple Music ($8.25/mo).
+
+**Monthly Leak:** 9.99 + 8.25 = $18.24 / month
+**Annual Leak:** 18.24 * 12 = $218.88 / year
 
 ## Security Architecture
 
-1. **Password Hashing (bcrypt)**: Plain-text passwords are never stored. Passwords are salted and hashed with 10 rounds of bcrypt before being written to MongoDB. Responses from `registerUser`, `loginUser`, and `getMyProfile` strip the password field completely.
-2. **JWT Authentication**: User sessions are stateless. Tokens are signed with `process.env.JWT_SECRET` and expire in 7 days. Protected routes require the header:
-   ```text
-   Authorization: Bearer <token>
-   ```
-3. **Strict User-Scoping**: Every single database query for subscriptions (`find`, `findById`, `findOneAndUpdate`, `findOneAndDelete`) matches `{ user: req.user._id }`. Users can never read, modify, or delete any subscription belonging to another account (preventing Insecure Direct Object Reference / IDOR vulnerabilities).
-4. **Input Whitelisting**: Body destructurings in controllers ignore any client-supplied `user` fields, ensuring ownership cannot be forged.
+- **Password Hashing (bcrypt):** Passwords are never saved in plain text. Each one is salted and hashed with 10 bcrypt rounds before it is written to MongoDB. The responses from `registerUser`, `loginUser`, and `getMyProfile` remove the password field entirely.
+- **JWT Authentication:** Sessions are stateless. Tokens are signed with `process.env.JWT_SECRET` and expire after 7 days. Protected routes need this header:
 
----
+  ```
+  Authorization: Bearer <token>
+  ```
+
+- **Strict User-Scoping:** Every subscription query (`find`, `findById`, `findOneAndUpdate`, `findOneAndDelete`) filters by `{ user: req.user._id }`. A user can never read, change, or delete another account's subscriptions, which prevents Insecure Direct Object Reference (IDOR) attacks.
+- **Input Whitelisting:** Controllers destructure only the expected body fields and ignore any `user` value sent by the client, so ownership can't be forged.
 
 ## Error Handling & Status Codes
 
-All errors pass through a centralized error-handling middleware (`errorHandler.js`) that returns consistent JSON error envelopes:
+All errors are routed through a central error-handling middleware (`errorHandler.js`), which returns a consistent JSON error format:
+
 ```json
 {
   "message": "Specific error description here"
@@ -349,30 +367,31 @@ All errors pass through a centralized error-handling middleware (`errorHandler.j
 ```
 
 ### Common HTTP Status Codes
-- `200 OK`: Request succeeded (GET, PUT, DELETE).
-- `201 Created`: Resource successfully created (POST).
-- `400 Bad Request`: Input validation failure, missing required fields, schema enum mismatch, or invalid ID format (CastError).
-- `401 Unauthorized`: Missing, expired, or invalid JWT token, or incorrect login credentials.
-- `404 Not Found`: Target subscription ID does not exist or unmatched API route.
-- `409 Conflict`: Attempting to register an email address that already exists in the database.
-- `500 Internal Server Error`: Unhandled server exception or missing server configuration.
 
----
+- **200 OK:** The request succeeded (GET, PUT, DELETE).
+- **201 Created:** A resource was created (POST).
+- **400 Bad Request:** Failed input validation, missing required fields, an invalid enum value, or a malformed ID (CastError).
+- **401 Unauthorized:** The JWT is missing, expired, or invalid, or the login credentials are wrong.
+- **404 Not Found:** The subscription ID doesn't exist, or the API route doesn't match anything.
+- **409 Conflict:** An attempt to register with an email address that is already in the database.
+- **500 Internal Server Error:** An unhandled server exception or missing server configuration.
 
 ## Testing with Postman
 
-An automated test suite covering all endpoints is provided in `backend/postman/Subscription-Leak-Detector.postman_collection.json`.
+A ready-made automated test suite for all endpoints is included at `backend/postman/Subscription-Leak-Detector.postman_collection.json`.
 
 ### How to Run in Postman:
+
 1. Open the Postman application.
-2. Click **Import** in the top-left corner and select `backend/postman/Subscription-Leak-Detector.postman_collection.json`.
-3. In the left sidebar, click the **Subscription Leak Detector** collection.
+2. Click **Import** in the top-left corner and choose `backend/postman/Subscription-Leak-Detector.postman_collection.json`.
+3. Click the **Subscription Leak Detector** collection in the left sidebar.
 4. Click **Run collection** to open the Collection Runner.
-5. Ensure all folders are selected in order:
-   - `1. Health`
-   - `2. Auth`
-   - `3. Subscriptions (CRUD)`
-   - `4. Analysis`
-   - `5. Cleanup`
+5. Make sure all folders are selected, in this order:
+   1. Health
+   2. Auth
+   3. Subscriptions (CRUD)
+   4. Analysis
+   5. Cleanup
 6. Click **Run Subscription Leak Detector**.
-7. All 29 requests will execute sequentially. Pre-request scripts will dynamically create an isolated demo user and chain JWT tokens and subscription IDs across tests.
+
+All 29 requests run one after another. Pre-request scripts automatically create an isolated demo user and pass the JWT token and subscription IDs along between tests.
